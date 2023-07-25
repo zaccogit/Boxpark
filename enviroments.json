@@ -1,0 +1,9 @@
+{
+    "APP_CONFIG_BASE_API": "http://ec2-34-222-215-115.us-west-2.compute.amazonaws.com:7272",
+    "AUTH_API_USERNAME": "admin",
+    "AUTH_API_PASSWORD": "1nt3r4xt3l3ph0nyWEB",
+    "HOST_BP": "http://200.73.192.242:7676",
+    "HOST_TRANSACTION": "http://ec2-34-219-44-146.us-west-2.compute.amazonaws.com:8066",
+    "HOST_RU": "http://ec2-34-222-69-15.us-west-2.compute.amazonaws.com:8080",
+    "HOST_COMPLIANCE": "http://ec2-34-209-208-60.us-west-2.compute.amazonaws.com:7575"
+}

@@ -1,0 +1,16 @@
+export default {
+  black: '#000000',
+  blackBackground: '#2A2C39',
+  blue: '#2F45AB',
+  blueLight: '#3ABDAE',
+  cream: '#e3dfc2',
+  danger: '#e53935',
+  grayLight: '#f2f2f2',
+  gray: '#E7E7E7',
+  graySemiDark: '#c2c0c0',
+  grayDark: '#424242',
+  green: '#85bE01',
+  transparent: '#00ff0000',
+  white: '#ffffff',
+  yellow: '#e8c221',
+};
