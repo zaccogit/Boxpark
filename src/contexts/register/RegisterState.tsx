@@ -3,25 +3,27 @@ import RegisterContext from './RegisterContext';
 
 import {RegisterRequest} from './RegisterInterfaces';
 
-const RegisterState = ({children}: PropsWithChildren) => {
-  const initialState: RegisterRequest = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    documentId: '',
-    credential: '',
-    credentialRepeat: '',
-    gender: 'M',
-    positionX: '',
-    positionY: '',
-    deviceId: '',
-    documentTypeId: '',
-    referenceNumber: '',
-    typeCondition: ''
-  };
+const initialStateRegister: RegisterRequest = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  documentId: '',
+  credential: '',
+  credentialRepeat: '',
+  gender: 'M',
+  positionX: '',
+  positionY: '',
+  deviceId: '',
+  documentTypeId: '',
+  referenceNumber: '',
+  typeCondition: ''
+};
 
-  const [registerReq, setRegisterReq] = useState<RegisterRequest>(initialState);
+const RegisterState = ({children}: PropsWithChildren) => {
+ 
+
+  const [registerReq, setRegisterReq] = useState<RegisterRequest>(initialStateRegister);
   const [nacionality, setNacionality] = useState<string | number>(0);
 
   return (
@@ -29,6 +31,7 @@ const RegisterState = ({children}: PropsWithChildren) => {
       value={{
         registerReq,
         nacionality,
+        initialStateRegister,
         setRegisterReq,
         setNacionality,
       }}>

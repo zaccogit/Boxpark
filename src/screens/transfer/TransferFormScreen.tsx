@@ -69,7 +69,7 @@ const TransferFormScreen = ({ navigation, route }: Props) => {
             />
             <Text style={styles.text}>{Languages[language].SCREENS.TransferFormScreen.text5}</Text>
             <InputDisabled value={transferRequest?.accountDestinationNumber} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.TransferFormScreen.text6}
             </Text>
             <Input
@@ -90,7 +90,7 @@ const TransferFormScreen = ({ navigation, route }: Props) => {
               }]}>
               {Languages[language].GENERAL.ERRORS.NotEnoughAmount}
             </Text>
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.TransferFormScreen.text7}
             </Text>
             <Input
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 18,
   },
   title: {

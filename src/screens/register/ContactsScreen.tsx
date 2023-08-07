@@ -241,19 +241,19 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: Colors.blackBackground,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 28,
     marginVertical: 15,
   },
   subTitle: {
     textAlign: 'center',
     color: Colors.blackBackground,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 18,
     marginTop: 5,
   },
   paragraph: {
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 24,
     paddingHorizontal: width * 0.1,
   },

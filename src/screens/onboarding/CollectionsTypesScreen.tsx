@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   textTitle: {
     color: Colors.blackBackground,
     fontSize: 32,
-    fontFamily: Fonts.DosisMedium,
+    fontFamily: "DosisMedium",
     marginHorizontal: 25,
     marginVertical: 20,
     width: "100%",
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   textSubTitle: {
     color: Colors.blackBackground,
     fontSize: 18,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     width: '100%',
     textAlign: 'left',
   },

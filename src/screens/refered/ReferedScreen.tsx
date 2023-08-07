@@ -81,12 +81,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontFamily: Fonts.DosisBold,
+    fontFamily:"DosisBold",
     color: Colors.blackBackground,
     fontSize: 18,
   },
   text2: {
-    fontFamily: Fonts.DosisMedium,
+    fontFamily:"DosisMedium",
     color: Colors.blackBackground,
     fontSize: 16,
     textAlign: 'center',

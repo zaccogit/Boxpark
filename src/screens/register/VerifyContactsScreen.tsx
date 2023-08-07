@@ -278,13 +278,13 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: Colors.blackBackground,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 28,
     marginVertical: 15,
   },
   subTitle: {
     color: Colors.blackBackground,
-    fontFamily: Fonts.DosisMedium,
+    fontFamily: "DosisMedium",
     fontSize: 18,
     marginTop: 5,
   },
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
   },
   textOptions: {
     color: Colors.green,
-    fontFamily: Fonts.DosisMedium,
+    fontFamily: "DosisMedium",
     fontSize: 18,
   },
 });

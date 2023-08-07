@@ -37,7 +37,7 @@ const ResetPassSuccessScreen = ({ navigation }: Props) => {
               color: Colors.blackBackground,
               fontSize: 26,
               textAlign: 'center',
-              fontFamily: Fonts.DosisExtraBold,
+              fontFamily: "DosisExtraBold",
             }}>
             {Languages[language].SCREENS.ResetPassSuccessScreen.title}
           </Text>

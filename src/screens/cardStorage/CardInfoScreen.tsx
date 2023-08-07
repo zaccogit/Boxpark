@@ -176,12 +176,12 @@ const styles = StyleSheet.create({
     },
     subtittle: {
         fontSize: 16,
-        fontFamily: Fonts.DosisSemiBold,
+        fontFamily: "DosisSemiBold",
         marginTop: 10
     },
     text: {
         fontSize: 15,
-        fontFamily: Fonts.Dosis,
+        fontFamily: "Dosis",
         borderBottomColor: Colors.gray,
         borderBottomWidth: 1,
         marginVertical: 10,

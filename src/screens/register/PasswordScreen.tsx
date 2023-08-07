@@ -18,7 +18,7 @@ const width: number = Dimensions.get('window').width;
 const PasswordScreen = ({ navigation }: Props) => {
   const { tokenRU, endPoints } = useContext(AuthContext);
   const { language, setLoader } = useContext(RenderContext);
-  const { registerReq, setRegisterReq, setNacionality, RegisterReqInitialState } = useContext(RegisterContext);
+  const { registerReq, setRegisterReq, setNacionality, initialStateRegister } = useContext(RegisterContext);
 
   const [countLength, setCountLength] = useState<boolean>(false);
   const [countUpperCase, setCountUpperCase] = useState<boolean>(false);
@@ -85,13 +85,14 @@ const PasswordScreen = ({ navigation }: Props) => {
       }
 
       if (response?.codigoRespuesta === '00') {
-        setRegisterReq(RegisterReqInitialState);
+        setRegisterReq(initialStateRegister);
         setNacionality(0);
         navigation.push('RegisterSuccess');
       } else {
         ToastCall('error', response?.mensajeRespuesta, language);
       }
     } catch (err) {
+      console.log(JSON.stringify(err))
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };
@@ -245,20 +246,20 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: Colors.blackBackground,
-    fontFamily: Fonts.DosisExtraBold,
+    fontFamily: "DosisExtraBold",
     fontSize: 28,
     marginVertical: 15,
   },
   subTitle: {
     textAlign: 'left',
     color: Colors.blackBackground,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     fontSize: 18,
     width: '100%',
     marginVertical: 5,
   },
   paragraph: {
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     fontSize: 24,
     paddingHorizontal: width * 0.1,
   },

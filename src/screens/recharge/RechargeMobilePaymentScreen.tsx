@@ -5,8 +5,8 @@ import { SesionContext } from '../../contexts';
 import { Colors } from '../../utils';
 import { Fonts, SVG } from '../../../assets';
 import { StackScreenProps } from '@react-navigation/stack';
-import Clipboard from '@react-native-clipboard/clipboard';
 import { ToastCall } from '../../utils/GeneralMethods';
+import * as Clipboard from 'expo-clipboard';
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -15,9 +15,9 @@ const width: number = Dimensions.get('window').width;
 const RechargeMobilePaymentScreen = ({ navigation, route }: Props) => {
     const { sesion, restartTimerSesion } = useContext(SesionContext)
     
-    const copyToClipboard = (text: string, type: boolean) => {
+    const copyToClipboard = async (text: string, type: boolean) => {
         restartTimerSesion()
-        Clipboard.setString(text);
+        await Clipboard.setStringAsync(text);
         ToastCall("success",`¡${type?"La cédula de identidad":"El número de teléfono"} se copió de manera exitosa!`, "ES")
     };
     return (
@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
     },
     text: {
         color: Colors.black,
-        fontFamily: Fonts.DosisSemiBold,
+        fontFamily: "DosisSemiBold",
         fontSize: 16,
     },
     title: {
         fontSize: 18,
         marginVertical: 20,
-        fontFamily: Fonts.Dosis,
+        fontFamily: "Dosis",
         color: Colors.black,
         textAlign: "center"
     },

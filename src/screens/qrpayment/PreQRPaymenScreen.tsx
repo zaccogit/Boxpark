@@ -183,11 +183,11 @@ const PreQRPaymenScreen = ({ navigation, route }: Props) => {
             <InputDisabled value={qrPaymentRequest?.accountBusinessName} />
             <Text style={styles.text}>{Languages[language].SCREENS.PreQRPaymentScreen.text6}</Text>
             <InputDisabled value={qrPaymentRequest?.accountBusinessNumber} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.PreQRPaymentScreen.text7}
             </Text>
             <InputDisabled value={qrPaymentRequest?.amount} displaySymbol={qrPaymentRequest?.displaySymbol} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.PreQRPaymentScreen.text8}
             </Text>
             <InputDisabled value={qrPaymentRequest?.concept} />
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 18,
   },
   title: {

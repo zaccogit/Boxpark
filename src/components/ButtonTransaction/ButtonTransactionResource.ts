@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontSize: 15,
+    fontSize: 13,
     fontFamily: "DosisSemiBold",
     marginVertical: 10,
   },

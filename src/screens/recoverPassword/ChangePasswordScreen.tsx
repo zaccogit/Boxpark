@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   subTitle: {
     textAlign: 'left',
     color: Colors.blackBackground,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     fontSize: 18,
     width: '100%',
     marginVertical: 5,

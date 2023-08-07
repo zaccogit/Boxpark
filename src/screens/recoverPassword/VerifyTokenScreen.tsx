@@ -232,12 +232,12 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.blackBackground,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     textAlign: 'center',
   },
   textOptions: {
     color: Colors.blackBackground,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     fontSize: 20,
   },
   buttonRenderWhite: {

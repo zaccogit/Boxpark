@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -11,9 +11,11 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { Colors } from "../../utils";
 import { Icons, Fonts } from "../../../assets";
 import { RenderContext } from "../../contexts";
-import { ToastCall } from "../../utils/GeneralMethods";
+
 interface Props {
   setState?: (e: string | undefined) => void;
+  active: boolean,
+  setActive?: any
 }
 
 const width: number = Dimensions.get("window").width;

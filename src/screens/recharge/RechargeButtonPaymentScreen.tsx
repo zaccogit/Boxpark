@@ -268,13 +268,13 @@ const styles = StyleSheet.create({
     },
     text: {
         color: Colors.black,
-        fontFamily: Fonts.Dosis,
+        fontFamily: "Dosis",
         fontSize: 14,
     },
     title: {
         fontSize: 18,
         marginVertical: 10,
-        fontFamily: Fonts.DosisBold,
+        fontFamily: "DosisBold",
     },
     containerRow: {
         flexDirection: 'row',

@@ -16,6 +16,7 @@ import { Icons, Fonts } from "../../../assets";
 import { SesionContext } from "../../contexts";
 import { Picker } from "@react-native-picker/picker";
 import { Image } from "expo-image";
+import { AntDesign } from '@expo/vector-icons';
 
 interface Props {
   items?: Items[];
@@ -101,7 +102,7 @@ const Select = ({
         }}
       >
         <Text style={[styles.text, styleText]}>{getLabel()}</Text>
-        <Image source={Icons.ArrowDown} style={stylesComp} />
+        <AntDesign name="down" size={20} color="black" style={stylesComp} />
         {Platform.OS === "android" && picker}
       </TouchableOpacity>
       <Modal animationType="fade" transparent={true} visible={modal}>
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    marginBottom: 10,
+    marginVertical: 10,
     position: "relative",
   },
   icon: {

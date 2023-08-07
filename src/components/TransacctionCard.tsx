@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.black,
     fontFamily: "Dosis",
-    fontSize: 15,
+    fontSize: 13,
     width: "100%",
   },
   transaction: {

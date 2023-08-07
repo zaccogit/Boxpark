@@ -197,11 +197,11 @@ const PreTransferScreen = ({ navigation, route }: Props) => {
             <InputDisabled value={transferRequest?.accountDestinationName} />
             <Text style={styles.text}>{Languages[language].SCREENS.PreTransferScreen.text6}</Text>
             <InputDisabled value={transferRequest?.accountDestinationNumber} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.PreTransferScreen.text7}
             </Text>
             <InputDisabled value={transferRequest?.amount} displaySymbol={transferRequest?.displaySymbol} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.PreTransferScreen.text8}
             </Text>
             <InputDisabled value={transferRequest?.concept} />
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 18,
   },
   title: {

@@ -1,6 +1,7 @@
 export interface RegisterContextProps {
   registerReq: RegisterRequest;
   nacionality: string | number;
+  initialStateRegister:RegisterRequest;
   setRegisterReq: (e: RegisterRequest) => void;
   setNacionality: (e: string | number) => void;
 }

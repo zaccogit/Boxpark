@@ -8,6 +8,7 @@ import Languages from '../../utils/Languages.json';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HttpService } from '../../services';
 import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
+import { Method } from '../auth/LoginScreen';
 
 const width: number = Dimensions.get('window').width;
 
@@ -17,8 +18,6 @@ interface itemsSelect {
   label: string;
   value: number;
 }
-
-type Method = "get" | "post" | "put" | "delete"
 
 const SecurityQuestionsScreen = ({ navigation }: Props) => {
   const { setLoader, language } = useContext(RenderContext);
@@ -38,8 +37,6 @@ const SecurityQuestionsScreen = ({ navigation }: Props) => {
   });
   const onSubmit = async () => {
     try {
-      /* const method = 'post';
-      const url: string = '/services/ruuser/api/pregunta-usuarios/saveList'; */
       const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_LIST_SQ_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_LIST_SQ_METHOD")?.vale as Method
@@ -242,14 +239,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.blackBackground,
     fontSize: 32,
-    fontFamily: Fonts.DosisMedium,
+    fontFamily: "DosisMedium",
     marginHorizontal: 10,
     marginVertical: 22,
   },
   textSubTitle: {
     color: Colors.blackBackground,
     fontSize: 18,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
   },
   cancelButton: {
     backgroundColor: Colors.transparent,

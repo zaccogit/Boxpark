@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ScreenContainer, Input, Button, Select } from '../../components';
-import DatePicker from 'react-native-date-picker';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { Colors } from '../../utils';
 import { Fonts } from '../../../assets';
@@ -80,7 +80,7 @@ const PersonalInfoScreen = ({ navigation }: Props) => {
       responseUser.birthDate = date;
       responseUser.birthplace = personalInfo.placeBirth;
       responseUser.civil_status = personalInfo.civilStatus;
-      
+
       method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "EDIT_USER_METHOD")?.vale as Method
       const responseReq: any = await HttpService(method, host, url, responseUser, headers, setLoader);
       if (responseReq?.birthDate) {
@@ -115,7 +115,7 @@ const PersonalInfoScreen = ({ navigation }: Props) => {
               onPress={() => {
                 setDatePicker(true);
               }}
-              text={date.toDateString()}
+              text={date.toLocaleDateString(language + '-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })}
               styleButton={{
                 backgroundColor: Colors.gray,
                 justifyContent: 'flex-start',
@@ -126,7 +126,7 @@ const PersonalInfoScreen = ({ navigation }: Props) => {
               styleText={{
                 color: Colors.blackBackground,
                 textAlign: 'left',
-                fontFamily: Fonts.Dosis,
+                fontFamily: "Dosis",
               }}
             />
           </View>
@@ -145,21 +145,23 @@ const PersonalInfoScreen = ({ navigation }: Props) => {
           <Button disabled={disabled()} onPress={() => onSubmit()} />
         </View>
       </View>
-      <DatePicker
-        modal
-        open={datePicker}
-        date={date}
-        mode="date"
-        locale={language.toLocaleLowerCase()}
-        maximumDate={maxDate()}
-        onConfirm={date => {
-          setDatePicker(false);
-          setDate(date);
-        }}
-        onCancel={() => {
-          setDatePicker(false);
-        }}
-      />
+
+      {
+        datePicker &&
+        <DateTimePicker
+          value={date}
+          mode="date"
+          locale={language.toLocaleLowerCase() + "-" + language}
+          maximumDate={maxDate()}
+          onChange={(event: DateTimePickerEvent, date?: Date) => {
+            setDatePicker(false);
+            if (date)
+              setDate(date);
+          }}
+        />
+
+      }
+
     </ScreenContainer>
   );
 };
@@ -174,14 +176,14 @@ const styles = StyleSheet.create({
   textTitle: {
     color: Colors.blackBackground,
     fontSize: 32,
-    fontFamily: Fonts.DosisMedium,
+    fontFamily: "DosisMedium",
     marginHorizontal: 25,
     marginVertical: 20,
   },
   textSubTitle: {
     color: Colors.blackBackground,
     fontSize: 18,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     width: '100%',
     textAlign: 'left',
   },
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
   },
   textDate: {
     color: Colors.blackBackground,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     fontSize: 18,
   },
   cancelButton: {

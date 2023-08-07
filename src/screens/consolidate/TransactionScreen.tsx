@@ -61,7 +61,7 @@ const TransactionScreen = ({ navigation, route }: Props) => {
   return (
     <>
       <ScreenContainer disabledPaddingBottom>
-        <HeaderDashboard navigation={navigation} route={route} />
+        {/* <HeaderDashboard navigation={navigation} route={route} /> */}
         <View style={[{ paddingHorizontal: width * 0.05 }]}>
           <Text style={[styles.text, styles.title]}>Transacciones</Text>
           <Text style={[styles.buttonRenderWhite]}>Seleccione un método de envío.</Text>
@@ -81,7 +81,6 @@ const TransactionScreen = ({ navigation, route }: Props) => {
           ))}
         </View>
       </ScreenContainer>
-      <Navbar navigation={navigation} route={route} />
     </>
   );
 };
@@ -89,12 +88,12 @@ const TransactionScreen = ({ navigation, route }: Props) => {
 const styles = StyleSheet.create({
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 16,
   },
   title: {
     fontSize: 24,
-    fontFamily: Fonts.DosisMedium,
+    fontFamily: "DosisMedium",
   },
   containerCenter: {
     justifyContent: 'center',
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.transparent,
     shadowColor: Colors.transparent,
     width: 'auto',
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
   },
   containerTransactions: {
     padding: 10,

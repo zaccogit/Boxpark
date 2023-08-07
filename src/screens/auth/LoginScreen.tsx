@@ -136,7 +136,7 @@ const LoginScreen = ({ navigation }: Props) => {
       const headers = GetHeader(tokenRU, "application/json")
       const type: number = credentials?.mail?.length === 0 ? 1 : 2
       let req = credentials;
-      console.log(req);
+      console.log(req, 'req');
       const response: any = await HttpService(
         method,
         host,
@@ -207,7 +207,7 @@ const LoginScreen = ({ navigation }: Props) => {
           const { usuario } = response;
           const sesion: SesionInterface = constructionSesion(usuario);
           setSesion(sesion);
-          console.log(usuario,'usuario 123')
+          console.log(response.codigoRespuesta,'usuario 123')
           if (response?.codigoRespuesta === '00') {
             if (usuario?.status !== 'ACTIVE') {
               ToastCall('warning', Languages[language].SCREENS.LoginScreen.ERRORS.message3, language);
@@ -232,8 +232,9 @@ const LoginScreen = ({ navigation }: Props) => {
             }
             setAccounts(savingsAccounts); 
             startTimerSesion();
-            navigation.push('Dashboard');
+            /* navigation.push('Dashboard'); */
           } else if (response?.codigoRespuesta === '12') {
+            console.log('aqui123456')
             navigation.push('RegisterSecurityQuestions');
           } else if (response?.codigoRespuesta === '35') {
             navigation.push('Onboarding');

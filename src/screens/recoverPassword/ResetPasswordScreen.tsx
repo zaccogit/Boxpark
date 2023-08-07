@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   textTitle: {
     color: Colors.blackBackground,
     fontSize: 20,
-    fontFamily: Fonts.DosisBold,
+    fontFamily:"DosisBold",
     marginBottom: 20,
     textAlign: 'center',
     width: '100%',
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 16,
   },
   title: {

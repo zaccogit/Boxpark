@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: Colors.blackBackground,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 32,
     marginVertical: 15,
   },

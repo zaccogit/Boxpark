@@ -71,8 +71,8 @@ export const styles = StyleSheet.create({
     bottom: 0,
   },
   icon: {
-    height: 30,
-    width: 30,
+    height: 32,
+    width: 32,
     tintColor: Colors.white,
   },
   logo: {

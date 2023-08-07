@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   containerRow: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
   containerCenter: {
     justifyContent: "center",
@@ -23,10 +23,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   containerTransactions: {
-    width: width * 0.9,
-    paddingVertical: 10,
-    marginHorizontal: width * 0.05,
-    borderRadius: 20,
+    width: width,
     backgroundColor: Colors.white,
     shadowColor: Colors.black,
     shadowOffset: {

@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 18,
   },
   title: {
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   textReference: {
     fontSize: 14,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
   },
   containerRow: {
     flexDirection: 'row',

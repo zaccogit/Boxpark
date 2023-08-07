@@ -6,6 +6,7 @@ import { SesionContext } from "../../contexts";
 import { Props } from "./InputInterfaces";
 import { styles } from "./InputResources";
 import { Image } from "expo-image";
+import { Ionicons } from '@expo/vector-icons';
 
 const Input = (props: Props) => {
   const { sesion, restartTimerSesion } = useContext(SesionContext);
@@ -41,11 +42,14 @@ const Input = (props: Props) => {
           style={styles.containerIcon}
           onPress={() => setSecurity(!security)}
         >
-          <Image
+          {/* <Image
             source={security ? Icons.EyeClose : Icons.EyeOpen}
             style={stylesComp}
             contentFit="cover"
-          />
+          /> */}
+          {
+            security ?<Ionicons name="eye-off" size={24} color="gray" /> : <Ionicons name="eye" size={24} color="gray" />
+          }
         </TouchableOpacity>
       )}
       {props?.displaySymbol && (

@@ -33,7 +33,7 @@ const IdentityScreen = ({navigation}: Props) => {
     });
   };
 
-  const change = (value: string | number, key: string) => {
+  const change = (value: string | number, key: string | number) => {
     setRegisterReq({
       ...registerReq,
       [key]: value,
@@ -152,14 +152,13 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: Colors.blackBackground,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 28,
-    marginVertical: 15,
-    marginBottom: 40,
+    marginVertical: 10,
   },
   subTitle: {
     color: Colors.white,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     fontSize: 18,
     marginTop: 5,
   },
@@ -176,8 +175,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.white,
   },
   image: {
-    width: 250,
-    height: 250,
+    width: 215,
+    height: 215,
     borderStyle: 'solid',
     borderWidth: 2,
     borderColor: Colors.white,

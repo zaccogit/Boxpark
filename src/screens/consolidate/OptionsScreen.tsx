@@ -34,7 +34,8 @@ const OptionsScreen = ({navigation, route}: Props) => {
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_METHOD")?.vale as Method
     stopTimerSesion();
-   /*  CloseSesion(host, url, method,tokenRU ?? '', sesion, language); */
+   /* 
+    */
     DestroySesion(setSesion, setAccounts, setTokenTransaction);
     setChannelTypeId(0);
     navigation.navigate('Login');
@@ -66,7 +67,11 @@ const OptionsScreen = ({navigation, route}: Props) => {
   return (
     <>
       <ScreenContainer disabledPaddingBottom>
-        <HeaderDashboard navigation={navigation} route={route} />
+        {/* <HeaderDashboard navigation={navigation} route={route} /> */}
+        <View style={[{ paddingHorizontal: width * 0.05 }]}>
+          <Text style={[styles.text, styles.title]}>Perfil</Text>
+          <Text style={[styles.buttonRenderWhite]}>Seleccione un metodo de configurar.</Text>
+        </View>
         <View style={{flex: 1, justifyContent: 'space-between'}}>
           <View style={[styles.containerWidth, {paddingHorizontal: 10}]}>
             {options?.map((option, index) => (
@@ -90,7 +95,7 @@ const OptionsScreen = ({navigation, route}: Props) => {
           </View>
         </View>
       </ScreenContainer>
-      <Navbar navigation={navigation} route={route} />
+
     </>
   );
 };
@@ -109,12 +114,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 16,
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
   },
   containerRow: {
     flexDirection: 'row',
@@ -168,6 +172,12 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     borderRadius: 15,
+  },
+  buttonRenderWhite: {
+    borderColor: Colors.transparent,
+    shadowColor: Colors.transparent,
+    width: 'auto',
+    fontFamily: "Dosis",
   },
 });
 

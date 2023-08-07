@@ -118,7 +118,7 @@ const SelectAccountWithdrawalScreen = ({ navigation, route }: Props) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 24,
-    fontFamily: Fonts.DosisMedium,
+    fontFamily: "DosisMedium",
   },
   containerTransactions: {
     backgroundColor: Colors.white,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   titles: {
     color: Colors.blackBackground,
     fontSize: 18,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     textAlign: 'center',
   },
   logo: {
@@ -157,14 +157,14 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: 26,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     color: Colors.blackBackground,
     textAlign: 'center',
     marginVertical: 10,
   },
   textSubTitle: {
     fontSize: 20,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     color: Colors.blackBackground,
     marginVertical: 15,
   },
@@ -201,12 +201,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     fontSize: 18,
   },
   textReSend: {
     color: Colors.green,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     fontSize: 20,
   },
   containerCheck: {
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 20,
     textAlign: 'left',
   },
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.transparent,
     shadowColor: Colors.transparent,
     width: 'auto',
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
   },
 });
 

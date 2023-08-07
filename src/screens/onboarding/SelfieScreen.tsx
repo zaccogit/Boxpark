@@ -9,6 +9,8 @@ import { HttpService } from '../../services';
 import Languages from '../../utils/Languages.json';
 import { StackScreenProps } from '@react-navigation/stack';
 import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
+import { Asset } from 'expo-media-library';
+import CameraComponent from '../../components/CameraComponent/CameraComponent';
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -27,8 +29,9 @@ const SelfieScreen = ({ navigation, route: { params } }: Props) => {
   const { sesion, setSesion } = useContext(SesionContext);
   /* const { permissions, askCameraPermission } = useContext(PermissionsContext); */
   const { setLoader, language } = useContext(RenderContext);
-  const [urlPhoto, setUrlPhoto] = useState<string | undefined>('');
-  const [photo, setPhoto] = useState<ImagePickerResponse | undefined>();
+  const [urlPhoto, setUrlPhoto] = useState<string | undefined>("")
+  const [photo, setPhoto] = useState<Asset | "">("")
+  const [CameraActive, setCameraActive] = useState<boolean>(false)
   /* const takePhoto = () => {
     if (permissions?.cameraStatus === 'granted') {
       launchCamera(
@@ -56,16 +59,15 @@ const SelfieScreen = ({ navigation, route: { params } }: Props) => {
       askCameraPermission();
     }
   }; */
-  const getPhoto = (file: ImagePickerResponse | undefined): File | null => {
+  const getPhoto = async (file: Asset | ""): Promise<File | null> => {
     if (!file) return null;
-    if (!file?.assets) return null;
     const data: File = {
-      uri: file?.assets[0]?.uri,
-      type: file?.assets[0]?.type,
-      name: file?.assets[0]?.fileName,
-    };
-    return data;
-  };
+      uri: file.uri,
+      type: 'image/jpg',
+      name: file.filename,
+    }
+    return data
+  }
   const onSubmit = async () => {
     try {
       const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale as string
@@ -73,14 +75,14 @@ const SelfieScreen = ({ navigation, route: { params } }: Props) => {
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_IMAGE_COMPLIANCE_METHOD")?.vale as Method
       const headers = GetHeader(tokenCompliance, 'multipart/form-data');
       const collectionType = params?.collectionTypes?.find((item: any) => item?.orden === 3);
-      const partPhoto: File = getPhoto(photo) as File
-      const req: FormData = new FormData();
-      /* req.append('addressId', sesion?.addressId);
-      req.append('mail', sesion?.email);
-      req.append('userSourceId', sesion?.id);
-      req.append('collectionTypeId', collectionType?.id);
-      req.append('descriptionImagenContentType', collectionType?.description);
-      req.append('file', partPhoto); */
+      const partPhoto: any = await getPhoto(photo)
+      const req: FormData = new FormData()
+      req.append("addressId", `${sesion?.addressId}`)
+      req.append("mail", `${sesion?.email}`)
+      req.append("userSourceId", `${sesion?.id}`)
+      req.append("collectionTypeId", `${collectionType?.id}`)
+      req.append("descriptionImagenContentType", collectionType?.description)
+      req.append("file", partPhoto)
       const response: any = await HttpService(method, host, url, req, headers, setLoader);
       if (response?.codigoRespuesta === '00') {
         navigation.replace('OnboardingSuccess');
@@ -92,70 +94,80 @@ const SelfieScreen = ({ navigation, route: { params } }: Props) => {
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };
- /*  useEffect(() => {
-    askCameraPermission();
-  }, []); */
+  /*  useEffect(() => {
+     askCameraPermission();
+   }, []); */
   return (
     <ScreenContainer>
-      <View style={styles.containerForm}>
-        <Text style={styles.textTitle}>{Languages[language].SCREENS.SelfieScreen.title}</Text>
-        <View style={{ marginHorizontal: width * 0.1, alignItems: 'center' }}>
-          <TouchableOpacity
-            style={styles.buttonQR}
-            onPress={() => {
-              /* takePhoto(); */
-            }}>
-            <View
-              style={{
-                position: 'absolute',
-                width: 12,
-                height: 160,
-                left: -10,
-                top: 25,
-                backgroundColor: Colors.white,
-              }}></View>
-            <View
-              style={{
-                position: 'absolute',
-                width: 160,
-                height: 12,
-                left: 25,
-                top: -10,
-                backgroundColor: Colors.white,
-              }}></View>
-            <View
-              style={{
-                position: 'absolute',
-                width: 160,
-                height: 12,
-                left: 25,
-                bottom: -10,
-                backgroundColor: Colors.white,
-              }}></View>
-            <View
-              style={{
-                position: 'absolute',
-                width: 12,
-                height: 160,
-                right: -10,
-                top: 25,
-                backgroundColor: Colors.white,
-              }}></View>
-            <View style={styles.iconQrContainer}>
-              <Image source={urlPhoto ? { uri: urlPhoto } : Icons.TouchScreen} style={styles.iconQr} />
+      {
+        CameraActive
+          ? (
+            <CameraComponent saveImage={setPhoto} setActive={setCameraActive} setUrl={setUrlPhoto}  text='Toma una foto selfie' typeMask='selfie' />
+          )
+          : (<>
+            <View style={styles.containerForm}>
+              <Text style={styles.textTitle}>{Languages[language].SCREENS.SelfieScreen.title}</Text>
+              <View style={{ marginHorizontal: width * 0.1, alignItems: 'center' }}>
+                <TouchableOpacity
+                  style={styles.buttonQR}
+                  onPress={() => {
+                    setCameraActive(true)
+                  }}>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      width: 12,
+                      height: 160,
+                      left: -10,
+                      top: 25,
+                      backgroundColor: Colors.white,
+                    }}></View>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      width: 160,
+                      height: 12,
+                      left: 25,
+                      top: -10,
+                      backgroundColor: Colors.white,
+                    }}></View>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      width: 160,
+                      height: 12,
+                      left: 25,
+                      bottom: -10,
+                      backgroundColor: Colors.white,
+                    }}></View>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      width: 12,
+                      height: 160,
+                      right: -10,
+                      top: 25,
+                      backgroundColor: Colors.white,
+                    }}></View>
+                  <View style={styles.iconQrContainer}>
+                    <Image source={urlPhoto ? { uri: urlPhoto } : Icons.TouchScreen} style={styles.iconQr} />
+                  </View>
+                </TouchableOpacity>
+              </View>
+              {/* <View style={{ marginTop: 20 }}>
+                <Image source={Images.selfie} style={{ width: 250, height: 250 }} />
+              </View> */}
+              <View style={{ width: width * 0.5, alignItems: 'center' }}>
+                <Button
+                  disabled={!urlPhoto?.length}
+                  onPress={() => { onSubmit(); }}
+                />
+              </View>
             </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <Image source={Images.selfie} style={{ width: 250, height: 250 }} />
-        </View>
-        <View style={{ width: width * 0.5, alignItems: 'center' }}>
-          <Button
-            disabled={!urlPhoto?.length}
-            onPress={() => { onSubmit(); }}
-          />
-        </View>
-      </View>
+          </>)
+
+      }
+
     </ScreenContainer>
   );
 };
@@ -169,7 +181,7 @@ const styles = StyleSheet.create({
   textTitle: {
     color: Colors.blackBackground,
     fontSize: 26,
-    fontFamily: Fonts.DosisMedium,
+    fontFamily: "DosisMedium",
     marginHorizontal: 10,
     marginVertical: 20,
     textAlign: 'center'
@@ -177,7 +189,7 @@ const styles = StyleSheet.create({
   textSubTitle: {
     color: Colors.blackBackground,
     fontSize: 22,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     textAlign: 'center'
   },
   cancelButton: {

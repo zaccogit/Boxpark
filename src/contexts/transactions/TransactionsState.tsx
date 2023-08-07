@@ -1,55 +1,75 @@
 import React, { useState, PropsWithChildren, useContext } from "react";
 import TransactionsContext from "./TransactionsContext";
-import { ProcessPaymentScanning, UserCard } from "./TransactionsInterface";
+import {QrPayment, Transfer, Withdrawal} from './TransactionsInterface';
 
-const initialStateProcessPaymentScanning: ProcessPaymentScanning = {
-  country: "",
-  reason: "",
-  amount: "",
-  loteNumber: "",
-  operatorId: 0,
-  virtualPosId: 0,
-  posId: 0,
-  idCard: 0,
-  numberPhone: "",
-  token_bank: "",
-  userId: "",
-  ref: "",
+const initialStateQRPayment: QrPayment = {
+  accountPaymentId: 0,
+  displaySymbol: '',
+  accountPaymentBalance: 0,
+  accountPaymentNumber: '',
+  accountPaymentName: '',
+  businessDestinationId: '',
+  businessName: '',
+  sucursalName: '',
+  userCoreId: '',
+  accountBusinessId: 0,
+  accountBusinessName: '',
+  accountBusinessNumber: '',
+  amount: '',
+  concept: '',
+  resourceId: '',
 };
-const initialStateUserCard: UserCard = {
-  idUser: "",
-  nameUser: "",
-  phone: "",
-  numberCard: "",
-  idCard: "",
-  key: "",
-  code_bank: "",
-  currency: "",
-  numberDocument: "",
+
+const initialStateTransfer: Transfer = {
+  displaySymbol: '',
+  accountPaymentId: 0,
+  accountPaymentBalance: 0,
+  accountPaymentNumber: '',
+  accountPaymentName: '',
+  userCoreId: '',
+  userDestinationId: '',
+  userDestinationName: '',
+  userDestinationLastName: '',
+  accountDestinationId: 0,
+  accountDestinationName: '',
+  accountDestinationNumber: '',
+  amount: '',
+  concept: '',
+  resourceId: '',
+};
+
+const initialStateWithdrawal: Withdrawal = {
+  accountPaymentBalance: 0,
+  accountPaymentNumber: '',
+  accountPaymentName: '',
+  accountPaymentId: 0,
+  accountBankId: '',
+  userCoreId: 0,
+  documentId: '',
+  alias: '',
+  concept: '',
+  amount: '',
+  displaySymbol: '',
+  phoneNumber: '',
 };
 
 export const TransactionsStateProvider = ({ children }: PropsWithChildren) => {
-  const [ProcessPaymentScanningRequest, setProcessPaymentScanningRequest] =
-    useState<ProcessPaymentScanning>(initialStateProcessPaymentScanning);
-  const [UserCardData, setUserCardData] =
-    useState<UserCard>(initialStateUserCard);
-
-  const ResetUserCardData = () => {
-    setUserCardData(initialStateUserCard);
-  };
-  const ResetProcessPaymentScanningRequest = () => {
-    setProcessPaymentScanningRequest(initialStateProcessPaymentScanning);
-  };
+  const [qrPaymentRequest, setQrPaymentRequest] = useState<QrPayment>(initialStateQRPayment);
+  const [transferRequest, setTransferRequest] = useState<Transfer>(initialStateTransfer);
+  const [withdrawalRequest, setWithdrawalRequest] = useState<Withdrawal>(initialStateWithdrawal);
+  const [rechargeCredicar, setRechargeCredicar] = useState<Withdrawal>(initialStateWithdrawal);
 
   return (
     <TransactionsContext.Provider
       value={{
-        ProcessPaymentScanningRequest,
-        setProcessPaymentScanningRequest,
-        UserCardData,
-        setUserCardData,
-        ResetUserCardData,
-        ResetProcessPaymentScanningRequest,
+        qrPaymentRequest,
+        transferRequest,
+        withdrawalRequest,
+        rechargeCredicar,
+        setQrPaymentRequest,
+        setTransferRequest,
+        setWithdrawalRequest,
+        setRechargeCredicar
       }}
     >
       {children}

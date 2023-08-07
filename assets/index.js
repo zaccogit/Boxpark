@@ -136,6 +136,7 @@ import Padlock from './svg/Padlock';
 import TransferIcon from './svg/TransferIcon';
 import RechargeIcon from './svg/RechargeIcon';
 import Trash from './svg/Trash';
+import ClipboardIcon from './svg/ClipboardIcon';
 
 export const SVG = {
   ScanQrSvg,
@@ -162,5 +163,6 @@ export const SVG = {
   Padlock,
   TransferIcon,
   RechargeIcon,
-  Trash
+  Trash,
+  ClipboardIcon
 };

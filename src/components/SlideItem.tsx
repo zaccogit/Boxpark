@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width,
     overflow: "hidden",
+    flexGrow:1
   },
   image: {
     width: "100%",

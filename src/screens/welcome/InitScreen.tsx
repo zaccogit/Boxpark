@@ -10,6 +10,7 @@ import Languages from "../../utils/Languages.json";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ToastCall } from "../../utils/GeneralMethods";
 import { Image } from "expo-image";
+import * as Location from 'expo-location';
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -35,6 +36,8 @@ const InitScreen = ({ navigation }: Props) => {
     setTokenCompliance,
     tokenPromotions,
     setTokenPromotions,
+    tokenBP,
+    setTokenBP,
     endPoints,
   } = useContext(AuthContext);
   const { language, setLanguage } = useContext(RenderContext);
@@ -73,7 +76,7 @@ const InitScreen = ({ navigation }: Props) => {
 
       const response: Response = await HttpService(method, host, url, req);
       if (response) {
-        setTokenRU(response?.id_token);
+        setTokenRU(response.id_token);
         onSubmitGateway();
       }
     } catch (err: any) {
@@ -105,7 +108,7 @@ const InitScreen = ({ navigation }: Props) => {
       )[0]?.vale;
       const host: string = endPoints?.filter(
         (endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API"
-      )[0]?.vale;
+      )[0]?.vale.trim();
       const url: string = endPoints?.filter(
         (endPoint: EndPointsInterface) => endPoint.name === "AUTHENTICATION_URL"
       )[0]?.vale;
@@ -114,13 +117,15 @@ const InitScreen = ({ navigation }: Props) => {
           endPoint.name === "AUTHENTICATION_METHOD"
       )[0]?.vale as Method;
       const req: Request = getRequest(username, password);
+
+      
       const response: Response = await HttpService(method, host, url, req);
       if (response) {
         setTokenGateway(response.id_token);
         onSubmitCompliance();
       }
     } catch (err: any) {
-      console.error(err, "Gateway");
+      console.error(JSON.stringify(err), "Gateway");
       if (err && err?.status) {
         ToastCall(
           "error",
@@ -149,7 +154,7 @@ const InitScreen = ({ navigation }: Props) => {
       const host: string = endPoints?.filter(
         (endPoint: EndPointsInterface) =>
           endPoint.name === "COMPLIANCE_BASE_API"
-      )[0]?.vale;
+      )[0]?.vale.trim();
       const url: string = endPoints?.filter(
         (endPoint: EndPointsInterface) => endPoint.name === "AUTHENTICATION_URL"
       )[0]?.vale;
@@ -193,7 +198,7 @@ const InitScreen = ({ navigation }: Props) => {
       const host: string = endPoints?.filter(
         (endPoint: EndPointsInterface) =>
           endPoint.name === "PROMOTIONS_BASE_API"
-      )[0]?.vale;
+      )[0]?.vale.trim();
       const url: string = endPoints?.filter(
         (endPoint: EndPointsInterface) => endPoint.name === "AUTHENTICATION_URL"
       )[0]?.vale;
@@ -282,19 +287,35 @@ const InitScreen = ({ navigation }: Props) => {
   const redirect = useCallback(async () => {
     let firsTime: any;
     try {
-      /* firsTime = await AsyncStorage.getItem("firsTime");
+      firsTime = await AsyncStorage.getItem("firsTime");
 
       if (firsTime) {
         navigation.replace("Login");
       }else{
         navigation.replace("Welcome")
-      } */
+      }
 
       navigation.replace("Welcome")
     } catch (err) {
       if (firsTime !== "true") navigation.replace("Welcome");
     }
   }, []);
+
+  const permisosCheck = async () => {
+
+    let { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status !== 'granted') {
+      ToastCall(
+        "error",
+        'Permission to access location was denied',
+        language
+      );
+      return;
+    }
+
+    redirect();
+  }
   useEffect(() => {
     changeLanguage();
   }, []);
@@ -311,7 +332,7 @@ const InitScreen = ({ navigation }: Props) => {
       tokenCompliance &&
       tokenPromotions
     ) {
-      redirect();
+      permisosCheck()
     }
   }, [tokenRU, tokenGateway, tokenCompliance, tokenPromotions]);
 

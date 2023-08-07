@@ -51,6 +51,7 @@ const AuthState = (props: PropsWithChildren) => {
         }
       }
     } catch (err: any) {
+      console.log("config")
       if (err && err?.status) {
         ToastCall(
           "error",

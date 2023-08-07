@@ -45,7 +45,7 @@ const WithdrawalFormScreen = ({ navigation, route }: Props) => {
 
     setAccountsPayment(allAccounts);
   };
-  const change = (value: string | number, key: string) => {
+  const change = (value: string | number, key: string| number) => {
     setWithdrawalRequest({
       ...withdrawalRequest,
       [key]: value,
@@ -106,7 +106,7 @@ const WithdrawalFormScreen = ({ navigation, route }: Props) => {
             <InputDisabled value={withdrawalRequest.phoneNumber} />
             <Text style={styles.text}>{'Cédula'}</Text>
             <InputDisabled value={withdrawalRequest.documentId} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.QrPaymentFormScreen.text6}
             </Text>
             <Input
@@ -127,7 +127,7 @@ const WithdrawalFormScreen = ({ navigation, route }: Props) => {
               }]}>
               {Languages[language].GENERAL.ERRORS.NotEnoughAmount}
             </Text>
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.QrPaymentFormScreen.text7}
             </Text>
             <Input
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 18,
   },
   title: {

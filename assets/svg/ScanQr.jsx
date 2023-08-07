@@ -2,7 +2,7 @@ import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
 const ScanQR = props => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={300} viewBox="0 0 810 810" height={300} {...props}>
+  <Svg xmlns="http://www.w3.org/2000/svg" width={225} height={225} viewBox="0 0 810 810"  {...props}>
     <Path fill="#fff" d="M-81-81h972v972H-81z" />
     <Path fill="#fff" d="M-81-81h972v972H-81z" />
     <Path fill="#fff" d="M-81-81h972v972H-81z" />

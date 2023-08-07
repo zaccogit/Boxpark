@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.blackBackground,
     fontSize: 22,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     marginBottom: 20,
     textAlign: 'center',
     width: '100%',

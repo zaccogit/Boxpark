@@ -1,10 +1,8 @@
-import { useContext, useEffect, useRef, useState, ReactNode } from "react";
+import { useContext, useEffect, useRef, ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   StyleSheet,
-  Animated,
   View,
-  FlatList,
   Dimensions,
   Platform,
   Text,
@@ -12,14 +10,14 @@ import {
 import { RenderContext } from "../../contexts";
 import {
   SlideItem,
-  Paginator,
   ScreenContainer,
   Button,
 } from "../../components";
 import { Colors } from "../../utils";
-import { Images, SVG } from "../../../assets";
+import { Images } from "../../../assets";
 import { StackScreenProps } from "@react-navigation/stack";
 import { Image } from "expo-image";
+import Swiper from "react-native-swiper";
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -29,14 +27,12 @@ interface Data {
   text: string;
 }
 const width: number = Dimensions.get("window").width;
+const height: number = Dimensions.get("window").height;
 
 const WelcomeScreen = ({ navigation }: Props) => {
   const { setFirstTime } = useContext(RenderContext);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
   var currentIndexRef: number = useRef(0).current;
   const slideRef: any = useRef(null);
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 60 }).current;
   const data: Data[] = [
     {
       id: "1",
@@ -73,26 +69,6 @@ const WelcomeScreen = ({ navigation }: Props) => {
     },
   ];
 
-  const viewableItemsChanged = useRef(({ viewableItems }: any) => {
-    setCurrentIndex(viewableItems[0].index);
-    currentIndexRef = viewableItems[0].index;
-  }).current;
-
-  const onScroll = Animated.event(
-    [
-      {
-        nativeEvent: {
-          contentOffset: {
-            x: scrollX,
-          },
-        },
-      },
-    ],
-    {
-      useNativeDriver: false,
-    }
-  );
-
   const scrollTo = () => {
     if (currentIndexRef < data.length - 1) {
       slideRef?.current?.scrollToIndex({ index: currentIndexRef + 1 });
@@ -121,33 +97,19 @@ const WelcomeScreen = ({ navigation }: Props) => {
 
   return (
     <ScreenContainer>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        pagingEnabled
-        bounces={false}
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <SlideItem image={item.image} text={item.text} />
-        )}
-        onScroll={onScroll}
-        onViewableItemsChanged={viewableItemsChanged}
-        viewabilityConfig={viewConfig}
-        ref={slideRef}
-        disableScrollViewPanResponder={true}
-      />
       <View
         style={{
-          position: "absolute",
           top: Platform.OS === "ios" ? 70 : 25,
           width: "100%",
         }}
       >
         <Text style={styles.title}>Bienvenidos a Zacco</Text>
       </View>
-      <View className="absolute bottom-1">
-        <Paginator items={data} currentIndex={currentIndex} />
+      <Swiper height={ height * 0.7} pagingEnabled autoplay >
+        {data.map(item => (<SlideItem key={item.id} image={item.image} text={item.text} />))}
+      </Swiper>
+      
+      <View>
         <View style={styles.containerButton}>
           <View style={{ width: "45%", alignItems: "center" }}>
             <Button

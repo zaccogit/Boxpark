@@ -68,6 +68,7 @@ const QRRifScreen = ({ navigation }: Props) => {
         <View style={[styles.containerWidth, { alignItems: 'center', marginVertical: 20 }]}>
           <QRScanner active={qr} setActive={setQr} setState={setUrlSeniat} />
         </View>
+
         <SVG.ScanQrSvg />
 
         <View style={{ width: width * 0.9, flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
@@ -122,14 +123,14 @@ const styles = StyleSheet.create({
   textTitle: {
     fontSize: 28,
     color: Colors.blackBackground,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     marginHorizontal: 10,
     textAlign: 'center',
   },
   textSubTitle: {
     color: Colors.white,
     fontSize: 22,
-    fontFamily: Fonts.DosisBold,
+    fontFamily: "DosisBold",
     textAlign: 'center',
   },
   cancelButton: {

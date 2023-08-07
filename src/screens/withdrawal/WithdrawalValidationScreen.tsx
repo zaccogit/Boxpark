@@ -102,11 +102,11 @@ const WithdrawalValidationScreen = ({ navigation, route }: Props) => {
             <InputDisabled value={withdrawalRequest.phoneNumber} />
             <Text style={styles.text}>{'Cedula'}</Text>
             <InputDisabled value={withdrawalRequest.documentId} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.QrPaymentFormScreen.text6}
             </Text>
             <InputDisabled value={withdrawalRequest.amount} displaySymbol={withdrawalRequest.displaySymbol} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.QrPaymentFormScreen.text7}
             </Text>
             <InputDisabled value={withdrawalRequest.concept} />
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 18,
   },
   title: {

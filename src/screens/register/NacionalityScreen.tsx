@@ -4,13 +4,11 @@ import { ScreenContainer, Select, Button } from '../../components';
 import { Colors } from '../../utils';
 import { Fonts, SVG } from '../../../assets';
 import { StackScreenProps } from '@react-navigation/stack';
-import Geolocation from 'react-native-geolocation-service';
-
-
 import Languages from '../../utils/Languages.json';
 import { AuthContext, RegisterContext, RenderContext, EndPointsInterface } from '../../contexts';
 import { HttpService } from '../../services';
 import { ToastCall, GetHeader } from '../../utils/GeneralMethods';
+import * as Location from 'expo-location';
 
 interface Props extends StackScreenProps<any, any> { }
 interface SelectItems {
@@ -27,45 +25,27 @@ const NacionalityScreen = ({ navigation }: Props) => {
   const { setLoader, language } = useContext(RenderContext);
   const { tokenRU, endPoints } = useContext(AuthContext);
   const { registerReq, setRegisterReq, nacionality, setNacionality } = useContext(RegisterContext);
-  /* const {
-    permissions: { locationStatus },
-    askLocationPermission,
-  } = useContext(PermissionsContext); */
   const [countries, setCountries] = useState<SelectItems[]>([]);
   const [venezuelaId, setVenezuelaId] = useState<number>(0);
 
   const changeNacionality = (value: string | number, key: string | number) => {
     setNacionality(value);
   };
-  /* const location = useCallback(
-    (nacionality: number) => {
-      if (locationStatus !== 'granted') {
-        askLocationPermission();
-        return;
-      }
-      Geolocation.getCurrentPosition(
-        position => {
-          getUniqueId()
-            .then(deviceId => {
-              setRegisterReq({
-                ...registerReq,
-                deviceId,
-                positionY: position?.coords?.latitude?.toString(),
-                positionX: position?.coords?.longitude?.toString(),
-              });
-              setNacionality(nacionality);
-            })
-            .catch(() => {
-              ToastCall('warning', Languages[language].SCREENS.NationalityScreen.ERRORS.message2, language);
-            });
-        },
-        () => {
-          ToastCall('warning', Languages[language].SCREENS.NationalityScreen.ERRORS.message3, language);
-        },
-      );
+  const location = useCallback(
+    async (nacionality: number) => {
+
+      let position = await Location.getCurrentPositionAsync({});
+
+      setRegisterReq({
+        ...registerReq,
+        positionY: position?.coords?.latitude?.toString(),
+        positionX: position?.coords?.longitude?.toString(),
+      });
+
+      setNacionality(nacionality);
     },
-    [locationStatus],
-  ); */
+    [],
+  );
 
   const query = async () => {
     try {
@@ -90,7 +70,7 @@ const NacionalityScreen = ({ navigation }: Props) => {
         }
       }
       setCountries(allCountries);
-      /* location(allCountries[0]?.value); */
+      location(allCountries[0]?.value);
     } catch (err) {
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
@@ -104,9 +84,9 @@ const NacionalityScreen = ({ navigation }: Props) => {
       typeCondition: nacionality === venezuelaId ? 'V' : 'E'
     })
   }
-  /* useEffect(() => {
+  useEffect(() => {
     query();
-  }, [locationStatus]); */
+  }, []);
   return (
     <ScreenContainer onRefresh={query}>
       <View style={styles.contentContainer}>
@@ -155,7 +135,7 @@ const NacionalityScreen = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 28,
     marginVertical: 15,
     color: Colors.blackBackground,

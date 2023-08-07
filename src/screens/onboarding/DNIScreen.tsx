@@ -9,6 +9,8 @@ import { HttpService } from '../../services';
 import Languages from '../../utils/Languages.json';
 import { ImagePickerResponse, launchCamera } from 'react-native-image-picker';
 import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
+import CameraComponent from '../../components/CameraComponent/CameraComponent';
+import { Asset } from 'expo-media-library';
 interface Props extends StackScreenProps<any, any> { }
 
 interface File {
@@ -27,7 +29,8 @@ const DNIScreen = ({ navigation, route: { params } }: Props) => {
     /* const { permissions, askCameraPermission } = useContext(PermissionsContext) */
     const { setLoader, language } = useContext(RenderContext)
     const [urlPhoto, setUrlPhoto] = useState<string | undefined>("")
-    const [photo, setPhoto] = useState<ImagePickerResponse | undefined>()
+    const [photo, setPhoto] = useState<Asset | "">("")
+    const [CameraActive, setCameraActive] = useState<boolean>(false)
     /* const takePhoto = () => {
         if (permissions?.cameraStatus === "granted") {
             launchCamera({
@@ -51,13 +54,12 @@ const DNIScreen = ({ navigation, route: { params } }: Props) => {
             askCameraPermission()
         }
     } */
-    const getPhoto = (file: ImagePickerResponse | undefined): File | null => {
+    const getPhoto = async (file: Asset | ""): Promise <File | null> => {
         if (!file) return null;
-        if (!file?.assets) return null;
         const data: File = {
-            uri: file?.assets[0]?.uri,
-            type: file?.assets[0]?.type,
-            name: file?.assets[0]?.fileName,
+            uri: file.uri,
+            type: 'image/jpg',
+            name: file.filename,
         }
         return data
     }
@@ -68,14 +70,14 @@ const DNIScreen = ({ navigation, route: { params } }: Props) => {
             const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_IMAGE_COMPLIANCE_URL")?.vale as string
             const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_IMAGE_COMPLIANCE_METHOD")?.vale as Method
             const headers = GetHeader(tokenCompliance, "multipart/form-data");
-            const partPhoto: File = getPhoto(photo) as File
+            const partPhoto: any = await getPhoto(photo)
             const req: FormData = new FormData()
             req.append("addressId", `${sesion?.addressId}`)
             req.append("mail", `${sesion?.email}`)
             req.append("userSourceId", `${sesion?.id}`)
             req.append("collectionTypeId", `${collectionType?.id}`)
             req.append("descriptionImagenContentType", collectionType?.description)
-            /* req.append("file", partPhoto) */
+            req.append("file", partPhoto)
             const response: any = await HttpService(method, host, url, req, headers, setLoader)
             if (response?.codigoRespuesta === "00") {
                 navigation.replace("DNII", { collectionTypes: params?.collectionTypes })
@@ -83,6 +85,7 @@ const DNIScreen = ({ navigation, route: { params } }: Props) => {
                 ToastCall('error', Languages[language].GENERAL.ERRORS.RequestInformationError, language)
             }
         } catch (err) {
+            console.log(JSON.stringify(err), 'aqui')
             ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language)
         }
     }
@@ -92,29 +95,39 @@ const DNIScreen = ({ navigation, route: { params } }: Props) => {
 
     return (
         <ScreenContainer>
-            <View style={styles.containerForm}>
-                <Text style={styles.textTitle}>{Languages[language].SCREENS.DNIScreen.title}</Text>
-                <View style={{ marginHorizontal: width * .1, alignItems: 'center' }}>
-                    <TouchableOpacity style={styles.buttonQR} onPress={() => { /* takePhoto() */ }}>
-                        <View style={{ position: 'absolute', width: 12, height: 160, left: -10, top: 25, backgroundColor: Colors.white }}></View>
-                        <View style={{ position: 'absolute', width: 160, height: 12, left: 25, top: -10, backgroundColor: Colors.white }}></View>
-                        <View style={{ position: 'absolute', width: 160, height: 12, left: 25, bottom: -10, backgroundColor: Colors.white }}></View>
-                        <View style={{ position: 'absolute', width: 12, height: 160, right: -10, top: 25, backgroundColor: Colors.white }}></View>
-                        <View style={styles.iconQrContainer}>
-                            <Image source={urlPhoto ? { uri: urlPhoto } : Icons.TouchScreen} style={styles.iconQr} />
+            {
+                CameraActive
+                    ? (
+                        <CameraComponent saveImage={setPhoto} setActive={setCameraActive} setUrl={setUrlPhoto} text='Toma una foto a tu documento de identidad' typeMask='doc' />
+                    )
+                    : (<>
+                        <View style={styles.containerForm}>
+                            <Text style={styles.textTitle}>{Languages[language].SCREENS.DNIScreen.title}</Text>
+                            <View style={{ marginHorizontal: width * .1, alignItems: 'center' }}>
+                                <TouchableOpacity style={styles.buttonQR} onPress={() => { setCameraActive(true); }}>
+                                    <View style={{ position: 'absolute', width: 12, height: 160, left: -10, top: 25, backgroundColor: Colors.white }}></View>
+                                    <View style={{ position: 'absolute', width: 160, height: 12, left: 25, top: -10, backgroundColor: Colors.white }}></View>
+                                    <View style={{ position: 'absolute', width: 160, height: 12, left: 25, bottom: -10, backgroundColor: Colors.white }}></View>
+                                    <View style={{ position: 'absolute', width: 12, height: 160, right: -10, top: 25, backgroundColor: Colors.white }}></View>
+                                    <View style={styles.iconQrContainer}>
+                                        <Image source={urlPhoto ? { uri: urlPhoto } : Icons.TouchScreen} style={styles.iconQr} />
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={{ marginTop: 20 }}>
+                                    <SVG.DNIImageSVG />
+                                </View>
+                            </View>
+                            <View style={{ width: width * .5, alignItems: 'center' }}>
+                                <Button
+                                    disabled={!urlPhoto?.length}
+                                    onPress={() => onSubmit()}
+                                />
+                            </View>
                         </View>
-                    </TouchableOpacity>
-                    <View style={{ marginTop: 20 }}>
-                        <SVG.DNIImageSVG />
-                    </View>
-                </View>
-                <View style={{ width: width * .5, alignItems: 'center' }}>
-                    <Button
-                        disabled={!urlPhoto?.length}
-                        onPress={() => onSubmit()}
-                    />
-                </View>
-            </View>
+                    </>)
+
+            }
+
         </ScreenContainer>
     )
 }
@@ -128,7 +141,7 @@ const styles = StyleSheet.create({
     textTitle: {
         color: Colors.blackBackground,
         fontSize: 32,
-        fontFamily: Fonts.DosisMedium,
+        fontFamily: "DosisMedium",
         marginHorizontal: 10,
         marginVertical: 20,
         textAlign: 'center'
@@ -136,7 +149,7 @@ const styles = StyleSheet.create({
     textSubTitle: {
         color: Colors.blackBackground,
         fontSize: 22,
-        fontFamily: Fonts.DosisBold,
+        fontFamily: "DosisBold",
         textAlign: 'center'
     },
     cancelButton: {

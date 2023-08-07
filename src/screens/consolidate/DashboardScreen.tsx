@@ -160,26 +160,14 @@ const DashboardScreen = ({ navigation, route }: Props) => {
         <HeaderDashboard navigation={navigation} route={route} />
         <AccountsList />
         <PromotionsList allPromotions={allPromotions} />
-        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}>
+        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', paddingVertical:10 }}>
           <ButtonTransaction
             icon={Icons.ArrowTop}
-            name={'Operaciones'}
-            onPress={() => {
-              navigation.push('Transaction');
-            }}
-            styleButton={{
-              borderColor: Colors.white,
-              borderWidth: 1
-            }}
-          />
-          <ButtonTransaction
-            icon={Icons.QR}
             name={'Recarga'}
             onPress={() => {
               navigation.push('RechargeMobilePayment');
             }}
             styleButton={{
-              backgroundColor: Colors.green,
               borderColor: Colors.white,
               borderWidth: 1
             }}
@@ -205,7 +193,6 @@ const DashboardScreen = ({ navigation, route }: Props) => {
           messageTransaction={messageTransaction}
         />
       </ScreenContainer>
-      <Navbar navigation={navigation} route={route} />
     </>
   );
 };

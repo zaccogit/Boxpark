@@ -26,7 +26,7 @@ const OnboardingScreen = ({navigation}: Props) => {
               color: Colors.blackBackground,
               fontSize: 32,
               textAlign: 'center',
-              fontFamily: Fonts.DosisMedium,
+              fontFamily: "DosisMedium",
             }}>
             {Languages[language].SCREENS.OnboardingScreen.title}
           </Text>

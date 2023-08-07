@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     color: Colors.blackBackground,
     fontSize: 22,
     textAlign: 'center',
-    fontFamily: Fonts.DosisBold
+    fontFamily: "DosisBold"
   }
 })
 

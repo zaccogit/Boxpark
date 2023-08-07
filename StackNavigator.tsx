@@ -1,15 +1,19 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Screens } from "./src/screens";
 import { useContext, useEffect } from "react";
-import { SesionContext } from "./src/contexts";
+import { AccountsContext, SesionContext } from "./src/contexts";
 import { Button } from "react-native";
 import { Image } from "expo-image";
 import { Icons } from "./assets";
+import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "./src/utils";
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const { sesion } = useContext(SesionContext);
+  const { sesion, } = useContext(SesionContext);
+  const { accounts } = useContext(AccountsContext);
 
   return (
     <Stack.Navigator
@@ -50,9 +54,10 @@ const StackNavigator = () => {
           component={Screens.RegisterSuccessScreen}
         />
         {/* Consolidate */}
-        <Stack.Screen name="Dashboard" component={Screens.DashboardScreen} />
+        {
+          sesion && <Stack.Screen name="Dashboard" component={BottomTab} />
+        }
         <Stack.Screen name="Profile" component={Screens.ProfileScreen} />
-        <Stack.Screen name="Options" component={Screens.OptionsScreen} />
         <Stack.Screen
           name="Transaction"
           component={Screens.TransactionScreen}
@@ -172,5 +177,63 @@ const StackNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+
+const Tab = createBottomTabNavigator();
+function BottomTab() {
+  return (
+    <Tab.Navigator screenOptions={{
+      headerShown: false,
+      headerShadowVisible: false,
+      tabBarShowLabel:false,
+    }}>
+      <Tab.Screen
+        name="Home"
+        component={Screens.DashboardScreen}
+        options={{
+          tabBarActiveTintColor: Colors.green,
+          headerShown: false,
+          headerShadowVisible: false,
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="home-outline" color={color} size={30} />
+          ),
+        }}
+      />
+       
+      <Tab.Screen
+        name="Settings"
+        component={Screens.TransactionScreen}
+        options={{
+          title: "Configuración",
+          tabBarActiveTintColor: Colors.green,
+          headerStyle: {
+            backgroundColor: Colors.green,
+          },
+          headerTintColor: "#fff",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="swap-horizontal" color={color} size={30} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Screens.OptionsScreen}
+        options={{
+          title: "Perfil",
+          tabBarActiveTintColor: Colors.green,
+          headerStyle: {
+            backgroundColor: Colors.green,
+          },
+          headerTintColor: "#fff",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person-outline" color={color} size={30} />
+          ),
+        }}
+      />
+     
+    </Tab.Navigator>
+  );
+}
+
 
 export default StackNavigator;

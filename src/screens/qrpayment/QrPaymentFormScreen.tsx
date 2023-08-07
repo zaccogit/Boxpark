@@ -62,7 +62,7 @@ const QrPaymentFormScreen = ({ navigation, route }: Props) => {
             <InputDisabled value={qrPaymentRequest?.accountBusinessName} />
             <Text style={styles.text}>{Languages[language].SCREENS.QrPaymentFormScreen.text5}</Text>
             <InputDisabled value={qrPaymentRequest?.accountBusinessNumber} />
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.QrPaymentFormScreen.text6}
             </Text>
             <Input
@@ -83,7 +83,7 @@ const QrPaymentFormScreen = ({ navigation, route }: Props) => {
               }]}>
               {Languages[language].GENERAL.ERRORS.NotEnoughAmount}
             </Text>
-            <Text style={[styles.text, { fontSize: 14, fontFamily: Fonts.DosisLight }]}>
+            <Text style={[styles.text, { fontSize: 14, fontFamily: "DosisLight" }]}>
               {Languages[language].SCREENS.QrPaymentFormScreen.text7}
             </Text>
             <Input
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.black,
-    fontFamily: Fonts.Dosis,
+    fontFamily: "Dosis",
     fontSize: 18,
   },
   title: {
