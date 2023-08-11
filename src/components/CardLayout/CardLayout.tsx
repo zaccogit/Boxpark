@@ -19,10 +19,8 @@ const CardLayout = (props: Props) => {
         style={[
           styles.containerPhoto,
           {
-            backgroundColor: props?.ImageCircle
-              ? Colors.blackBackground
-              : Colors.white,
-            borderRadius: props?.ImageCircle ? 25 : 0,
+            backgroundColor: Colors.white,
+            borderRadius: 50,
           },
         ]}
       >
@@ -39,9 +37,17 @@ const CardLayout = (props: Props) => {
           <Image
             source={props?.photo ? props?.photo : Images.Profile}
             style={{
-              width: props?.ImageCircle ? 40 : 50,
-              height: props?.ImageCircle ? 40 : 50,
+              width: "100%",
+              height: "100%",
+              shadowColor: Colors.black,
+              shadowOffset: {
+                width: 0,
+                height: 3,
+              },
+              shadowOpacity: 0.29,
+              shadowRadius: 4.65,
             }}
+            contentFit="cover"
           />
         )}
         {props.svgComponent && props.svgComponent}

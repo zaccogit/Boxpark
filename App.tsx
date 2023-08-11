@@ -1,5 +1,5 @@
 /// <reference types="nativewind/types" />
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import StackNavigator from "./StackNavigator";
 import AppMultiContext from "./AppMultiContext";
@@ -23,13 +23,13 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    Dosis: require("./assets/fonts/Nexa-ExtraLight.ttf"),
-    DosisLight: require("./assets/fonts/Dosis-Light.ttf"),
-    DosisExtraLight: require("./assets/fonts/Dosis-ExtraLight.ttf"),
-    DosisMedium: require("./assets/fonts/Nexa-ExtraLight.ttf"),
-    DosisSemiBold: require("./assets/fonts/Nexa-ExtraLight.ttf"),
-    DosisBold: require("./assets/fonts/Nexa-Heavy.ttf"),
-    DosisExtraBold: require("./assets/fonts/Dosis-ExtraBold.ttf"),
+    Dosis: require("./assets/fonts/Nexa-Regular.otf"),
+    DosisLight: require("./assets/fonts/Nexa-Light.otf"),
+    DosisExtraLight: require("./assets/fonts/Nexa-ExtraLight.otf"),
+    DosisMedium: require("./assets/fonts/Nexa-Medium.otf"),
+    DosisSemiBold: require("./assets/fonts/Nexa-SemiBold.otf"),
+    DosisBold: require("./assets/fonts/Nexa-Bold.otf"),
+    DosisExtraBold: require("./assets/fonts/Nexa-ExtraBold.otf"),
   });
 
   const onLayoutRootView = useCallback(async () => {

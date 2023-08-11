@@ -202,6 +202,7 @@ const LoginScreen = ({ navigation }: Props) => {
   }, []);
   const changeGlobals = useCallback(
     (response: Response) => {
+      console.log(response)
       if (requireSesion.includes(response?.codigoRespuesta)) {
         if (response?.usuario) {
           const { usuario } = response;
@@ -232,7 +233,7 @@ const LoginScreen = ({ navigation }: Props) => {
             }
             setAccounts(savingsAccounts); 
             startTimerSesion();
-            /* navigation.push('Dashboard'); */
+            navigation.push('Dashboard');
           } else if (response?.codigoRespuesta === '12') {
             console.log('aqui123456')
             navigation.push('RegisterSecurityQuestions');

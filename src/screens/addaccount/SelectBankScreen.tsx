@@ -100,6 +100,7 @@ const SelectBankScreen = ({navigation, route}: Props) => {
             <CardLayout
               photo={{uri: bank.imgsrc?.trim()}}
               key={bank.id}
+              ImageCircle
               onPress={() => navigation.push('AddAccount', {bank})}>
               <Text style={[styles.text]}>{bank.name}</Text>
               <Text style={styles.buttonRenderWhite}>{bank.abaCode}</Text>

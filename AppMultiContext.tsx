@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { FC, Fragment, PropsWithChildren, ReactElement, ReactNode, cloneElement } from 'react'
 
 const nest = (
-  children: React.ReactNode,
-  component: React.ReactElement
-) => React.cloneElement(component, {}, children)
+  children: ReactNode,
+  component: ReactElement
+) => cloneElement(component, {}, children)
 
-export type MultiProviderProps = React.PropsWithChildren<{
-  providers: React.ReactElement[]
+export type MultiProviderProps = PropsWithChildren<{
+  providers: ReactElement[]
 }>
 
-const AppMultiContext: React.FC<MultiProviderProps> = ({
+const AppMultiContext: FC<MultiProviderProps> = ({
   children,
   providers
 }) => (
-  <React.Fragment>
+  <Fragment>
     {providers.reduceRight(nest, children)}
-  </React.Fragment>
+  </Fragment>
 )
 
 export default AppMultiContext

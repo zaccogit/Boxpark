@@ -1,6 +1,5 @@
 import React, { useState, PropsWithChildren, useEffect } from "react";
 import RenderContext from "./RenderContext";
-import { useNavigation } from "@react-navigation/native";
 
 const RenderState = ({ children }: PropsWithChildren) => {
   const [loader, setLoader] = useState<boolean>(false);

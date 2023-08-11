@@ -293,11 +293,10 @@ const InitScreen = ({ navigation }: Props) => {
         navigation.replace("Login");
       }else{
         navigation.replace("Welcome")
+        await AsyncStorage.setItem("firsTime", "true")
       }
-
-      navigation.replace("Welcome")
     } catch (err) {
-      if (firsTime !== "true") navigation.replace("Welcome");
+      if (!firsTime) navigation.replace("Welcome");
     }
   }, []);
 

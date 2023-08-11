@@ -3,7 +3,6 @@ import { View, Text, Dimensions, StyleSheet, Platform } from 'react-native';
 import { ScreenContainer, Button, Header, InputDisabled, AuthToken } from '../../components';
 import { RenderContext, SesionContext, AuthContext, AccountsContext, TransactionsContext, EndPointsInterface } from '../../contexts';
 import { Colors } from '../../utils';
-import { Fonts } from '../../../assets';
 import { HttpService } from '../../services';
 import Languages from '../../utils/Languages.json';
 import { CloseSesion, DestroySesion, RefreshAccounts, GetHeader, ToastCall } from '../../utils/GeneralMethods';
@@ -121,6 +120,7 @@ const PreTransferScreen = ({ navigation, route }: Props) => {
         channelTypeId,
       }
       const response: ReponseTransfer = await HttpService(method, host, url, req, headers, setLoader)
+      console.log(response)
       if (response?.codigoRespuesta === "00") {
         setTransferRequest({
           ...transferRequest,
@@ -142,6 +142,7 @@ const PreTransferScreen = ({ navigation, route }: Props) => {
       } else {
         ToastCall('error', Languages[language].GENERAL.ERRORS.RequestError, language)
       }
+      
     } catch (err) {
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language)
       navigation.replace("Dashboard")

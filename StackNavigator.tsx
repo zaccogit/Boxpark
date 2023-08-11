@@ -55,7 +55,7 @@ const StackNavigator = () => {
         />
         {/* Consolidate */}
         {
-          sesion && <Stack.Screen name="Dashboard" component={BottomTab} />
+          sesion && !(!accounts.length) && <Stack.Screen name="Dashboard" component={BottomTab} />
         }
         <Stack.Screen name="Profile" component={Screens.ProfileScreen} />
         <Stack.Screen

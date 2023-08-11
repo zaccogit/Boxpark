@@ -126,6 +126,7 @@ export default function AuthToken({ isActive, setIsActive, onSubmit }: Props) {
         headers,
         setLoader
       );
+      console.log(response)
       if (response?.codigoRespuesta === "00") {
         setTimer1(150);
         setTimer2(20);
