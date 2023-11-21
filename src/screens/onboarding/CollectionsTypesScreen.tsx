@@ -38,7 +38,7 @@ const CollectionsTypesScreen = ({ navigation, route: { params } }: Props) => {
   };
   const getCountries = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COUNTRIES_COMPLIANCE_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COUNTRIES_COMPLIANCE_METHOD")?.vale as Method
       const headers = GetHeader(tokenCompliance, 'application/json');
@@ -65,7 +65,7 @@ const CollectionsTypesScreen = ({ navigation, route: { params } }: Props) => {
   };
   const getdocumentTypes = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale.trim() as string
       const url: string = `${endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "DOCUMENT_TYPES_COMPLIANCE_URL")?.vale as string}${compliance?.countryId}`
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "DOCUMENT_TYPES_COMPLIANCE_METHOD")?.vale as Method
       const headers = GetHeader(tokenCompliance, 'application/json');
@@ -90,7 +90,7 @@ const CollectionsTypesScreen = ({ navigation, route: { params } }: Props) => {
   };
   const getCollectionsTypes = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale.trim() as string
       const url: string = `${endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COLLECTION_TYPES_URL")?.vale as string}${2}/${compliance?.countryId}/${compliance?.documentTypeId}`
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COLLECTION_TYPES_METHOD")?.vale as Method
       const headers = GetHeader(tokenCompliance, 'application/json');

@@ -134,7 +134,7 @@ const ProfileScreen = ({ navigation, route }: Props) => {
   }
   const onSubmit = async (tokenAuth: string) => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CHANGE_PASSWORD_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CHANGE_PASSWORD_METHOD")?.vale as Method
       const req = {
@@ -179,7 +179,7 @@ const ProfileScreen = ({ navigation, route }: Props) => {
   }
   const onSubmitPhoto = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CHANGE_PROFILE_IMAGE_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CHANGE_PROFILE_IMAGE_METHOD")?.vale as Method
       const headers = GetHeader(tokenCompliance, "multipart/form-data")

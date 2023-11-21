@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { TouchableOpacity, Text } from "react-native";
 import { Icons } from "../../../assets";
-import { SesionContext } from "../../contexts";
 import { styles } from "./ButtonResources";
 import { Props } from "./ButtonInterfaces";
 import { Image } from "expo-image";
+import { useSesion } from "../../contexts/sesion/SesionState";
 
 const Button = (props: Props) => {
-  const { sesion, restartTimerSesion } = useContext(SesionContext);
+  const { sesion, restartTimerSesion } = useSesion();
   const stylesComp = props?.styleIcon
     ? [
         props?.white ? styles.textCancel : {},

@@ -10,11 +10,11 @@ export const styles = StyleSheet.create({
     height: width * 0.5,
     position: "relative",
     marginBottom: 10,
-    backgroundColor: Colors.blackBackground,
+    backgroundColor: Colors.black,
     borderRadius: 16,
     overflow: "hidden",
   },
-  circle: {
+ /*  circle: {
     width: width * 0.5,
     height: width * 0.5,
     position: "absolute",
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
     zIndex: 10,
     top: "-35%",
     left: "35%",
-  },
+  }, */
   containerItems: {
     width: "100%",
     height: "100%",
@@ -77,6 +77,6 @@ export const styles = StyleSheet.create({
   },
   logo: {
     height: width * 0.25,
-    width: width * 0.5,
+    width: width * 0.25,
   },
 });

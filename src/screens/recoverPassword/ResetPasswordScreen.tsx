@@ -43,7 +43,7 @@ const ResetPasswordScreen = ({ navigation }: Props) => {
   const onSubmit = async () => {
     try {
       let url: string = '';
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
 
       let method: Method
       if (!email) {
@@ -100,11 +100,8 @@ const ResetPasswordScreen = ({ navigation }: Props) => {
   },[])
   return (
     <ScreenContainer>
-      <View style={styles.imageContainer}>
-        <SVG.ZaccoLogoDSVG width={300} height={150} />
-      </View>
       <View style={styles.containerForm}>
-        <View style={[styles.containerRow, styles.containerWidth]}>
+        {/* <View style={[styles.containerRow, styles.containerWidth]}>
           <Button
             text={'Correo electrónico'}
             styleButton={[styles.buttonRender, { marginRight: 15 }, !email ? styles.buttonRenderWhite : {}]}
@@ -120,6 +117,33 @@ const ResetPasswordScreen = ({ navigation }: Props) => {
           />
           <Button
             text={'Número de teléfono'}
+            styleButton={[styles.buttonRender, email ? styles.buttonRenderWhite : {}]}
+            white={email}
+            onPress={() => {
+              setEmail(false);
+              setRecoverPassword({
+                ...recoverPassword,
+                email: '',
+              });
+            }}
+          />
+        </View> */}
+          <View style={[styles.containerRow, styles.containerWidth, styles.containerButtons]} className="">
+          <Button
+            text={Languages[language].SCREENS.LoginScreen.titleEmail}
+            styleButton={[styles.buttonRender, !email ? styles.buttonRenderWhite : {}]}
+            white={!email}
+            onPress={() => {
+              setEmail(true);
+              setRecoverPassword({
+                ...recoverPassword,
+                phoneNumber: '',
+                phoneCode: '',
+              });
+            }}
+          />
+          <Button
+            text={Languages[language].SCREENS.LoginScreen.titlePhone}
             styleButton={[styles.buttonRender, email ? styles.buttonRenderWhite : {}]}
             white={email}
             onPress={() => {
@@ -208,10 +232,10 @@ const styles = StyleSheet.create({
   },
   containerForm: {
     width: width * 0.9,
-    height: height * 0.4,
+    flex:1,
     borderRadius: 30,
     marginHorizontal: width * 0.05,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   textTitle: {
@@ -247,8 +271,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonRender: {
-    width: 'auto',
-    paddingHorizontal: 20,
+    width: "auto",
+    paddingHorizontal: 10,
   },
   buttonRenderWhite: {
     borderColor: Colors.transparent,
@@ -268,6 +292,9 @@ const styles = StyleSheet.create({
   colorFormat: {
     borderStyle: 'solid',
     borderColor: '#898989',
+  },
+  containerButtons: {
+    justifyContent: "center",
   },
 });
 

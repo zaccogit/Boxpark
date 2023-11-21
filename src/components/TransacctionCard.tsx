@@ -23,6 +23,7 @@ const TransacctionCard = ({ transaction, style }: Props) => {
     () => moment(transaction.aprovedDate).format("hh:ss:mm a"),
     [transaction]
   );
+  console.log(transaction)
 
   if (transaction.transactionTypeId === 7) {
     //RECARGA MANUAL

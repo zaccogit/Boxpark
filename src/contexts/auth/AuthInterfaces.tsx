@@ -5,8 +5,8 @@ export interface AuthContextProps {
   tokenPromotions: string | null;
   tokenTransaction: string | null;
   tokenBP: string | null;
+  deviceId: string;
   channelTypeId: number;
-  virtualPosId: number;
   endPoints: EndPoints[];
   setTokenRU: (e: string | null) => void;
   setTokenGateway: (e: string | null) => void;
@@ -14,9 +14,10 @@ export interface AuthContextProps {
   setTokenPromotions: (e: string | null) => void;
   setTokenTransaction: (e: string | null) => void;
   setTokenBP: (e: string | null) => void;
+  setdeviceId: (e: string) => void;
   setChannelTypeId: (e: number) => void;
-  setVirtualPosId: (e: number) => void;
   setEndPoints: (e: EndPoints[]) => void;
+
 }
 
 export interface EndPoints {

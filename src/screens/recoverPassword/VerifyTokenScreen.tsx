@@ -40,7 +40,7 @@ const VerifyTokenScreen = ({ navigation, route: { params } }: Props) => {
     return !(tokenUser.length === 6);
   };
   const onSubmit = async () => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_TOKEN_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_TOKEN_METHOD")?.vale as Method
     const { userId, email, phoneNumber, channelTypeId } = params?.reReq
@@ -96,7 +96,7 @@ const VerifyTokenScreen = ({ navigation, route: { params } }: Props) => {
     }
   };
   const reSubmit = async () => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_METHOD")?.vale as Method
     const req = params?.reReq;
@@ -150,9 +150,6 @@ const VerifyTokenScreen = ({ navigation, route: { params } }: Props) => {
   }, [activeTimer2, timer2]);
   return (
     <ScreenContainer>
-      <View style={styles.imageContainer}>
-        <SVG.ZaccoLogoDSVG width={300} height={150} />
-      </View>
       <View style={styles.containerForm}>
         <Text style={[styles.text, { fontSize: 22, marginBottom: 20 }]}>
           {Languages[language].SCREENS.VerifyTokenScreen.title}

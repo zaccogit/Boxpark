@@ -54,7 +54,7 @@ const RechargeMobilePaymentScreen = ({ navigation, route }: Props) => {
                     </View>
                     <View style={styles.containerWidth}>
                         <Text style={[styles.title]}>
-                            Una vez hallas realizado el pago móvil, este se te acreditará automaticamente en tu cuenta zacco.
+                            Una vez hallas realizado el pago móvil, este se te acreditará automaticamente en tu cuenta.
                         </Text>
                         <View style={styles.containerWidth}>
                             <Button

@@ -2,7 +2,7 @@ import { useEffect, useContext, useCallback } from "react";
 import { Dimensions, View, StatusBar } from "react-native";
 import { ScreenContainer } from "../../components";
 import { Colors } from "../../utils";
-import { Images, SVG } from "../../../assets";
+import { Images, Logos, SVG } from "../../../assets";
 import { HttpService } from "../../services";
 import { RenderContext, AuthContext, EndPointsInterface } from "../../contexts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -64,7 +64,7 @@ const InitScreen = ({ navigation }: Props) => {
       )[0]?.vale;
       const host: string = endPoints?.filter(
         (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-      )[0]?.vale;
+      )[0]?.vale.trim();
       const url: string = endPoints?.filter(
         (endPoint: EndPointsInterface) => endPoint.name === "AUTHENTICATION_URL"
       )[0]?.vale;
@@ -288,7 +288,6 @@ const InitScreen = ({ navigation }: Props) => {
     let firsTime: any;
     try {
       firsTime = await AsyncStorage.getItem("firsTime");
-
       if (firsTime) {
         navigation.replace("Login");
       }else{
@@ -341,6 +340,7 @@ const InitScreen = ({ navigation }: Props) => {
       disabledPaddingBottom
       disabledStatusBar
       onRefresh={onSubmit}
+      backgroundColor="#000000"
     >
       <StatusBar
         barStyle={"light-content"}
@@ -349,7 +349,7 @@ const InitScreen = ({ navigation }: Props) => {
       <View style={{ flex: 1 }}>
       </View>
       <View className=" w-full h-full absolute justify-center items-center top-0 left-0">
-        <Image source={Images.SplashLogoGif} style={{ width: 300, height: 150 }} />
+        <Image source={Logos.LogoWhiteGreen} style={{ width: width* 0.5, height: width* 0.5 }} />
       </View>
     </ScreenContainer>
   );

@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
   smallCircle: {
     height: 40,
     width: 40,
-    borderLeftColor: Colors.danger,
-    borderTopColor: Colors.danger,
+    borderLeftColor: Colors.black,
+    borderTopColor: Colors.black,
     borderBottomColor: 'rgba(0,0,0,.009)',
     borderRightColor: 'rgba(0,0,0,.009)',
     borderRadius: 20,

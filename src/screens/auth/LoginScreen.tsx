@@ -21,21 +21,6 @@ interface Phone {
 
 export type Method = "get" | "post" | "put" | "delete";
 
-
-/* interface LoginOperadorRequest {
-  alias: string;
-  deviceId: string;
-  passwordPos: string;
-  userPos: string;
-}
-
-const initialState: LoginOperadorRequest = {
-  alias: "",
-  deviceId: "",
-  passwordPos: "",
-  userPos: "",
-};
- */
 interface User extends SesionInterface {
   products: SavingsAccounts | null;
 }
@@ -76,7 +61,7 @@ const width: number = Dimensions.get("window").width;
 
 const LoginScreen = ({ navigation }: Props) => {
   const { language, setLoader } = useContext(RenderContext);
-  const { tokenRU, endPoints } = useContext(AuthContext);
+  const { tokenRU, endPoints,deviceId } = useContext(AuthContext);
   const { setSesion, startTimerSesion, sesion } = useContext(SesionContext);
   const { setAccounts } = useContext(AccountsContext);
   const [email, setEmail] = useState<boolean>(true);
@@ -94,34 +79,6 @@ const LoginScreen = ({ navigation }: Props) => {
     [credentials]
   );
 
-  const changeDevideId = useCallback(() => {
-    if (Platform.OS === "ios") {
-      getIosIdForVendorAsync()
-        .then((deviceId) => {
-          if (deviceId) {
-            setCredentials({
-              ...credentials,
-              deviceId,
-            });
-          }
-        })
-        .catch(() => {
-          ToastCall(
-            "error",
-            Languages[language].GENERAL.ERRORS.DeviceIdError,
-            language
-          );
-        });
-    } else if (Platform.OS === "android") {
-      androidId;
-      if (androidId)
-        setCredentials({
-          ...credentials,
-          deviceId: androidId,
-        });
-    }
-  }, [credentials, language]);
-
   const disabled = useCallback(() => {
     const { mail, credencial } = credentials;
     const { phoneNumer, code } = phone;
@@ -130,7 +87,7 @@ const LoginScreen = ({ navigation }: Props) => {
 
   const Login = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "LOGIN_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "LOGIN_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, "application/json")
@@ -212,14 +169,13 @@ const LoginScreen = ({ navigation }: Props) => {
           if (response?.codigoRespuesta === '00') {
             if (usuario?.status !== 'ACTIVE') {
               ToastCall('warning', Languages[language].SCREENS.LoginScreen.ERRORS.message3, language);
-              setSesion(null)
               console.log('codigoRespuesta')
               return;
             }
+            console.log(usuario?.products,"usuario?.products")
 
              if (!usuario?.products) {
               ToastCall('warning', Languages[language].SCREENS.LoginScreen.ERRORS.message1, language);
-              setSesion(null)
               console.log('products')
               return;
             }
@@ -228,7 +184,6 @@ const LoginScreen = ({ navigation }: Props) => {
               ToastCall('warning', Languages[language].SCREENS.LoginScreen.ERRORS.message11,
                 language);
               console.log('savingsAccounts')
-              setSesion(null)
               return;
             }
             setAccounts(savingsAccounts); 
@@ -252,6 +207,7 @@ const LoginScreen = ({ navigation }: Props) => {
           } else if (response?.codigoRespuesta === '41') {
             navigation.push('CollectionsTypes', { redirect: 'Selfie' });
           }
+          console.log(response?.codigoRespuesta,'response?.codigoRespuesta')
           setCredentials(initialState);
         } else {
           ToastCall('warning', 'Información del usuario no encontrada', language);
@@ -295,17 +251,20 @@ const LoginScreen = ({ navigation }: Props) => {
       navigation.push("Init");
     }
   }, []);
-  useEffect(() => {
-    if (tokenRU) {
-      changeDevideId();
+  /* useEffect(() => {
+    if (deviceId) {
+      setCredentials({
+        ...credentials,
+        deviceId 
+      });
     }
-  }, []);
-  useEffect(() => {
+  }, [deviceId]); */
+  /* useEffect(() => {
+    console.log(sesion);
     if (sesion) {
-      console.log(sesion);
       navigation.navigate("Dashboard");
     }
-  }, [sesion]);
+  }, [sesion]); */
 
   /* useEffect(() => {
     navigation.addListener("beforeRemove", (e) => {
@@ -316,7 +275,7 @@ const LoginScreen = ({ navigation }: Props) => {
   return (
     <ScreenContainer>
       <View style={styles.container} className=" justify-between h-full ">
-        <Image source={SVG.ZaccoLogoDV2} style={{ width: 200, height: 125 }} />
+        <Image source={SVG.ZaccoLogoWV2} style={{ width: 128, height: 128, backgroundColor:"#000", borderRadius:32 }} />
         <Text style={[styles.text, styles.title]}>{Languages[language].SCREENS.LoginScreen.title}</Text>
         <View style={[styles.containerRow, styles.containerWidth, styles.containerButtons]} className="">
           <Button
@@ -467,7 +426,7 @@ const styles = StyleSheet.create({
   },
   buttonRender: {
     width: "auto",
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   buttonRenderWhite: {
     borderColor: Colors.transparent,

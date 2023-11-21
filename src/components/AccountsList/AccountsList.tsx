@@ -1,7 +1,8 @@
-import React, { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef } from "react";
 import { View, Dimensions, FlatList } from "react-native";
-import { DebitCard, Paginator } from "..";
-import { SesionContext, AccountsContext } from "../../contexts";
+import DebitCard from "../DebitCard/DebitCard";
+import Paginator from "../Paginator/Paginator";
+import { AccountsContext } from "../../contexts";
 
 const width: number = Dimensions.get("window").width;
 const spaceDebitCards = width * 0.8 + 15;

@@ -63,7 +63,7 @@ const VerifySecQuestionsScreen = ({ navigation, route: { params } }: Props) => {
   };
   const getSecQuestions = async () => {
     if (params?.sesion || tokenRU) {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = `${endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SQ_USER_URL")?.vale as string}${params?.sesion?.id}`
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SQ_USER_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, 'application/json');
@@ -124,7 +124,7 @@ const VerifySecQuestionsScreen = ({ navigation, route: { params } }: Props) => {
     }
     const { answer1, answer2 } = answers;
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_SQ_USER_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_SQ_USER_METHOD")?.vale as Method
       const req: ValidateAnswer = {
@@ -189,9 +189,6 @@ const VerifySecQuestionsScreen = ({ navigation, route: { params } }: Props) => {
   }, []);
   return (
     <ScreenContainer onRefresh={getSecQuestions}>
-      <View style={styles.imageContainer}>
-        <SVG.ZaccoLogoDSVG width={300} height={150} />
-      </View>
       <View style={styles.containerForm}>
         <Text style={styles.text}>{Languages[language].SCREENS.SecurityQuestionsScreen.title}</Text>
 
@@ -248,10 +245,10 @@ const styles = StyleSheet.create({
   },
   containerForm: {
     width: width * 0.9,
-    height: height * 0.7,
+    flex:1,
     paddingVertical: 30,
     marginHorizontal: width * 0.05,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   text: {

@@ -38,7 +38,7 @@ const AllCardScreen = ({ navigation, route }: Props) => {
 
     const deleteCard = useCallback(async () => {
         try {
-            const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale as string
+            const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
             const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "DELETE_CARD_CREDICARD")?.vale as string 
             const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "DELETE_CARD_CREDICARD_METHOD")?.vale as Method 
             const headers = GetHeader(tokenGateway, "application/json")

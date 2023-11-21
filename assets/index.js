@@ -94,7 +94,7 @@ export const Images = {
 };
 
 import LogoBlack from './logos/logo-black.png';
-import LogoWhiteGreen from './logos/logo-white-green.png';
+import LogoWhiteGreen from './logos/logo.png';
 
 export const Logos = {
   LogoBlack,
@@ -128,15 +128,14 @@ import Withdrawal from './svg/Withdrawal';
 import InitIcon1 from './svg/InitIcon1';
 import initlcon2 from './svg/initlcon2';
 import initlcon3 from './svg/initlcon3';
-import LogoAlopos from './svg/Alopos.svg';
-import BgSplashSVG from './svg/bg-splash.svg';
-import ZaccoLogoDV2 from './svg/ZaccoLogoDV2.svg';
-import ZaccoLogoWV2 from './svg/ZaccoLogoWV2.svg';
+import ZaccoLogoDV2 from './logos/logo-black.png';
+import ZaccoLogoWV2 from './logos/logo.png';
 import Padlock from './svg/Padlock';
 import TransferIcon from './svg/TransferIcon';
 import RechargeIcon from './svg/RechargeIcon';
 import Trash from './svg/Trash';
 import ClipboardIcon from './svg/ClipboardIcon';
+import LogoBoxpark from './svg/LogoBoxpark';
 
 export const SVG = {
   ScanQrSvg,
@@ -156,13 +155,12 @@ export const SVG = {
   InitIcon1,
   initlcon2,
   initlcon3,
-  LogoAlopos,
-  BgSplashSVG,
   ZaccoLogoDV2,
   ZaccoLogoWV2,
   Padlock,
   TransferIcon,
   RechargeIcon,
   Trash,
-  ClipboardIcon
+  ClipboardIcon,
+  LogoBoxpark
 };

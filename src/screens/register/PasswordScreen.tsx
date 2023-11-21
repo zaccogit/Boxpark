@@ -16,7 +16,7 @@ type Method = "get" | "post" | "put" | "delete"
 const width: number = Dimensions.get('window').width;
 
 const PasswordScreen = ({ navigation }: Props) => {
-  const { tokenRU, endPoints } = useContext(AuthContext);
+  const { tokenRU, endPoints, deviceId } = useContext(AuthContext);
   const { language, setLoader } = useContext(RenderContext);
   const { registerReq, setRegisterReq, setNacionality, initialStateRegister } = useContext(RegisterContext);
 
@@ -42,7 +42,6 @@ const PasswordScreen = ({ navigation }: Props) => {
       gender,
       positionX,
       positionY,
-      deviceId,
       documentTypeId,
       credential,
       credentialRepeat,
@@ -53,7 +52,7 @@ const PasswordScreen = ({ navigation }: Props) => {
       ToastCall('warning', Languages[language].SCREENS.PasswordScreen.ERRORS.message2, language);
       return;
     }
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_METHOD")?.vale as Method
     const headers = GetHeader(tokenRU, "application/json")

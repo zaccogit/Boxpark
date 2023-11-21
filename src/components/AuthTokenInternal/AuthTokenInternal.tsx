@@ -1,15 +1,18 @@
-import React, { useState, useContext, useCallback, useLayoutEffect, useEffect } from 'react';
+import { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Input, Modal } from '..';
-import { AuthContext, RenderContext, SesionContext, EndPointsInterface } from '../../contexts';
+import Input  from '../Input/Input';
+import Modal  from '../Modal/Modal';
 import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
 import { HttpService } from '../../services';
 import { Colors } from '../../utils';
 import Languages from '../../utils/Languages.json';
-import { Fonts } from '../../../assets';
 import { styles } from './AuthTokenInternalResources';
 import { Props, Method } from "./AuthTokenInternalInterfaces"
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { useAuth } from '../../contexts/auth/AuthState';
+import { useRender } from '../../contexts/render/RenderState';
+import { useSesion } from '../../contexts/sesion/SesionState';
+import { EndPoints } from '../../contexts/auth/AuthInterfaces';
 
 
 const formatNumber = (number: number) => `0${number}`.slice(-2);
@@ -21,9 +24,9 @@ const getRemaining = (time: number) => {
 };
 
 export default function AuthTokenInternal({ active, setActive, onSubmit }: Props) {
-  const { tokenRU, channelTypeId, setChannelTypeId, tokenTransaction, setTokenTransaction, endPoints } = useContext(AuthContext);
-  const { setLoader, language } = useContext(RenderContext);
-  const { sesion } = useContext(SesionContext);
+  const { tokenRU, channelTypeId, setChannelTypeId, tokenTransaction, setTokenTransaction, endPoints } = useAuth();
+  const { setLoader, language } = useRender();
+  const { sesion } = useSesion();
   const [timer1, setTimer1] = useState<number>(150);
   const [timer2, setTimer2] = useState<number>(20);
   const [activeTimer1, setActiveTimer1] = useState<boolean>(false);
@@ -37,9 +40,9 @@ export default function AuthTokenInternal({ active, setActive, onSubmit }: Props
   const sendToken = useCallback(async () => {
     setActive(false)
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
-      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_URL")?.vale as string
-      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_METHOD")?.vale as Method
+      const host: string = endPoints?.find((endPoint: EndPoints) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
+      const url: string = endPoints?.find((endPoint: EndPoints) => endPoint.name === "SEND_TOKEN_URL")?.vale as string
+      const method: Method = endPoints?.find((endPoint: EndPoints) => endPoint.name === "SEND_TOKEN_METHOD")?.vale as Method
       const req = {
         userId: sesion?.id,
         email: '',
@@ -63,9 +66,9 @@ export default function AuthTokenInternal({ active, setActive, onSubmit }: Props
   }, [sesion, channelTypeId, language, channelTypeId]);
   const validateToken = useCallback(async () => {
     setIsActive(false);
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
-    const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_TOKEN_URL")?.vale as string
-    const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_TOKEN_METHOD")?.vale as Method
+    const host: string = endPoints?.find((endPoint: EndPoints) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
+    const url: string = endPoints?.find((endPoint: EndPoints) => endPoint.name === "VALIDATE_TOKEN_URL")?.vale as string
+    const method: Method = endPoints?.find((endPoint: EndPoints) => endPoint.name === "VALIDATE_TOKEN_METHOD")?.vale as Method
     let req = {
       userId: sesion?.id,
       email: channelTypeId === 2 ? sesion?.email : '',

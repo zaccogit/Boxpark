@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import {
   Modal as ModalComponent,
   TouchableOpacity,
@@ -6,9 +5,8 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
-import { Button } from "..";
+import Button from "../Button/Button";
 import { Colors } from "../../utils";
-import { SesionContext } from "../../contexts";
 
 interface Props {
   active: boolean;

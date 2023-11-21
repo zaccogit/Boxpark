@@ -37,7 +37,7 @@ const SecurityQuestionsScreen = ({ navigation }: Props) => {
   });
   const onSubmit = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_LIST_SQ_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_LIST_SQ_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, 'application/json');
@@ -76,12 +76,13 @@ const SecurityQuestionsScreen = ({ navigation }: Props) => {
         ToastCall('error', Languages[language].GENERAL.ERRORS.RequestInformationError, language);
       }
     } catch (err) {
+      console.log(JSON.stringify(err))
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };
   const getSecQuestions = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GET_SQ_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GET_SQ_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, 'application/json');
@@ -150,6 +151,7 @@ const SecurityQuestionsScreen = ({ navigation }: Props) => {
     setSecQuestions3(
       secQuestions.filter(item => item.value !== sqSelected.question1 && item.value !== sqSelected.question2),
     );
+    console.log(sesion?.id, "sesion?.id")
   }, [sqSelected.question1, sqSelected.question2]);
   return (
     <ScreenContainer onRefresh={getSecQuestions}>

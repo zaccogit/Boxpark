@@ -61,7 +61,7 @@ const ScanQRCliente = ({ navigation }: Props) => {
     try {
       const host: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API"
-      )?.vale as string;
+      )?.vale.trim()as string;
       const url: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "GET_BANKS_URL"
       )?.vale as string;

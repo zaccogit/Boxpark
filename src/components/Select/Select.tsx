@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,13 +10,11 @@ import {
   ImageStyle,
   TextStyle,
 } from "react-native";
-import { Button } from "..";
+import Button  from "../Button/Button";
 import { Colors } from "../../utils";
-import { Icons, Fonts } from "../../../assets";
-import { SesionContext } from "../../contexts";
 import { Picker } from "@react-native-picker/picker";
-import { Image } from "expo-image";
 import { AntDesign } from '@expo/vector-icons';
+import { useSesion } from "../../contexts/sesion/SesionState";
 
 interface Props {
   items?: Items[];
@@ -52,7 +50,7 @@ const Select = ({
   const [label, setLabel] = useState(itemsSelect[0]?.label);
   const [modal, setModal] = useState(false);
   const stylesComp = styleIcons ? [styles.icon, styleIcons] : [styles.icon];
-  const { sesion, restartTimerSesion } = useContext(SesionContext);
+  const { sesion, restartTimerSesion } = useSesion();
   useEffect(() => {
     setLabel(itemsSelect[0]?.label);
   }, [itemsSelect]);

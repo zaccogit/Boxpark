@@ -14,15 +14,15 @@ export default function ReferedScreen({ navigation, route }: Props) {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: `Hola desde Zacco! \n\n
+        message: `Hola desde BoxParkApp! \n\n
         ${sesion?.firstName?.split(' ')[0]} ${sesion?.lastName?.split(' ')[0]}
-        te ha invitado a utilizar Zacco, con nuestra app podrás pagar en comercios  con codigo qr\n\n
-        Instala nuestra aplicación, crea tu cuenta y ambos recibirán un bono de $5 para ser utilizados en cualquiera de nuestros comercios aliados.\n\n
-        Descarga tu app a continuación.\n\n
+        te ha invitado a utilizar BoxParkApp, con nuestra app podrás pagar en comercios  con codigo qr\n\n
+        Instala nuestra aplicación, crea tu cuenta y ambos recibirán un bono de $5 para ser utilizados en cualquiera de nuestras tiendas.\n\n
+        Descarga la app.\n\n
         Ingresa el codigo siguiente codigo al registrarte\n\n                     
         *${sesion?.code}*\n\n
         \n\n
-        Copyright © 2022 Zacco`,
+        Copyright © 2023 BoxParkApp`,
       });
     } catch (err) { }
   };

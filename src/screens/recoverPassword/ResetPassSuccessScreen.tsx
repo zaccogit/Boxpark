@@ -24,9 +24,6 @@ const ResetPassSuccessScreen = ({ navigation }: Props) => {
   return (
     <ScreenContainer>
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <SVG.ZaccoLogoDSVG width={300} height={150} />
-        </View>
         <View>
           <SVG.CheckAnimateSVG />
         </View>

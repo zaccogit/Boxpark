@@ -1,4 +1,4 @@
-import React, { useState, PropsWithChildren, useEffect } from "react";
+import React, { useState, PropsWithChildren, useEffect, useContext } from "react";
 import RenderContext from "./RenderContext";
 
 const RenderState = ({ children }: PropsWithChildren) => {
@@ -20,5 +20,6 @@ const RenderState = ({ children }: PropsWithChildren) => {
     </RenderContext.Provider>
   );
 };
+export const useRender = () => useContext(RenderContext);
 
 export default RenderState;

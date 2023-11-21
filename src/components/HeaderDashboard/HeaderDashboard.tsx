@@ -15,7 +15,7 @@ const HeaderDashboard = ({ navigation: { push }, route: { name } }: Props) => {
 
   useEffect(() => {
     
-    console.log(sesion)
+    console.log(sesion?.profileImage?.url)
   
     
   }, [sesion])
@@ -26,9 +26,9 @@ const HeaderDashboard = ({ navigation: { push }, route: { name } }: Props) => {
       <TouchableOpacity
         style={[styles.profile,{ position: "absolute", left: width * .05, top: 0, zIndex: 10 }]}
         onPress={() => {
-          push('Options');
+          push('Profile');
         }}
-        disabled={name === 'Options'}
+        disabled={name === 'Profile'}
         >
         <Image
           style={[styles.profile]}

@@ -60,7 +60,7 @@ const DebitCardWithInfo = ({ card, secure, action, security }: Props) => {
           <View style={[styles.containerItems, { justifyContent: "flex-end" }]}>
             {/* <View style={styles.containerMod}>
               <Text style={[styles.textTop, { fontSize: 18, marginRight: 30 }]}>
-                Zacco Débito
+                boxpark Débito
               </Text> {
                 !secure &&
                 <TouchableOpacity

@@ -55,7 +55,7 @@ const AddAccountScreen = ({navigation, route}: Props) => {
   };
 
   const destroySesion = useCallback((): void => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_METHOD")?.vale as Method
     stopTimerSesion();
@@ -67,7 +67,7 @@ const AddAccountScreen = ({navigation, route}: Props) => {
 
   const onSubmit = async (tokenAuth: string) => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "P2P_ADD_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "P2P_ADD_METHOD")?.vale as Method
       const headers = GetHeader(tokenGateway, 'application/json');

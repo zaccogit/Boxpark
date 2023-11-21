@@ -67,7 +67,7 @@ const PersonalInfoScreen = ({ navigation }: Props) => {
   };
   const onSubmit = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = `${endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "EDIT_USER_URL")?.vale as string}${sesion?.id}`;
       let method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_DOCUMENT_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, "application/json")

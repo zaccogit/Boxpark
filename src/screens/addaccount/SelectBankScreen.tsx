@@ -59,7 +59,7 @@ const SelectBankScreen = ({navigation, route}: Props) => {
   }, []);
   const getBanks = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GET_BANKS_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GET_BANKS_METHOD")?.vale as Method
       const headers = GetHeader(tokenTransaction, 'application/json');

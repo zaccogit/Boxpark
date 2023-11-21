@@ -41,7 +41,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
 
   const refreshAccounts = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REFRESH_ACCOUNTS_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REFRESH_ACCOUNTS_METHOD")?.vale as Method
       await RefreshAccounts(method, host, url, sesion?.id ?? 0, setAccounts, tokenRU ?? '', setLoader);
@@ -52,7 +52,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
   }, [sesion, tokenRU, language, endPoints]);
 
   const destroySesion = useCallback((): void => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_METHOD")?.vale as Method
     stopTimerSesion();
@@ -64,7 +64,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
 
   const getLastTransactions = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "ALL_LAST_TRANSACTIONS_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "ALL_LAST_TRANSACTIONS_METHOD")?.vale as Method
       const headers: any = GetHeader(tokenRU, 'application/json');
@@ -113,7 +113,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
 
   const getPromotions = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "PROMOTIONS_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "PROMOTIONS_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BANNERS_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BANNERS_METHOD")?.vale as Method
       const headers: any = GetHeader(tokenPromotions, 'application/json');
@@ -159,7 +159,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
       <ScreenContainer onRefresh={refresh} disabledPaddingBottom>
         <HeaderDashboard navigation={navigation} route={route} />
         <AccountsList />
-        <PromotionsList allPromotions={allPromotions} />
+        {/* <PromotionsList allPromotions={allPromotions} /> */}
         <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', paddingVertical:10 }}>
           <ButtonTransaction
             icon={Icons.ArrowTop}

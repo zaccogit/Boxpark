@@ -103,7 +103,7 @@ const WelcomeScreen = ({ navigation }: Props) => {
           width: "100%",
         }}
       >
-        <Text style={styles.title}>Bienvenidos a Zacco</Text>
+        <Text style={styles.title}>Bienvenidos a BoxParkApp</Text>
       </View>
       <Swiper height={ height * 0.7} pagingEnabled autoplay >
         {data.map(item => (<SlideItem key={item.id} image={item.image} text={item.text} />))}

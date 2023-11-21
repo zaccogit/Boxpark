@@ -40,7 +40,6 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
   const { qrPaymentRequest, setQrPaymentRequest } = useContext(TransactionsContext);
   const { setLoader, language } = useContext(RenderContext);
   const [qr, setQr] = useState<boolean>(true);
-  const [cryptogram, setCryptogram] = useState<string | null | undefined>(null);
   const [accountsPayment, setAccountsPayment] = useState<ItemSelect[]>([]);
   const change = (value: string | number, key: string) => {
     setQrPaymentRequest({
@@ -78,12 +77,14 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
       });
     }
   }, [qrPaymentRequest, accounts]);
-  const getInfoBusiness = useCallback(async () => {
+  const getInfoBusiness = useCallback(async (cryptogram:string) => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BUSINESS_INFO_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BUSINESS_INFO_METHOD")?.vale as Method
       const headers = GetHeader(tokenGateway, 'application/json');
+      console.log(cryptogram)
+      console.log(host,url)
       const req = {
         criptograma: cryptogram,
       };
@@ -123,21 +124,16 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
       });
       navigation.push('QrPaymentForm');
     } catch (err) {
+      console.log(JSON.stringify(err))
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
-  }, [cryptogram, qrPaymentRequest, language]);
+  }, [qrPaymentRequest, language]);
   useEffect(() => {
     getAccountsPayment();
   }, []);
   useEffect(() => {
     getAccountInfo();
   }, [qrPaymentRequest.accountPaymentId]);
-  useEffect(() => {
-    if (cryptogram) {
-      getInfoBusiness();
-      setQr(false);
-    }
-  }, [cryptogram]);
 
   return (
     <>
@@ -163,7 +159,12 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
             </Text>
           </View>
           <View style={[styles.containerWidth, { alignItems: 'center' }]}>
-            <QRScanner active={qr} setActive={setQr} setState={setCryptogram} />
+            <QRScanner active={qr} setActive={setQr} setState={(data) => {
+              if(data){
+                getInfoBusiness(data);
+                setQr(false);
+              }
+            }} />
             <Text style={[styles.text]}>{Languages['ES'].SCREENS.QrPaymentScreen.text2}</Text>
           </View>
 

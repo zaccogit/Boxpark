@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     position: "relative",
-    height: 50,
+    padding:5,
     marginTop:5,
   },
   icon: {

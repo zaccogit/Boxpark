@@ -7,19 +7,20 @@ import React, {
 } from "react";
 import { AppState, StyleSheet, Text } from "react-native";
 import SesionContext from "./SesionContext";
-import { RenderContext, AuthContext, EndPointsInterface } from "../";
 import { CloseSesion } from "../../utils/GeneralMethods";
-import { Sesion } from "./SesionInterface";
-import { Modal } from "../../components";
 import { Colors } from "../../utils";
-import { Fonts } from "../../../assets";
+import { useAuth } from "../auth/AuthState";
+import { useRender } from "../render/RenderState";
+import { EndPoints } from "../auth/AuthInterfaces";
+import Modal from "../../components/Modal/Modal";
+import { Sesion } from "./SesionInterface";
 
 type Method = "get" | "post" | "put" | "delete";
 
 var intervalSesion: any = null;
 const SesionState = ({ children }: PropsWithChildren) => {
-  const { tokenRU, setChannelTypeId, endPoints } = useContext(AuthContext);
-  const { language } = useContext(RenderContext);
+  const { tokenRU, setChannelTypeId, endPoints } = useAuth();
+  const { language } = useRender();
   const [sesion, setSesion] = useState<Sesion | null>(null);
   const [sesionDash, setSesionDash] = useState<boolean>(false);
   const [timerSesion, setTimerSesion] = useState<number>(0);
@@ -59,14 +60,13 @@ const SesionState = ({ children }: PropsWithChildren) => {
     !modalLogout && setModalLogout(true);
     if (sesion) {
       const host: string = endPoints?.find(
-        (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-      )?.vale as string;
+        (endPoint: EndPoints) => endPoint.name === "APP_BASE_API"
+      )?.vale.trim() as string;
       const url: string = endPoints?.find(
-        (endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_URL"
+        (endPoint: EndPoints) => endPoint.name === "CLOSE_SESION_URL"
       )?.vale as string;
       const method: Method = endPoints?.find(
-        (endPoint: EndPointsInterface) =>
-          endPoint.name === "CLOSE_SESION_METHOD"
+        (endPoint: EndPoints) => endPoint.name === "CLOSE_SESION_METHOD"
       )?.vale as Method;
       CloseSesion(host, url, method, tokenRU ?? "", sesion, language);
 
@@ -111,12 +111,12 @@ const SesionState = ({ children }: PropsWithChildren) => {
     });
   }, [sesion, sesionDash]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (timerSesion > 15) modalAlert && setModalAlert(false);
     if (timerSesion <= 15 && timerSesion > 0)
       !modalAlert && setModalAlert(true);
     if (timerSesion <= 0) sesion && closeSesion();
-  }, [timerSesion]);
+  }, [timerSesion]); */
 
   return (
     <SesionContext.Provider
@@ -131,51 +131,16 @@ const SesionState = ({ children }: PropsWithChildren) => {
         restartTimerSesion,
         stopTimerSesion,
         setModalLogout,
+        modalLogout,
+        modalAlert,
+        setModalAlert,
       }}
     >
       {children}
-      <Modal
-        active={modalLogout}
-        disableCloseButton
-        onSubmit={() => {
-          setModalLogout(false);
-        }}
-      >
-        <Text
-          style={[styles.text, styles.title, { fontFamily: "DosisSemiBold" }]}
-        >
-          ¡Su sesión ha expirado!
-        </Text>
-      </Modal>
-      <Modal
-        active={modalAlert}
-        disableCloseButton
-        onSubmit={() => {
-          setModalAlert(false);
-        }}
-      >
-        <Text style={[styles.text, styles.title]}>
-          Su sesión esta por expirar
-        </Text>
-        <Text style={[styles.text]}>
-          Si desea extenderla presione ok, de no confirmar será desconectada en{" "}
-          {timerSesion}seg
-        </Text>
-      </Modal>
     </SesionContext.Provider>
   );
 };
 
-const styles = StyleSheet.create({
-  text: {
-    color: Colors.black,
-    fontFamily: "Dosis",
-    fontSize: 16,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
-});
+export const useSesion = () => useContext(SesionContext);
 
 export default SesionState;

@@ -16,9 +16,6 @@ const OnboardingScreen = ({navigation}: Props) => {
   const {language} = useContext(RenderContext);
   return (
     <ScreenContainer>
-      <View style={styles.imageContainer}>
-        <SVG.ZaccoLogoDSVG width={300} height={150} />
-      </View>
       <View style={styles.container}>
         <View style={styles.containerForm}>
           <Text
@@ -51,10 +48,10 @@ const OnboardingScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   container: {
     minHeight: width * 0.7,
-    height: height * 0.7,
+    flex:1,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     flexDirection: 'column',
   },
   imageContainer: {

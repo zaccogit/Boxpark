@@ -17,7 +17,6 @@ import {
 import Languages from '../../utils/Languages.json';
 import { StackScreenProps } from '@react-navigation/stack';
 import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
-import { androidId, getIosIdForVendorAsync } from 'expo-application';
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -75,7 +74,7 @@ const requireSesion: string[] = ['00', '12', '35', '36', '37', '38', '39', '40',
 
 const TrustedDeviceScreen = ({ navigation, route }: Props) => {
   const { language, setLoader } = useContext(RenderContext)
-  const { tokenRU, endPoints } = useContext(AuthContext)
+  const { tokenRU, endPoints, deviceId } = useContext(AuthContext)
   const { setSesion, startTimerSesion, sesion } = useContext(SesionContext)
   const { setAccounts } = useContext(AccountsContext)
   var intervalTimer: any = null
@@ -89,30 +88,7 @@ const TrustedDeviceScreen = ({ navigation, route }: Props) => {
   const [modal, setModal] = useState<boolean>(false)
   const [tokenAuth, setTokenAuth] = useState<string>("")
   const [sesionAux, setSesionAux] = useState<SesionInterface | null>(null)
-  const [deviceId, setDeviceID] = useState<string>("")
   const { mins, secs } = getRemaining(timer1);
-
-  const changeDeviceId = useCallback(() => {
-    if (Platform.OS === "ios") {
-      getIosIdForVendorAsync()
-        .then((deviceId) => {
-          if (deviceId) {
-            setDeviceID(deviceId)
-          }
-        })
-        .catch(() => {
-          ToastCall(
-            "error",
-            Languages[language].GENERAL.ERRORS.DeviceIdError,
-            language
-          );
-        });
-    } else if (Platform.OS === "android") {
-      if (androidId){
-        setDeviceID(androidId)
-      }
-    }
-  }, [deviceId, language,androidId]);
 
   const validateUser = async () => {
     const type = route?.params?.type
@@ -120,7 +96,7 @@ const TrustedDeviceScreen = ({ navigation, route }: Props) => {
     try {
       const host: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-      )?.vale as string;
+      )?.vale.trim() as string;
       let url: string
       let method: Method
       if (type === 1) {
@@ -144,7 +120,7 @@ const TrustedDeviceScreen = ({ navigation, route }: Props) => {
   const sendToken = async () => {
     try {
       console.log("pase por aqui")
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string;
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string;
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_METHOD")?.vale as Method
       const req: SendToken = {
@@ -180,7 +156,7 @@ const TrustedDeviceScreen = ({ navigation, route }: Props) => {
     setModal(false);
     const host: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-      )?.vale as string;
+      )?.vale.trim() as string;
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_TOKEN_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_TOKEN_METHOD")?.vale as Method
     const req = {
@@ -210,12 +186,12 @@ const TrustedDeviceScreen = ({ navigation, route }: Props) => {
     setModal(false);
     const host: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-      )?.vale as string;
+      )?.vale.trim() as string;
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "TRUSTED_DEVICE_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "TRUSTED_DEVICE_METHOD")?.vale as Method
     const req: OnSubmit = {
       originAplication: 'APP',
-      deviceId: deviceId,
+      deviceId  ,
       userId: sesionAux?.id,
       tokenNumber: tokenAuth,
       channelTypeId: sms ? 1 : 2,
@@ -240,12 +216,12 @@ const TrustedDeviceScreen = ({ navigation, route }: Props) => {
     try {
       const host: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-      )?.vale as string;
+      )?.vale.trim() as string;
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "LOGIN_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "LOGIN_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, "application/json")
       let req: RequestLogin = route?.params?.req
-      req.deviceId = deviceId
+      req.deviceId = deviceId 
       const response: Response = await HttpService(method, host, url, req, headers, setLoader)
       if (!response) {
         ToastCall('error', Languages[language].GENERAL.ERRORS.RequestError, language)
@@ -359,7 +335,6 @@ const TrustedDeviceScreen = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     validateUser();
-    changeDeviceId();
   }, []);
   useLayoutEffect(() => {
     let intervalTimer: any;

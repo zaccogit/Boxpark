@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Dimensions } from "react-native";
-import { LoadingTransaction, TransacctionCard } from "..";
+import TransacctionCard  from "../TransacctionCard";
+import LoadingTransaction from "../LoadingTransaction/LoadingTransaction";
 import { styles } from "./LastTransactionsStyles";
 import { LastTransaction, Props } from "./LastTransactionsInterfaces";
 

@@ -132,7 +132,7 @@ const TransferScreen = ({ navigation, route }: Props) => {
       return;
     }
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CUSTOMER_INFO_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CUSTOMER_INFO_METHOD")?.vale as Method
       const headers = GetHeader(tokenGateway, 'application/json');

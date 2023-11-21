@@ -57,7 +57,7 @@ export default function AuthTokenTransacction({
     try {
       const host: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-      )?.vale as string;
+      )?.vale.trim() as string;
       const url: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_URL"
       )?.vale as string;
@@ -104,7 +104,7 @@ export default function AuthTokenTransacction({
     setIsActive(false);
     const host: string = endPoints?.find(
       (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-    )?.vale as string;
+    )?.vale.trim() as string;
     const url: string = endPoints?.find(
       (endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_TOKEN_URL"
     )?.vale as string;

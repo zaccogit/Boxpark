@@ -55,7 +55,7 @@ const AddressScreen = ({ navigation }: Props) => {
   });
   const getCountries = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COUNTRIES_RU_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COUNTRIES_RU_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, 'application/json');
@@ -84,7 +84,7 @@ const AddressScreen = ({ navigation }: Props) => {
   };
   const getStates = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = `${endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "STATES_RU_URL")?.vale as string}${direcction.country}`
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "STATES_RU_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, 'application/json');
@@ -112,7 +112,7 @@ const AddressScreen = ({ navigation }: Props) => {
   };
   const getCities = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = `${endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CITIES_RU_URL")?.vale as string}${direcction.state}`
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CITIES_RU_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, 'application/json');
@@ -143,7 +143,7 @@ const AddressScreen = ({ navigation }: Props) => {
   };
   const onSubmit = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       let url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_ADDRESS_URL")?.vale as string
       let method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SAVE_ADDRESS_METHOD")?.vale as Method
       const req: AddressReq = {

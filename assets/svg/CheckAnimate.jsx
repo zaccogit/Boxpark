@@ -3,6 +3,7 @@ import {Dimensions} from 'react-native';
 import {Easing, withTiming, useSharedValue} from 'react-native-reanimated';
 import Svg, {Path} from 'react-native-svg';
 import Animated, {useAnimatedProps} from 'react-native-reanimated';
+import { Colors } from '../../src/utils';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -32,7 +33,7 @@ const CheckAnimate = props => {
   const height = (width * vHeight) / vWidth;
   const progress = useSharedValue(0);
   useEffect(() => {
-    progress.value = withTiming(1, {duration: 700, easing: Easing.linear /* bezier(0.34, 1.56, 0.40, 0.60) */});
+    progress.value = withTiming(1, {duration: 700, easing: Easing.linear});
   }, [progress]);
   return (
     <Svg
@@ -44,7 +45,7 @@ const CheckAnimate = props => {
       {...props}>
       <AnimatedStroked
         d="m284.04 547.448 191.634 186.259 247.065-255.216 240.172-240.174"
-        stroke="#83BF00"
+        stroke={Colors.blackBackground}
         strokeWidth={75}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -52,7 +53,7 @@ const CheckAnimate = props => {
       />
       <AnimatedStroked
         d="M830 131C321-204-204.5 441.5 158 871s1023.5 44 875.5-468.5"
-        stroke="#83BF00"
+        stroke={Colors.blackBackground}
         strokeWidth={75}
         strokeLinecap="round"
         strokeLinejoin="round"

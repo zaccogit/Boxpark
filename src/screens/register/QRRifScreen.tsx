@@ -24,7 +24,7 @@ const QRRifScreen = ({ navigation }: Props) => {
 
   const onSubmit = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_RIF_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_RIF_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, 'application/json');

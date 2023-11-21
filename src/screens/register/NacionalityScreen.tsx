@@ -49,7 +49,7 @@ const NacionalityScreen = ({ navigation }: Props) => {
 
   const query = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COUNTRIES_RU_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COUNTRIES_RU_METHOD")?.vale as Method
       const headers = GetHeader(tokenRU, "application/json")

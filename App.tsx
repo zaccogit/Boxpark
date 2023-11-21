@@ -16,8 +16,9 @@ import ToastNotification from "./src/components/ToastNotification";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { View } from "react-native";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { TransactionsStateProvider } from "./src/contexts/transactions/TransactionsState";
+import PushNotification from "./src/components/PushNotification";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -56,6 +57,7 @@ export default function App() {
       <AppMultiContext providers={ContextProviders}>
         <SafeAreaProvider>
           <Loading />
+          <PushNotification/>
           <NavigationContainer>
             <StackNavigator />
           </NavigationContainer>

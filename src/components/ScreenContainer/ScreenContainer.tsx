@@ -1,7 +1,8 @@
-import React, {useState, useCallback, useContext} from 'react';
-import {ScrollView, Platform, RefreshControl, StatusBar, Dimensions} from 'react-native';
-import {SesionContext} from "../../contexts"
+import {useState, useCallback} from 'react';
+import {ScrollView, Platform, RefreshControl, StatusBar, Dimensions, Text, StyleSheet} from 'react-native';
 import {Colors} from '../../utils';
+import { useSesion } from '../../contexts/sesion/SesionState';
+import Modal from '../Modal/Modal';
 interface Props {
   onRefresh?: any;
   children?: any;
@@ -27,7 +28,7 @@ const ScreenContainer = ({
   disabledPaddingBottom,
   disabledStatusBar,
 }: Props) => {
-  const {sesion, restartTimerSesion} = useContext(SesionContext)
+  const {sesion, restartTimerSesion, modalLogout, setModalLogout,modalAlert,setModalAlert,timerSesion} = useSesion()
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const onSubmit = useCallback(() => {
@@ -59,8 +60,48 @@ const ScreenContainer = ({
       }>
       {disabledStatusBar ?? <StatusBar barStyle={'dark-content'} backgroundColor={Colors.white} />}
       {children}
+      <Modal
+        active={modalLogout}
+        disableCloseButton
+        onSubmit={() => {
+          setModalLogout(false);
+        }}
+      >
+        <Text
+          style={[styles.text, styles.title, { fontFamily: "DosisSemiBold" }]}
+        >
+          ¡Su sesión ha expirado!
+        </Text>
+      </Modal>
+      <Modal
+        active={modalAlert}
+        disableCloseButton
+        onSubmit={() => {
+          setModalAlert(false);
+        }}
+      >
+        <Text style={[styles.text, styles.title]}>
+          Su sesión esta por expirar
+        </Text>
+        <Text style={[styles.text]}>
+          Si desea extenderla presione ok, de no confirmar será desconectada en{" "}
+          {timerSesion}seg
+        </Text>
+      </Modal>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    color: Colors.black,
+    fontFamily: "Dosis",
+    fontSize: 16,
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+});
 
 export default ScreenContainer;

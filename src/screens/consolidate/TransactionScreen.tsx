@@ -32,7 +32,7 @@ const TransactionScreen = ({ navigation, route }: Props) => {
       },
       {
         name: 'Transferencia',
-        desc: 'Transferencia entre usuarios Zacco',
+        desc: 'Transferencia entre usuarios',
         svgComponent: <SVG.TransferIcon />,
         route: 'Transfer',
       },

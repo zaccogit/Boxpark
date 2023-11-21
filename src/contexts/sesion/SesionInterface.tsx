@@ -2,13 +2,16 @@ export interface SesionContextProps {
   sesion: Sesion | null;
   sesionDash: boolean;
   timerSesion: number;
+  modalLogout: boolean;
+  modalAlert: boolean;
   setSesion: (e: Sesion | null) => void;
   setSesionDash: (e: boolean) => void;
   setTimerSesion: (e: number) => void;
-  startTimerSesion: ()=>void,
-  restartTimerSesion: ()=>void,
-  stopTimerSesion: ()=>void,
+  startTimerSesion: () => void;
+  restartTimerSesion: () => void;
+  stopTimerSesion: () => void;
   setModalLogout: (e: boolean) => void;
+  setModalAlert: (e: boolean) => void;
 }
 
 export interface Sesion {
@@ -54,4 +57,3 @@ interface Country {
   iso3: string;
   phoneCode: number;
 }
-

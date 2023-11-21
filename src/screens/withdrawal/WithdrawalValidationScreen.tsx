@@ -24,7 +24,7 @@ const WithdrawalValidationScreen = ({ navigation, route }: Props) => {
   const { setAccounts } = useContext(AccountsContext);
   const refreshAccounts = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REFRESH_ACCOUNTS_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REFRESH_ACCOUNTS_METHOD")?.vale as Method
       await RefreshAccounts(method, host, url, sesion?.id ?? 0, setAccounts, tokenRU ?? '');
@@ -34,7 +34,7 @@ const WithdrawalValidationScreen = ({ navigation, route }: Props) => {
     }
   }, [sesion, tokenRU, language, endPoints]);
   const destroySesion = useCallback((): void => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_METHOD")?.vale as Method
     stopTimerSesion();
@@ -45,7 +45,7 @@ const WithdrawalValidationScreen = ({ navigation, route }: Props) => {
   }, [tokenRU, sesion, language, endPoints]);
   const onSubmit = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "WITHDRAWAL_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "WITHDRAWAL_METHOD")?.vale as Method
       const headers = GetHeader(tokenGateway, 'application/json');

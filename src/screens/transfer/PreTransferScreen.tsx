@@ -100,7 +100,7 @@ const PreTransferScreen = ({ navigation, route }: Props) => {
         displaySymbol,
         userDestinationId
       } = transferRequest
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "TRANSFER_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "TRANSFER_METHOD")?.vale as Method
       const headers = GetHeader(tokenGateway, "application/json")
@@ -152,7 +152,7 @@ const PreTransferScreen = ({ navigation, route }: Props) => {
   }, [transferRequest, sesion, channelTypeId, language, tokenAuth, tokenTransaction, channelTypeId]);
   const refreshAccounts = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
       const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REFRESH_ACCOUNTS_URL")?.vale as string
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REFRESH_ACCOUNTS_METHOD")?.vale as Method
       await RefreshAccounts(method, host, url, sesion?.id ?? 0, setAccounts, tokenRU ?? '');
@@ -162,7 +162,7 @@ const PreTransferScreen = ({ navigation, route }: Props) => {
     }
   }, [sesion, tokenRU, language, endPoints]);
   const destroySesion = useCallback((): void => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_METHOD")?.vale as Method
     stopTimerSesion();

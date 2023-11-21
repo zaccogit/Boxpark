@@ -11,9 +11,9 @@ import Languages from "../../utils/Languages.json";
 import { GetHeader, ToastCall } from "../../utils/GeneralMethods";
 import { EndPoints, Request, Response } from "./AuthInterfaces";
 import enviroments from "../../../enviroments.json";
-import { RenderContext } from "../";
+import { useRender } from "../render/RenderState";
 const AuthState = (props: PropsWithChildren) => {
-  const { language } = useContext(RenderContext);
+  const { language } = useRender();
   const [tokenRU, setTokenRU] = useState<string | null>(null);
   const [tokenGateway, setTokenGateway] = useState<string | null>(null);
   const [tokenCompliance, setTokenCompliance] = useState<string | null>(null);
@@ -21,7 +21,7 @@ const AuthState = (props: PropsWithChildren) => {
   const [tokenTransaction, setTokenTransaction] = useState<string | null>(null);
   const [tokenBP, setTokenBP] = useState<string | null>(null);
   const [channelTypeId, setChannelTypeId] = useState<number>(0);
-  const [virtualPosId, setVirtualPosId] = useState<number>(0);
+  const [deviceId, setdeviceId] = useState<string>("123456789");
   const [endPoints, setEndPoints] = useState<EndPoints[]>([]);
   const getRequest = useCallback((): Request => {
     return {
@@ -82,7 +82,7 @@ const AuthState = (props: PropsWithChildren) => {
         tokenBP,
         channelTypeId,
         endPoints,
-        virtualPosId,
+        deviceId,
         setTokenRU,
         setTokenGateway,
         setTokenCompliance,
@@ -91,12 +91,14 @@ const AuthState = (props: PropsWithChildren) => {
         setTokenBP,
         setChannelTypeId,
         setEndPoints,
-        setVirtualPosId,
+        setdeviceId
       }}
     >
       {props.children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
 
 export default AuthState;

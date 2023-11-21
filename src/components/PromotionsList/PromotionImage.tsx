@@ -11,24 +11,23 @@ function PromotionImage({ item }: { item: Promotions }) {
      useEffect(() => {
         setTimeout(() => {
             setLoaded(true)
-        }, 1500);
+        }, 1000);
      }, [])
      
 
     return (
-        <View className="w-full  justify-center items-center">
+        <View className="w-full h-auto  justify-center items-center">
             {
             Loaded 
             ?
             <Image
                 source={{ uri: item?.description }}
                 style={style.image}
-                contentFit="contain"
-                
+                onLoad={() => setLoaded(true)}
             />
             :
              <View style={style.loader} >
-                <ActivityIndicator size="large"/>
+                <ActivityIndicator size="large" color={Colors.blackBackground} />
             </View>
             
             }
@@ -40,10 +39,9 @@ export default PromotionImage
 
 const style = StyleSheet.create({
     image: {
-        width: width * 0.7,
-        height: width * 0.28,
-        borderRadius: 12,
-        marginRight: 15,
+        width: width * 0.8,
+        height: width * 0.3,
+        borderRadius: 20,
     },
     loader: {
         width: width * 0.7,

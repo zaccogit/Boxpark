@@ -6,7 +6,8 @@ import React, {
   useEffect,
 } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { Input, Modal } from "..";
+import Input  from '../Input/Input';
+import Modal  from '../Modal/Modal';
 import {
   AuthContext,
   RenderContext,
@@ -17,7 +18,6 @@ import { GetHeader, ToastCall } from "../../utils/GeneralMethods";
 import { HttpService } from "../../services";
 import { Colors } from "../../utils";
 import Languages from "../../utils/Languages.json";
-import { Fonts } from "../../../assets";
 import { styles } from "./AuthTokenResources";
 import { Props, Method } from "./AuthTokenInterfaces";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -54,7 +54,7 @@ export default function AuthToken({ isActive, setIsActive, onSubmit }: Props) {
     try {
       const host: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-      )?.vale as string;
+      )?.vale.trim() as string;
       const url: string = endPoints?.find(
         (endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_URL"
       )?.vale as string;
@@ -101,7 +101,7 @@ export default function AuthToken({ isActive, setIsActive, onSubmit }: Props) {
     setIsActive(false);
     const host: string = endPoints?.find(
       (endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API"
-    )?.vale as string;
+    )?.vale.trim() as string;
     const url: string = endPoints?.find(
       (endPoint: EndPointsInterface) => endPoint.name === "VALIDATE_TOKEN_URL"
     )?.vale as string;

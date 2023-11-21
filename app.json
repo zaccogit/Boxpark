@@ -1,36 +1,45 @@
 {
   "expo": {
-    "name": "zaccoapp",
-    "slug": "zaccoapp",
-    "version": "1.1.0",
+    "name": "boxpark",
+    "slug": "boxpark",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "scheme": "zaccoapp",
+    "scheme": "boxpark",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.desarrollozacco.zaccoapp",
+      "bundleIdentifier": "com.desarrollozacco.boxpark",
       "infoPlist": {
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone",
+        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
       "package": "com.desarrollozacco.zaccoapp",
       "permissions": [
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
       ]
     },
     "web": {
@@ -38,7 +47,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "5e3ff334-8c5c-4ab0-bfe8-8ef629252d15"
+        "projectId": "5403d075-bb54-4991-acb8-87eb4f76eb61"
       }
     },
     "plugins": [
@@ -68,9 +77,21 @@
           "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
           "isAccessMediaLocationEnabled": true
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/logos/logo.png",
+          "color": "#00ff0000"
+        }
       ]
-
     ],
-    "owner": "desarrollozacco"
+    "owner": "desarrollozacco",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/5403d075-bb54-4991-acb8-87eb4f76eb61"
+    }
   }
 }

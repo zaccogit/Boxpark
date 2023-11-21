@@ -1,12 +1,12 @@
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect} from "react";
 import { View, StyleSheet, Dimensions, Animated, Easing } from "react-native";
 import { Colors } from "../../utils";
-import { RenderContext } from "../../contexts";
+import { useRender } from "../../contexts/render/RenderState";
 const width: number = Dimensions.get("window").width;
 const height: number = Dimensions.get("window").height;
 
 const Loading = () => {
-  const { loader } = useContext(RenderContext);
+  const { loader } = useRender();
   const smallCircle = useRef(new Animated.Value(0)).current;
   const mediumCircle = useRef(new Animated.Value(0)).current;
   const bigCircle = useRef(new Animated.Value(0)).current;

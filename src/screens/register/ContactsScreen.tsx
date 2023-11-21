@@ -51,7 +51,7 @@ const ContactsScreen = ({ navigation }: Props) => {
   const query = async () => {
     /* const method = 'get';
     const url = '/services/ruaddress/api/pais'; */
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COUNTRIES_RU_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COUNTRIES_RU_METHOD")?.vale as Method
     const headers = GetHeader(tokenRU, 'application/json');
@@ -76,7 +76,7 @@ const ContactsScreen = ({ navigation }: Props) => {
     }
   };
   const validateContacts = async () => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     let method: Method
     let url: string;
     const headers: any = GetHeader(tokenRU, 'application/json');
@@ -123,7 +123,7 @@ const ContactsScreen = ({ navigation }: Props) => {
     }
   };
   const onSubmit = async (type: number, contact: string) => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale as string
+    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
     const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_URL")?.vale as string
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "SEND_TOKEN_METHOD")?.vale as Method
     const req = {
