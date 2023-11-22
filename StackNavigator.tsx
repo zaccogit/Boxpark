@@ -41,6 +41,7 @@ const StackNavigator = () => {
         name="VerifyContacts"
         component={Screens.VerifyContactsScreen}
       />
+      <Stack.Screen name="Selfie2Screen" component={Screens.Selfie2Screen} />
       <Stack.Screen name="CreatePassword" component={Screens.PasswordScreen} />
       <Stack.Screen
         name="RegisterSuccess"

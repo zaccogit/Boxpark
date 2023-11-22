@@ -1,7 +1,7 @@
 import React, {useState, PropsWithChildren} from 'react';
 import RegisterContext from './RegisterContext';
 
-import {RegisterRequest} from './RegisterInterfaces';
+import {FileReq, RegisterRequest} from './RegisterInterfaces';
 
 const initialStateRegister: RegisterRequest = {
   firstName: '',
@@ -25,6 +25,7 @@ const RegisterState = ({children}: PropsWithChildren) => {
 
   const [registerReq, setRegisterReq] = useState<RegisterRequest>(initialStateRegister);
   const [nacionality, setNacionality] = useState<string | number>(0);
+  const [partPhoto, setpartPhoto] = useState<FileReq | null>(null);
 
   return (
     <RegisterContext.Provider
@@ -34,6 +35,7 @@ const RegisterState = ({children}: PropsWithChildren) => {
         initialStateRegister,
         setRegisterReq,
         setNacionality,
+        partPhoto, setpartPhoto
       }}>
       {children}
     </RegisterContext.Provider>

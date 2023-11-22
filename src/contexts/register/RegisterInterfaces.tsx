@@ -1,9 +1,11 @@
 export interface RegisterContextProps {
   registerReq: RegisterRequest;
   nacionality: string | number;
-  initialStateRegister:RegisterRequest;
+  initialStateRegister: RegisterRequest;
   setRegisterReq: (e: RegisterRequest) => void;
   setNacionality: (e: string | number) => void;
+  partPhoto: FileReq | null;
+  setpartPhoto: (e: FileReq | null) => void;
 }
 
 export interface RegisterRequest {
@@ -21,4 +23,9 @@ export interface RegisterRequest {
   documentTypeId: string;
   referenceNumber: string;
   typeCondition: string;
+}
+export interface FileReq {
+  uri: string | undefined;
+  type: any;
+  name: string | undefined;
 }

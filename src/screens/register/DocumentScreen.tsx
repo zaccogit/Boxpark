@@ -86,6 +86,7 @@ const DocumentScreen = ({ navigation, route }: Props) => {
 
       response[0] && change(response[0]?.id, "documentTypeId");
     } catch (err) {
+      console.log(JSON.stringify(err));
       ToastCall(
         "error",
         Languages[language].GENERAL.ERRORS.GeneralError,
@@ -138,6 +139,7 @@ const DocumentScreen = ({ navigation, route }: Props) => {
 
       navigation.push("Identity");
     } catch (err) {
+      console.log(JSON.stringify(err));
       ToastCall(
         "error",
         Languages[language].GENERAL.ERRORS.GeneralError,

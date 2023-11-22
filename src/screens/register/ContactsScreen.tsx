@@ -72,6 +72,7 @@ const ContactsScreen = ({ navigation }: Props) => {
       setCountries(allCountries);
       setCode(response[0].phoneCode);
     } catch (err) {
+      console.log(JSON.stringify(err));
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };
@@ -119,6 +120,7 @@ const ContactsScreen = ({ navigation }: Props) => {
       onSubmit(1, registerReq.phone);
       onSubmit(2, registerReq.email);
     } catch (err) {
+      console.log(JSON.stringify(err));
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };
@@ -144,6 +146,7 @@ const ContactsScreen = ({ navigation }: Props) => {
 
       type === 2 && navigation.push('VerifyContacts');
     } catch (err) {
+      console.log(JSON.stringify(err));
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };

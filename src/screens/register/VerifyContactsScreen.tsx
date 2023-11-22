@@ -89,6 +89,7 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
         setTimer4(20);
       }
     } catch (err) {
+      console.log(JSON.stringify(err));
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };
@@ -139,7 +140,7 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
       clearInterval(intervalTimer2);
       clearInterval(intervalTimer3);
       clearInterval(intervalTimer4);
-      navigation.push('CreatePassword');
+      navigation.push('Selfie2Screen');
     } catch (err) {
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }

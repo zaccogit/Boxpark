@@ -19,6 +19,7 @@ import ContactsScreen from './register/ContactsScreen';
 import VerifyContactsScreen from './register/VerifyContactsScreen';
 import PasswordScreen from './register/PasswordScreen';
 import RegisterSuccessScreen from './register/RegisterSuccessScreen';
+import Selfie2Screen from './register/Selfie2Screen';
 /* OnBoarding */
 import OnboardingScreen from './onboarding/OnboardingScreen';
 import RegisterSecurityQuestionsScreen from './onboarding/RegisterSecurityQuestionsScreen';
@@ -112,7 +113,8 @@ export const Screens = {
   RechargeMobilePaymentScreen,
   RechargeButtonPaymentScreen,
   AllCardScreen,
-  CardInfoScreen
+  CardInfoScreen,
+  Selfie2Screen
 };
 
 

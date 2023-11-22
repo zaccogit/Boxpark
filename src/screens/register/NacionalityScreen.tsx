@@ -76,7 +76,7 @@ const NacionalityScreen = ({ navigation }: Props) => {
     }
   };
   const redirect = () => {
-    navigation.push(nacionality === venezuelaId ? 'QRRif' : 'Document', {
+    navigation.push('Document', {
       message: 'Ingrese su documento de identidad',
     });
     setRegisterReq({

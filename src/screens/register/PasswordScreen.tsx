@@ -18,7 +18,7 @@ const width: number = Dimensions.get('window').width;
 const PasswordScreen = ({ navigation }: Props) => {
   const { tokenRU, endPoints, deviceId } = useContext(AuthContext);
   const { language, setLoader } = useContext(RenderContext);
-  const { registerReq, setRegisterReq, setNacionality, initialStateRegister } = useContext(RegisterContext);
+  const { registerReq, setRegisterReq, setNacionality, initialStateRegister, partPhoto } = useContext(RegisterContext);
 
   const [countLength, setCountLength] = useState<boolean>(false);
   const [countUpperCase, setCountUpperCase] = useState<boolean>(false);
@@ -52,25 +52,26 @@ const PasswordScreen = ({ navigation }: Props) => {
       ToastCall('warning', Languages[language].SCREENS.PasswordScreen.ERRORS.message2, language);
       return;
     }
+    console.log(partPhoto);
     const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
-    const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_URL")?.vale as string
+    const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_URL")?.vale as string + `\
+    firstName=${firstName.replaceAll(" ", "")}&\
+    lastName=${lastName.replaceAll(" ", "")}&\
+    email=${email}&\
+    phone=${phone}&\
+    documentId=${documentId}&\
+    documentTypeId=${documentTypeId}&\
+    credential=${credential}&\
+    ${referenceNumber ? "referCode="+referenceNumber+"&" : ""}\
+    positionX=${positionX}&\
+    positionY=${positionY}&\
+    deviceId=${deviceId}&\
+    typeCondition=${typeCondition}&\
+    gender=${gender}`.replaceAll("    ", "")
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_METHOD")?.vale as Method
     const headers = GetHeader(tokenRU, "application/json")
-    const req = {
-      firstName,
-      lastName,
-      email: email.toLowerCase().trim(),
-      phone: phone.trim(),
-      documentId: documentId.trim(),
-      credential: credential.trim(),
-      gender,
-      positionX,
-      positionY,
-      deviceId,
-      documentTypeId,
-      referCode: referenceNumber.trim(),
-      typeCondition
-    };
+    const req: FormData = new FormData()
+    req.append("mfile", partPhoto as any)
     try {
       const response = await HttpService(method, host, url, req, headers, setLoader);
       if (response?.codigoRespuesta === '08') {
