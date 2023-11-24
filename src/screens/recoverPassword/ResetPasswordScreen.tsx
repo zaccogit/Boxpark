@@ -55,7 +55,8 @@ const ResetPasswordScreen = ({ navigation }: Props) => {
       }
       const headers = GetHeader(tokenRU, 'application/json');
       const response: Response = await HttpService(method, host, url, {}, headers, setLoader);
-      if (!response) {
+      console.log(response,"VALIDATE_USER_EMAIL_URL");
+      if (response.codigoRespuesta === "97") {
         ToastCall('error', Languages[language].SCREENS.ResetPasswordScreen.ERRORS.message3, language);
         return;
       }

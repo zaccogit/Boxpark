@@ -45,7 +45,7 @@ const ContactsScreen = ({ navigation }: Props) => {
       [key]: value,
     });
   };
-  const changeCode = (value: string | number, key: string) => {
+  const changeCode = (value: string | number, key: string | number) => {
     setCode(value);
   };
   const query = async () => {
@@ -166,17 +166,18 @@ const ContactsScreen = ({ navigation }: Props) => {
       <View style={styles.contentContainer}>
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 20 }}>
-            <View style={{ width: 100 }}>
+            <View style={{ width: 110 }}>
               <Text style={styles.label}>{Languages[language].SCREENS.ContactsScreen.subtitle1}</Text>
               <Select items={countries} setState={changeCode} value={code} name={'code'} lengthText={5} />
             </View>
-            <View style={{ width: width * 0.9 - 110, marginLeft: 10 }}>
+            <View style={{ width: width * 0.9 - 120, marginLeft: 10 }}>
               <Text style={styles.label}>{Languages[language].SCREENS.ContactsScreen.subtitle2}</Text>
               <Input
                 keyboardType="numeric"
                 placeholder={Languages[language].SCREENS.ContactsScreen.placeholder1}
                 onChangeText={(e: string) => setPhone(e.replace(/[^0-9]/g, ''))}
                 value={phone}
+                maxLength={11}
               />
             </View>
           </View>

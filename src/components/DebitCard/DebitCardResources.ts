@@ -6,7 +6,7 @@ const width: number = Dimensions.get("window").width;
 
 export const styles = StyleSheet.create({
   container: {
-    width: width * 0.8,
+    width: width * 0.9,
     height: width * 0.5,
     position: "relative",
     marginBottom: 10,

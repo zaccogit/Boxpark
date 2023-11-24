@@ -17,7 +17,6 @@ export default function ReferedScreen({ navigation, route }: Props) {
         message: `Hola desde BoxParkApp! \n\n
         ${sesion?.firstName?.split(' ')[0]} ${sesion?.lastName?.split(' ')[0]}
         te ha invitado a utilizar BoxParkApp, con nuestra app podrás pagar en comercios  con codigo qr\n\n
-        Instala nuestra aplicación, crea tu cuenta y ambos recibirán un bono de $5 para ser utilizados en cualquiera de nuestras tiendas.\n\n
         Descarga la app.\n\n
         Ingresa el codigo siguiente codigo al registrarte\n\n                     
         *${sesion?.code}*\n\n

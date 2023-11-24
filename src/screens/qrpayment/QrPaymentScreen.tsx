@@ -8,6 +8,7 @@ import { HttpService } from '../../services';
 import Languages from '../../utils/Languages.json';
 import { StackScreenProps } from '@react-navigation/stack';
 import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
+import { useIsFocused } from '@react-navigation/native';
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -39,7 +40,8 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
   const { accounts } = useContext(AccountsContext);
   const { qrPaymentRequest, setQrPaymentRequest } = useContext(TransactionsContext);
   const { setLoader, language } = useContext(RenderContext);
-  const [qr, setQr] = useState<boolean>(true);
+  const [qr, setQr] = useState<boolean>(false);
+  const isFocus = useIsFocused()
   const [accountsPayment, setAccountsPayment] = useState<ItemSelect[]>([]);
   const change = (value: string | number, key: string) => {
     setQrPaymentRequest({
@@ -130,7 +132,14 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
   }, [qrPaymentRequest, language]);
   useEffect(() => {
     getAccountsPayment();
+    
   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setQr(true)
+    }, 500); 
+  }, [isFocus])
+  
   useEffect(() => {
     getAccountInfo();
   }, [qrPaymentRequest.accountPaymentId]);

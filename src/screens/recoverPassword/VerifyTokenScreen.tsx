@@ -62,14 +62,15 @@ const VerifyTokenScreen = ({ navigation, route: { params } }: Props) => {
       if (response?.codigoRespuesta === '00') {
         clearInterval(intervalTimer);
         clearInterval(intervalTimer2);
-        navigation.push('SecurityQuestions', {
+        navigation.push('ChangePassword', {
           sesion: params?.sesion,
           type: params?.type,
-          tokenUser,
+          tokenUser: tokenUser,
           reReq: params?.reReq,
+          sqFail: false
         });
         restartTimers(false)
-      } else if (response?.codigoRespuesta === '44') {
+      }/*  else if (response?.codigoRespuesta === '44') {
         if (counter === 2) {
           ToastCall('error', Languages[language].SCREENS.VerifyTokenScreen.ERRORS.message1, language);
           navigation.push('Login');
@@ -89,7 +90,7 @@ const VerifyTokenScreen = ({ navigation, route: { params } }: Props) => {
         setCounter(0);
         ToastCall('error', Languages[language].SCREENS.VerifyTokenScreen.ERRORS.message4, language);
         reSubmit();
-      }
+      } */
     } catch (err) {
       ToastCall('error', Languages[language].SCREENS.VerifyTokenScreen.ERRORS.message6, language);
       restartTimers(false)

@@ -8,6 +8,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { AuthContext, RegisterContext, RenderContext, EndPointsInterface } from '../../contexts';
 import { HttpService } from '../../services';
 import { ToastCall, GetHeader } from '../../utils/GeneralMethods';
+import * as Location from 'expo-location';
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -33,6 +34,8 @@ const PasswordScreen = ({ navigation }: Props) => {
   };
 
   const onSubmit = async () => {
+    let position = await Location.getCurrentPositionAsync({});
+
     const {
       firstName,
       lastName,
@@ -54,7 +57,7 @@ const PasswordScreen = ({ navigation }: Props) => {
     }
     console.log(partPhoto);
     const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
-    const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_URL")?.vale as string + `\
+    const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_URL")?.vale as string + `?\
     firstName=${firstName.replaceAll(" ", "")}&\
     lastName=${lastName.replaceAll(" ", "")}&\
     email=${email}&\
@@ -63,15 +66,15 @@ const PasswordScreen = ({ navigation }: Props) => {
     documentTypeId=${documentTypeId}&\
     credential=${credential}&\
     ${referenceNumber ? "referCode="+referenceNumber+"&" : ""}\
-    positionX=${positionX}&\
-    positionY=${positionY}&\
+    positionX=${position.coords.longitude}&\
+    positionY=${position.coords.latitude}&\
     deviceId=${deviceId}&\
     typeCondition=${typeCondition}&\
     gender=${gender}`.replaceAll("    ", "")
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_METHOD")?.vale as Method
-    const headers = GetHeader(tokenRU, "application/json")
+    const headers = GetHeader(tokenRU, "multipart/form-data")
     const req: FormData = new FormData()
-    req.append("mfile", partPhoto as any)
+    req.append("file", partPhoto as any)
     try {
       const response = await HttpService(method, host, url, req, headers, setLoader);
       if (response?.codigoRespuesta === '08') {
@@ -155,11 +158,6 @@ const PasswordScreen = ({ navigation }: Props) => {
       [key]: value,
     });
   };
-  useEffect(() => {
-    navigation.addListener('beforeRemove', e => {
-      e.preventDefault();
-    });
-  }, [navigation]);
   useEffect(() => {
     const { credential, credentialRepeat } = registerReq;
     setEquals(credential.length && credential.length ? credential === credentialRepeat : false);

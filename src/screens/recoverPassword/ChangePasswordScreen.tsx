@@ -80,7 +80,7 @@ const ChangePasswordScreen = ({ navigation, route: { params } }: Props) => {
           (endPoint: EndPointsInterface) =>
             endPoint.name === "RECOVER_PASSWORD_METHOD"
         )?.vale as Method;
-        req.respuestasUsuario = [
+       /*  req.respuestasUsuario = [
           {
             answer_question: params?.answers?.answer1?.toLowerCase(),
             question: params?.secQuestion[0]?.id,
@@ -89,7 +89,7 @@ const ChangePasswordScreen = ({ navigation, route: { params } }: Props) => {
             answer_question: params?.answers?.answer2?.toLowerCase(),
             question: params?.secQuestion[1]?.id,
           },
-        ];
+        ]; */
       }
       const response = await HttpService(
         method as Method,
@@ -191,7 +191,7 @@ const ChangePasswordScreen = ({ navigation, route: { params } }: Props) => {
   return (
     <ScreenContainer>
       <View style={styles.imageContainer}>
-        <SVG.ZaccoLogoDSVG width={300} height={150} />
+      <Image source={SVG.ZaccoLogoWV2} style={{ width: 128, height: 128, backgroundColor:"#000", borderRadius:32 }} />
       </View>
       <View style={styles.containerForm}>
         <View style={{ width: "100%" }}>

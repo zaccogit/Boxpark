@@ -7,6 +7,7 @@ import { Props } from "./DebitCardInterfaces";
 import { Image } from "expo-image";
 import LogoBoxpark from "../../../assets/svg/LogoBoxpark";
 import { width } from "../../utils";
+import { AntDesign } from '@expo/vector-icons';
 
 const DebitCard = ({ name, balance, displaySymbol, language }: Props) => {
   const [security, setSecurity] = useState(true);
@@ -20,7 +21,7 @@ const DebitCard = ({ name, balance, displaySymbol, language }: Props) => {
         style={{ position: "absolute", top:0, right: 0 }}
       />
       <View style={styles.containerItems}>
-        <Text style={[styles.textTop, { fontSize: 18 }]}>
+        <Text style={[styles.textTop, { fontSize: 18, textTransform:"capitalize" }]}>
           {!security ? name : "----"}
         </Text>
         <View style={{ alignItems: "flex-end", position: "relative" }}>
@@ -48,7 +49,7 @@ const DebitCard = ({ name, balance, displaySymbol, language }: Props) => {
         <Text
           style={[styles.textTop, { fontSize: 28, fontFamily: "DosisLight" }]}
         >
-          {displaySymbol ? displaySymbol : "Bs."} {!security ? balance : "----"}
+          <AntDesign name="CodeSandbox" size={24} color="white" />{/* {displaySymbol ? displaySymbol : "Bs."} */} {!security ? balance : "----"}
         </Text>
       </View>
     </View>

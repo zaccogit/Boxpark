@@ -115,7 +115,7 @@ const VerifySecQuestionsScreen = ({ navigation, route: { params } }: Props) => {
           type: params?.type,
           tokenUser: params?.tokenUser,
           reReq: params?.reReq,
-          sqFail: true
+          sqFail: false
         });
       }else{
         ToastCall('error', Languages[language].SCREENS.SecurityQuestionsScreen.ERRORS.message4, language);

@@ -46,7 +46,7 @@ const Selfie2Screen = ({ navigation, route: { params } }: Props) => {
   const onSubmit = async () => {
     if(photo){
 
-      const photoReq = await  getPhoto(photo)
+      const photoReq = await getPhoto(photo)
 
       setpartPhoto(photoReq)
 

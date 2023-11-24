@@ -31,9 +31,9 @@ const AccountsList = () => {
         contentContainerStyle={{ paddingHorizontal: width * 0.05 }}
         keyExtractor={(item) => item?.accountNo}
         renderItem={({ item }) => (
-          <View style={{ marginRight: 15 }}>
+          <View>
             <DebitCard
-              name={item?.currency?.displayLabel}
+              name={item?.productName}
               key={item?.accountNo}
               balance={item?.accountBalance}
               displaySymbol={item?.currency?.displaySymbol}
@@ -45,9 +45,9 @@ const AccountsList = () => {
         ref={slideRef}
         disableScrollViewPanResponder={true}
       />
-      <View style={{ marginVertical: 15 }}>
+     {/*  <View style={{ marginVertical: 15 }}>
         <Paginator currentIndex={currentIndex} items={accounts} />
-      </View>
+      </View> */}
     </View>
   );
 };

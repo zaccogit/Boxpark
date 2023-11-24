@@ -23,6 +23,7 @@ import TouchScreen from './icons/touch-screen.png';
 import user from './icons/user.png';
 import send from './icons/send.png';
 import QR from './icons/qr.png';
+import Mantenimiento from './images/mantenimiento.png';
 
 
 export const Icons = {
@@ -51,6 +52,7 @@ export const Icons = {
   user,
   send,
   QR,
+  Mantenimiento
 };
 
 import Profile from './images/profile.png';

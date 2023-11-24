@@ -75,10 +75,10 @@ const StackNavigator = () => {
         component={Screens.ResetPasswordScreen}
       />
       <Stack.Screen name="VerifyToken" component={Screens.VerifyTokenScreen} />
-      <Stack.Screen
+{/*       <Stack.Screen
         name="SecurityQuestions"
         component={Screens.SecurityQuestionsScreen}
-      />
+      /> */}
       <Stack.Screen
         name="ChangePassword"
         component={Screens.ChangePasswordScreen}

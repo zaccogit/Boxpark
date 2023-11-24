@@ -8,6 +8,8 @@ import { HttpService } from '../../services';
 import Languages from '../../utils/Languages.json';
 import { CloseSesion, DestroySesion, RefreshAccounts, GetHeader, ToastCall } from '../../utils/GeneralMethods';
 import { StackScreenProps } from '@react-navigation/stack';
+import { FAB } from '@rneui/themed';
+
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -159,8 +161,8 @@ const DashboardScreen = ({ navigation, route }: Props) => {
       <ScreenContainer onRefresh={refresh} disabledPaddingBottom>
         <HeaderDashboard navigation={navigation} route={route} />
         <AccountsList />
-        {/* <PromotionsList allPromotions={allPromotions} /> */}
-        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', paddingVertical:10 }}>
+        <PromotionsList allPromotions={allPromotions} />
+        {/* <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', paddingVertical:10 }}>
           <ButtonTransaction
             icon={Icons.ArrowTop}
             name={'Recarga'}
@@ -186,13 +188,20 @@ const DashboardScreen = ({ navigation, route }: Props) => {
               borderWidth: 1
             }}
           />
-        </View>
+        </View> */}
         <LastTransactions
           lastTransactions={lastTransactions}
           loaderTransactions={loaderTransactions}
           messageTransaction={messageTransaction}
         />
       </ScreenContainer>
+              <FAB
+        visible
+        onPress={() => navigation.push('QrPayment')}
+        placement="right"
+        icon={{ name: 'qr-code', color: 'white' }}
+        color="black"
+      />
     </>
   );
 };

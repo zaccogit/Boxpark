@@ -36,21 +36,21 @@ const TransactionScreen = ({ navigation, route }: Props) => {
         svgComponent: <SVG.TransferIcon />,
         route: 'Transfer',
       },
-      {
+      /* {
         name: 'Agregar cuentas',
         desc: 'Cuentas para el servicio de retiro de fondos',
         svgComponent: <SVG.UserIconRounded />,
         route: 'SelectBank',
-      },
-      {
+      }, */
+     /*  {
         name: 'Retiro de Fondos',
         desc: 'Pago móvil de fondo al banco de tu preferencia',
         svgComponent: <SVG.Withdrawal />,
         route: 'SelectAccountWithdrawal',
-      },
+      }, */
       {
         name: 'Recarga por Pago Móvil',
-        desc: 'Recarga desde cualquier banco con el servicio de Pago Móvil',
+        desc: /* 'Recarga desde cualquier banco con el servicio de Pago Móvil' */'Próximamente',
         svgComponent: <SVG.RechargeIcon />,
         route: 'RechargeMobilePayment',
       },
