@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import { ScreenContainer, Button, Header, Input, InputDisabled } from '../../components';
 import { RenderContext, TransactionsContext } from '../../contexts';
@@ -6,13 +6,14 @@ import { Colors } from '../../utils';
 import { Fonts } from '../../../assets';
 import Languages from '../../utils/Languages.json';
 import { StackScreenProps } from '@react-navigation/stack';
+import { initialStateQRPayment } from '../../contexts/transactions/TransactionsState';
 
 interface Props extends StackScreenProps<any, any> { }
 
 const width: number = Dimensions.get('window').width;
 
 const QrPaymentFormScreen = ({ navigation, route }: Props) => {
-  const { qrPaymentRequest, setQrPaymentRequest } = useContext(TransactionsContext);
+  const { qrPaymentRequest, setQrPaymentRequest} = useContext(TransactionsContext);
   const { language } = useContext(RenderContext);
 
   const change = useCallback(
@@ -34,10 +35,15 @@ const QrPaymentFormScreen = ({ navigation, route }: Props) => {
       sucursalName.length &&
       accountBusinessName.length &&
       accountBusinessNumber.length &&
-      Number(amount) <= accountPaymentBalance &&
+      accountPaymentBalance <= Number(amount)  &&
       Number(amount) >= 0
     );
   }, [qrPaymentRequest]);
+  useEffect(() => {
+    navigation.addListener('beforeRemove', e => {
+      setQrPaymentRequest(initialStateQRPayment)
+    });
+  }, [navigation]);
   return (
     <>
       <Header

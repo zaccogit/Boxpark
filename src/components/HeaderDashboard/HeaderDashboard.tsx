@@ -12,13 +12,6 @@ const width: number = Dimensions.get('window').width;
 
 const HeaderDashboard = ({ navigation: { push }, route: { name } }: Props) => {
   const { sesion, restartTimerSesion } = useContext(SesionContext);
-
-  useEffect(() => {
-    
-    console.log(sesion?.profileImage?.url)
-  
-    
-  }, [sesion])
   
 
   return (

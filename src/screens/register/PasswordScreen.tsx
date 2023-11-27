@@ -1,5 +1,5 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
-import { View, Text, Dimensions, StyleSheet, Image } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Image, Linking,Alert } from 'react-native';
 import { ScreenContainer, Button, Input } from '../../components';
 import { Colors } from '../../utils';
 import { Fonts, Icons } from '../../../assets';
@@ -13,6 +13,13 @@ import * as Location from 'expo-location';
 interface Props extends StackScreenProps<any, any> { }
 
 type Method = "get" | "post" | "put" | "delete"
+
+const supportedURL = 'http://54.148.218.243:7474/img4/terminosycondiciones.html';
+
+type OpenURLButtonProps = {
+  url: string;
+  children: string;
+};
 
 const width: number = Dimensions.get('window').width;
 
@@ -99,6 +106,22 @@ const PasswordScreen = ({ navigation }: Props) => {
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };
+  const OpenURLButton = ({url, children}: OpenURLButtonProps) => {
+    const handlePress = useCallback(async () => {
+      // Checking if the link is supported for links with custom URL scheme.
+      const supported = await Linking.canOpenURL(url);
+  
+      if (supported) {
+        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+        // by some browser in the mobile
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(`Don't know how to open this URL: ${url}`);
+      }
+    }, [url]);
+  
+    return <Button styleText={{color:"#4f9bd9", textAlign:"center",textDecorationLine:"underline", fontFamily:"DosisBold",}} styleButton={[styles.buttonRenderWhite]} text={children} onPress={handlePress} white />;
+  }
   const validatePassword = useCallback(
     (e: any) => {
       let password = e;
@@ -195,7 +218,7 @@ const PasswordScreen = ({ navigation }: Props) => {
             {' '}
             {!countSymbols ? '●' : <Image source={Icons.Check} style={styles.icon} />}{' '}
             {Languages[language].SCREENS.PasswordScreen.text7}{' '}
-            <Text style={[styles.subTitle, { color: Colors.green, fontSize: 20 }]}> # ? ! $ % & * - . ,</Text>
+            <Text style={[styles.subTitle, { color: Colors.blackBackground, fontSize: 18 }]}> # ? ! $ % & * - . ,</Text>
           </Text>
           <Text style={[styles.subTitle]}>
             {' '}
@@ -226,6 +249,11 @@ const PasswordScreen = ({ navigation }: Props) => {
             placeholderColor={Colors.transparent}
           />
         </View>
+        <View className=' gap-y-3'>
+          <OpenURLButton url={supportedURL}>
+          Si presionas continuar aceptas los terminos y condiciones.
+          </OpenURLButton>
+
         <View style={{ width: width * 0.9, flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
           <Button
             text={Languages[language].SCREENS.PasswordScreen.textSubmit}
@@ -234,6 +262,7 @@ const PasswordScreen = ({ navigation }: Props) => {
               onSubmit();
             }}
           />
+        </View>
         </View>
       </View>
     </ScreenContainer>
@@ -252,7 +281,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: Colors.blackBackground,
     fontFamily: "DosisBold",
-    fontSize: 18,
+    fontSize: 16,
     width: '100%',
     marginVertical: 5,
   },
@@ -284,6 +313,10 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     tintColor: Colors.green,
+  },
+  buttonRenderWhite: {
+    borderColor: Colors.transparent,
+    shadowColor: Colors.transparent,
   },
 });
 

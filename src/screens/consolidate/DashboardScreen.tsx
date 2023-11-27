@@ -1,6 +1,15 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { View } from 'react-native';
-import { ScreenContainer, Navbar, ButtonTransaction, HeaderDashboard, LastTransactions, LastransactionsInterface, PromotionsList, AccountsList } from '../../components';
+import {
+  ScreenContainer,
+  Navbar,
+  ButtonTransaction,
+  HeaderDashboard,
+  LastTransactions,
+  LastransactionsInterface,
+  PromotionsList,
+  AccountsList
+} from '../../components';
 import { Icons } from '../../../assets';
 import { Colors } from '../../utils';
 import { RenderContext, SesionContext, AccountsContext, AuthContext, EndPointsInterface } from '../../contexts';
@@ -9,14 +18,14 @@ import Languages from '../../utils/Languages.json';
 import { CloseSesion, DestroySesion, RefreshAccounts, GetHeader, ToastCall } from '../../utils/GeneralMethods';
 import { StackScreenProps } from '@react-navigation/stack';
 import { FAB } from '@rneui/themed';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-
-interface Props extends StackScreenProps<any, any> { }
+interface Props extends StackScreenProps<any, any> {}
 
 interface LastTransactionReq {
-  userSourceId: string | null,
-  destinationId: string | null,
-  size: number
+  userSourceId: string | null;
+  destinationId: string | null;
+  size: number;
 }
 
 interface Promotions {
@@ -28,7 +37,7 @@ interface Promotions {
   imagenContentType: string;
 }
 
-type Method = "get" | "post" | "put" | "delete"
+type Method = 'get' | 'post' | 'put' | 'delete';
 
 const DashboardScreen = ({ navigation, route }: Props) => {
   const { setLoader, language } = useContext(RenderContext);
@@ -38,14 +47,18 @@ const DashboardScreen = ({ navigation, route }: Props) => {
   const [lastTransactions, setLastTransactions] = useState<LastransactionsInterface[]>([]);
   const [allPromotions, setAllPromotions] = useState<Promotions[]>([]);
   const [loaderTransactions, setLoaderTransaction] = useState<boolean>(false);
-  const [messageTransaction, setMessageTransaction] = useState<string>("No tienes Transacciones");
-
+  const [messageTransaction, setMessageTransaction] = useState<string>('No tienes Transacciones');
 
   const refreshAccounts = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
-      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REFRESH_ACCOUNTS_URL")?.vale as string
-      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REFRESH_ACCOUNTS_METHOD")?.vale as Method
+      const host: string = endPoints
+        ?.find((endPoint: EndPointsInterface) => endPoint.name === 'APP_BASE_API')
+        ?.vale.trim() as string;
+      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'REFRESH_ACCOUNTS_URL')
+        ?.vale as string;
+      const method: Method = endPoints?.find(
+        (endPoint: EndPointsInterface) => endPoint.name === 'REFRESH_ACCOUNTS_METHOD'
+      )?.vale as Method;
       await RefreshAccounts(method, host, url, sesion?.id ?? 0, setAccounts, tokenRU ?? '', setLoader);
     } catch (err) {
       ToastCall('error', Languages[language].GENERAL.ERRORS.ErrorUpdatingAccounts, language);
@@ -54,9 +67,13 @@ const DashboardScreen = ({ navigation, route }: Props) => {
   }, [sesion, tokenRU, language, endPoints]);
 
   const destroySesion = useCallback((): void => {
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
-    const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_URL")?.vale as string
-    const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CLOSE_SESION_METHOD")?.vale as Method
+    const host: string = endPoints
+      ?.find((endPoint: EndPointsInterface) => endPoint.name === 'APP_BASE_API')
+      ?.vale.trim() as string;
+    const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'CLOSE_SESION_URL')
+      ?.vale as string;
+    const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'CLOSE_SESION_METHOD')
+      ?.vale as Method;
     stopTimerSesion();
     CloseSesion(host, url, method, tokenRU ?? '', sesion, language);
     DestroySesion(setSesion, setAccounts, setTokenTransaction);
@@ -66,36 +83,56 @@ const DashboardScreen = ({ navigation, route }: Props) => {
 
   const getLastTransactions = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
-      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "ALL_LAST_TRANSACTIONS_URL")?.vale as string
-      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "ALL_LAST_TRANSACTIONS_METHOD")?.vale as Method
+      const host: string = endPoints
+        ?.find((endPoint: EndPointsInterface) => endPoint.name === 'APP_BASE_API')
+        ?.vale.trim() as string;
+      const url: string = endPoints?.find(
+        (endPoint: EndPointsInterface) => endPoint.name === 'ALL_LAST_TRANSACTIONS_URL'
+      )?.vale as string;
+      const method: Method = endPoints?.find(
+        (endPoint: EndPointsInterface) => endPoint.name === 'ALL_LAST_TRANSACTIONS_METHOD'
+      )?.vale as Method;
       const headers: any = GetHeader(tokenRU, 'application/json');
       let req: LastTransactionReq = {
         userSourceId: `${sesion?.id}`,
         destinationId: null,
         size: 10
-      }
-      const response: LastransactionsInterface[] = await HttpService(method, host, url, req, headers, setLoaderTransaction);
+      };
+      const response: LastransactionsInterface[] = await HttpService(
+        method,
+        host,
+        url,
+        req,
+        headers,
+        setLoaderTransaction
+      );
       if (!response) {
         ToastCall('error', Languages[language].GENERAL.ERRORS.RequestInformationError, language);
-        setMessageTransaction("Error al consultar las ultimas \ntransacciones")
+        setMessageTransaction('Error al consultar las ultimas \ntransacciones');
         return;
       }
       req = {
         userSourceId: null,
         destinationId: `${sesion?.id}`,
         size: 10
-      }
-      const response2: LastransactionsInterface[] = await HttpService(method, host, url, req, headers, setLoaderTransaction);
+      };
+      const response2: LastransactionsInterface[] = await HttpService(
+        method,
+        host,
+        url,
+        req,
+        headers,
+        setLoaderTransaction
+      );
       if (!response2) {
         ToastCall('error', Languages[language].GENERAL.ERRORS.RequestInformationError, language);
-        setMessageTransaction("Error al consultar las ultimas \ntransacciones")
+        setMessageTransaction('Error al consultar las ultimas \ntransacciones');
         return;
       }
       const ordenar = [...response, ...response2].sort((a, b) => b.id - a.id);
       const uniqueIds: any[] = [];
 
-      const unique = ordenar.filter(element => {
+      const unique = ordenar.filter((element) => {
         const isDuplicate = uniqueIds.includes(element.id);
 
         if (!isDuplicate) {
@@ -107,7 +144,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
         return false;
       });
       setLastTransactions(unique);
-      setMessageTransaction("No tienes transacciones")
+      setMessageTransaction('No tienes transacciones');
     } catch (err) {
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
@@ -115,9 +152,13 @@ const DashboardScreen = ({ navigation, route }: Props) => {
 
   const getPromotions = useCallback(async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "PROMOTIONS_BASE_API")?.vale.trim() as string
-      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BANNERS_URL")?.vale as string
-      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BANNERS_METHOD")?.vale as Method
+      const host: string = endPoints
+        ?.find((endPoint: EndPointsInterface) => endPoint.name === 'PROMOTIONS_BASE_API')
+        ?.vale.trim() as string;
+      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'BANNERS_URL')
+        ?.vale as string;
+      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'BANNERS_METHOD')
+        ?.vale as Method;
       const headers: any = GetHeader(tokenPromotions, 'application/json');
       const response: Promotions[] = await HttpService(method, host, url, {}, headers, setLoader);
       if (!response) {
@@ -131,7 +172,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
   }, [sesion?.userCoreId, language, tokenPromotions]);
 
   const refresh = useCallback(() => {
-    if(sesion){
+    if (sesion) {
       refreshAccounts();
       getLastTransactions();
       getPromotions();
@@ -195,17 +236,15 @@ const DashboardScreen = ({ navigation, route }: Props) => {
           messageTransaction={messageTransaction}
         />
       </ScreenContainer>
-              <FAB
+      <FAB
         visible
-        onPress={() => navigation.push('QrPayment')}
+        onPress={() => navigation.push('Transfer')}
         placement="right"
-        icon={{ name: 'qr-code', color: 'white' }}
+        icon={<Icon name="send" size={24} color="white" />}
         color="black"
       />
     </>
   );
 };
-
-
 
 export default DashboardScreen;

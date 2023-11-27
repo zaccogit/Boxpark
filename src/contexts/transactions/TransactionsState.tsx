@@ -2,7 +2,7 @@ import React, { useState, PropsWithChildren, useContext } from "react";
 import TransactionsContext from "./TransactionsContext";
 import {QrPayment, Transfer, Withdrawal} from './TransactionsInterface';
 
-const initialStateQRPayment: QrPayment = {
+export const initialStateQRPayment: QrPayment = {
   accountPaymentId: 0,
   displaySymbol: '',
   accountPaymentBalance: 0,

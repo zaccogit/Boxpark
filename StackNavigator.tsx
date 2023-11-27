@@ -196,23 +196,23 @@ function BottomTab() {
           headerShown: false,
           headerShadowVisible: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home-outline" color={color} size={30} />
+            <Ionicons name="home" color={color} size={30} />
           ),
         }}
       />
 
       <Tab.Screen
         name="Settings"
-        component={Screens.TransactionScreen}
+        component={Screens.QRPaymentScreen}
         options={{
           title: "Configuración",
-          tabBarActiveTintColor: Colors.green,
+          tabBarActiveTintColor: Colors.blackBackground,
           headerStyle: {
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.blackBackground,
           },
           headerTintColor: "#fff",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="swap-horizontal" color={color} size={30} />
+            <Ionicons name="qr-code" color={color} size={30} />
           ),
         }}
       />
@@ -221,13 +221,13 @@ function BottomTab() {
         component={Screens.OptionsScreen}
         options={{
           title: "Perfil",
-          tabBarActiveTintColor: Colors.green,
+          tabBarActiveTintColor: Colors.blackBackground,
           headerStyle: {
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.blackBackground,
           },
           headerTintColor: "#fff",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="person-outline" color={color} size={30} />
+            <Ionicons name="person" color={color} size={30} />
           ),
         }}
       />

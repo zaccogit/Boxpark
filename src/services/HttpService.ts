@@ -20,9 +20,9 @@ const CreateResponse = (
       console.log(headers, "aqui 1");
       console.log(req, "aqui 2");
       console.log(`${host}${url}`, "aqui 3");
-      response = Axios[method](`${host}${url}`, { headers });
+      response = Axios[method](`${host}${url}`.replaceAll(" ",""), { headers });
     } else {
-      response = Axios[method](`${host}${url}`, req, {
+      response = Axios[method](`${host}${url}`.replaceAll(" ",""), req, {
         headers,
         timeout: 6000,
       });

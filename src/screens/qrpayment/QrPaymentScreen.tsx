@@ -39,8 +39,8 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
   const { tokenGateway, endPoints } = useContext(AuthContext);
   const { accounts } = useContext(AccountsContext);
   const { qrPaymentRequest, setQrPaymentRequest } = useContext(TransactionsContext);
-  const { setLoader, language } = useContext(RenderContext);
-  const [qr, setQr] = useState<boolean>(false);
+  const { setLoader, language, loader } = useContext(RenderContext);
+  const [qr, setQr] = useState<boolean>(true);
   const isFocus = useIsFocused()
   const [accountsPayment, setAccountsPayment] = useState<ItemSelect[]>([]);
   const change = (value: string | number, key: string) => {
@@ -79,65 +79,74 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
       });
     }
   }, [qrPaymentRequest, accounts]);
-  const getInfoBusiness = useCallback(async (cryptogram:string) => {
-    try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
-      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BUSINESS_INFO_URL")?.vale as string
-      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BUSINESS_INFO_METHOD")?.vale as Method
-      const headers = GetHeader(tokenGateway, 'application/json');
-      console.log(cryptogram)
-      console.log(host,url)
-      const req = {
-        criptograma: cryptogram,
-      };
-      const response: Response = await HttpService(method, host, url, req, headers, setLoader);
-      if (response?.codigoRespuesta !== '00') {
-        ToastCall('warning', Languages[language].SCREENS.QrPaymentScreen.message3, language);
-        return;
-      }
-      const {
-        products: { savingsAccounts },
-      } = response;
-      if (!savingsAccounts?.length) {
-        ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
-        return;
-      }
-      const productId: number = accounts.find(item => item.id === qrPaymentRequest.accountPaymentId)?.productId as number;
-      const accountsBusiness: AccountsInterface[] = savingsAccounts?.filter(
-        (account: AccountsInterface) => account?.productId === productId,
-      );
-      if (!accountsBusiness?.length) {
-        ToastCall(
-          'warning',
-          `${Languages[language].SCREENS.QrPaymentScreen.message1} ${qrPaymentRequest.accountPaymentName}. ${Languages[language].SCREENS.QrPaymentScreen.message2}`,
-          language,
+  const getInfoBusiness = useCallback(async (cryptogram:string | undefined) => {
+    if(!loader){
+      try {
+        const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
+        const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BUSINESS_INFO_URL")?.vale as string
+        const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BUSINESS_INFO_METHOD")?.vale as Method
+        const headers = GetHeader(tokenGateway, 'application/json');
+        console.log(cryptogram)
+        const req = {
+          criptograma: cryptogram,
+        };
+        const response: Response = await HttpService(method, host, url, req, headers, setLoader);
+        if (response?.codigoRespuesta !== '00') {
+          ToastCall('warning', Languages[language].SCREENS.QrPaymentScreen.message3, language);
+          return;
+        }
+        const {
+          products: { savingsAccounts },
+        } = response;
+        if (!savingsAccounts?.length) {
+          ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
+          return;
+        }
+        const productId: number = accounts.find(item => item.id === qrPaymentRequest.accountPaymentId)?.productId as number;
+        const accountsBusiness: AccountsInterface[] = savingsAccounts?.filter(
+          (account: AccountsInterface) => account?.productId === productId,
         );
-        return;
+        if (!accountsBusiness?.length) {
+          ToastCall(
+            'warning',
+            `${Languages[language].SCREENS.QrPaymentScreen.message1} ${qrPaymentRequest.accountPaymentName}. ${Languages[language].SCREENS.QrPaymentScreen.message2}`,
+            language,
+          );
+          return;
+        }
+        setQrPaymentRequest({
+          ...qrPaymentRequest,
+          businessDestinationId: response?.userId,
+          businessName: response?.name,
+          sucursalName: response?.lastName,
+          userCoreId: response?.userCoreId,
+          accountBusinessId: accountsBusiness[0]?.id ?? 0,
+          accountBusinessNumber: accountsBusiness[0]?.accountNo ?? '',
+          accountBusinessName: accountsBusiness[0]?.productName ?? '',
+        });
+        navigation.push('QrPaymentForm');
+      } catch (err) {
+        console.log(JSON.stringify(err))
+        ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
+      }finally{
+        setQr(true);
       }
-      setQrPaymentRequest({
-        ...qrPaymentRequest,
-        businessDestinationId: response?.userId,
-        businessName: response?.name,
-        sucursalName: response?.lastName,
-        userCoreId: response?.userCoreId,
-        accountBusinessId: accountsBusiness[0]?.id ?? 0,
-        accountBusinessNumber: accountsBusiness[0]?.accountNo ?? '',
-        accountBusinessName: accountsBusiness[0]?.productName ?? '',
-      });
-      navigation.push('QrPaymentForm');
-    } catch (err) {
-      console.log(JSON.stringify(err))
-      ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
-  }, [qrPaymentRequest, language]);
+  }, [qrPaymentRequest, language,loader]);
   useEffect(() => {
     getAccountsPayment();
     
   }, []);
   useEffect(() => {
-    setTimeout(() => {
-      setQr(true)
-    }, 500); 
+    if(isFocus){
+      setLoader(true)
+      setTimeout(() => {
+        setQr(false);
+        setLoader(false)
+      }, 1000);
+    }else{
+      setQr(true);
+    }
   }, [isFocus])
   
   useEffect(() => {
@@ -150,7 +159,6 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
         navigation={navigation}
         route={route}
         title={Languages['ES'].SCREENS.QrPaymentScreen.Header}
-        showBackButtom
       />
       <ScreenContainer disabledPaddingTop>
         <View style={[styles.container, { flexGrow: 1, justifyContent: 'space-between', paddingTop: 20 }]}>
@@ -168,12 +176,7 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
             </Text>
           </View>
           <View style={[styles.containerWidth, { alignItems: 'center' }]}>
-            <QRScanner active={qr} setActive={setQr} setState={(data) => {
-              if(data){
-                getInfoBusiness(data);
-                setQr(false);
-              }
-            }} />
+            <QRScanner active={qr} setActive={setQr} setState={getInfoBusiness} />
             <Text style={[styles.text]}>{Languages['ES'].SCREENS.QrPaymentScreen.text2}</Text>
           </View>
 

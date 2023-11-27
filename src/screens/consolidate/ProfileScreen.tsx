@@ -1,21 +1,22 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
-import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity } from "react-native"
-import { Button, Header, ScreenContainer, Input, Select, AuthToken } from "../../components"
-import { RenderContext, AuthContext, SesionContext, SesionInterface, EndPointsInterface } from "../../contexts"
-import { HttpService } from "../../services"
-import { Colors, } from "../../utils"
-import { Fonts, Images } from "../../../assets"
-import Languages from "../../utils/Languages.json"
+import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity } from 'react-native';
+import { Button, Header, ScreenContainer, Input, Select, AuthToken } from '../../components';
+import { RenderContext, AuthContext, SesionContext, SesionInterface, EndPointsInterface } from '../../contexts';
+import { HttpService } from '../../services';
+import { Colors } from '../../utils';
+import { Fonts, Images } from '../../../assets';
+import Languages from '../../utils/Languages.json';
 import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
 import { StackScreenProps } from '@react-navigation/stack';
-import { GetHeader, ToastCall } from "../../utils/GeneralMethods";
+import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
+import * as ImagePicker from 'expo-image-picker';
 
-interface Props extends StackScreenProps<any, any> { }
+interface Props extends StackScreenProps<any, any> {}
 
 interface File {
   uri: string | undefined;
   type: any;
-  name: string | undefined;
+  name: string | null | undefined;
 }
 interface SelectItems {
   label: string;
@@ -42,17 +43,73 @@ interface CredentialsResponse {
   mensajeRespuesta: string;
 }
 
-type Method = "get" | "post" | "put" | "delete"
+type Method = 'get' | 'post' | 'put' | 'delete';
 
 const width: number = Dimensions.get('window').width;
 
 const days: SelectItems[] = [
   { label: '60 dias', value: 60 },
   { label: '120 dias', value: 120 },
-  { label: '180 dias', value: 180 },
+  { label: '180 dias', value: 180 }
 ];
-const upperCase: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-const lowerCase: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+const upperCase: string[] = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'Ñ',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z'
+];
+const lowerCase: string[] = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'ñ',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z'
+];
 const numbers: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 const symbols: string[] = ['#', '?', '!', '$', '%', '&', '*', '-', '.', ','];
 
@@ -60,83 +117,99 @@ const initialState: Credentials = {
   oldPassword: '',
   newPassword: '',
   confirmPassword: '',
-  expirationDays: 60,
+  expirationDays: 60
 };
 
 const ProfileScreen = ({ navigation, route }: Props) => {
-  const { setLoader, language } = useContext(RenderContext)
-  const { tokenRU, tokenTransaction, tokenCompliance, channelTypeId, setTokenTransaction, endPoints } = useContext(AuthContext)
-  const { sesion, setSesion } = useContext(SesionContext)
-  const [modal, setModal] = useState<boolean>(false)
-  const [photo, setPhoto] = useState<ImagePickerResponse | undefined>()
-  const [credentials, setCredentials] = useState<Credentials>(initialState)
+  const { setLoader, language } = useContext(RenderContext);
+  const { tokenRU, tokenTransaction, tokenCompliance, channelTypeId, setTokenTransaction, endPoints } =
+    useContext(AuthContext);
+  const { sesion, setSesion } = useContext(SesionContext);
+  const [modal, setModal] = useState<boolean>(false);
+  const [photo, setPhoto] = useState<ImagePicker.ImagePickerResult | undefined>();
+  const [credentials, setCredentials] = useState<Credentials>(initialState);
   const change = (value: string | number, key: string | number) => {
     setCredentials({
       ...credentials,
       [key]: value
-    })
-  }
-  const changePhoto = () => {
-    launchImageLibrary({
-      mediaType: "photo",
-      quality: 0.8,
-      maxHeight: 1024,
-      maxWidth: 720,
-    }, (file) => {
-      if (file?.didCancel) return;
-      if (!file) return;
-      if (!file?.assets) return;
-      if (file?.assets[0]?.fileSize as number > 230000) {
-        ToastCall('warning', "La imagen que elegiste es demasiado pesada", language)
-        return
+    });
+  };
+  const changePhoto = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 0.1,
+      aspect: [3, 4]
+    });
+    if (!result.canceled) {
+      if (!result) return;
+      if (!result?.assets) return;
+      if ((result?.assets[0]?.fileSize as number) > 230000) {
+        ToastCall('warning', 'La imagen que elegiste es demasiado pesada', language);
+        return;
       }
-      setPhoto(file)
-    })
-  }
-  const getPhoto = (file: ImagePickerResponse | undefined): File | null => {
+
+      setPhoto(result);
+    }
+  };
+  const getPhoto = (file: ImagePicker.ImagePickerResult | undefined): File | null => {
+    
     if (!file) return null;
     if (!file?.assets) return null;
+
+    const name = file?.assets[0]?.uri.split("/")
+
     const data: File = {
       uri: file?.assets[0]?.uri,
-      type: file?.assets[0]?.type,
-      name: file?.assets[0]?.fileName,
-    }
+      type: file?.assets[0]?.type + "/jpeg",
+      name: file?.assets[0]?.uri.split("/")[name.length -1 ]
+    };
+    console.log(data);
     return data
-  }
+  };
   const validatePassword = (tokenAuth: string) => {
     if (credentials?.newPassword === credentials?.confirmPassword) {
-      let countUpperCase = 0
-      let countLowerCase = 0
-      let countNumbers = 0
-      let countSymbols = 0
+      let countUpperCase = 0;
+      let countLowerCase = 0;
+      let countNumbers = 0;
+      let countSymbols = 0;
       for (let i = 0; i < credentials?.newPassword?.length; i++) {
-        const character = credentials?.newPassword?.charAt(i)
+        const character = credentials?.newPassword?.charAt(i);
         if (upperCase.includes(character)) {
-          countUpperCase++
+          countUpperCase++;
         } else if (lowerCase.includes(character)) {
-          countLowerCase++
+          countLowerCase++;
         } else if (numbers.includes(character)) {
-          countNumbers++
+          countNumbers++;
         } else if (symbols.includes(character)) {
-          countSymbols++
+          countSymbols++;
         }
       }
-      if ((countUpperCase >= 1) && (countLowerCase >= 1) &&
-        (countNumbers >= 1) && (countSymbols >= 1) &&
-        (credentials?.newPassword?.length)) {
-        onSubmit(tokenAuth)
+      if (
+        countUpperCase >= 1 &&
+        countLowerCase >= 1 &&
+        countNumbers >= 1 &&
+        countSymbols >= 1 &&
+        credentials?.newPassword?.length
+      ) {
+        onSubmit(tokenAuth);
       } else {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message1, language)
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message1, language);
       }
     } else {
-      ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message2, language)
+      ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message2, language);
     }
-  }
+  };
   const onSubmit = async (tokenAuth: string) => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
-      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CHANGE_PASSWORD_URL")?.vale as string
-      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CHANGE_PASSWORD_METHOD")?.vale as Method
+      const host: string = endPoints
+        ?.find((endPoint: EndPointsInterface) => endPoint.name === 'APP_BASE_API')
+        ?.vale.trim() as string;
+      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'CHANGE_PASSWORD_URL')
+        ?.vale as string;
+      const method: Method = endPoints?.find(
+        (endPoint: EndPointsInterface) => endPoint.name === 'CHANGE_PASSWORD_METHOD'
+      )?.vale as Method;
       const req = {
         userId: sesion?.id,
         oldPassword: credentials?.oldPassword,
@@ -145,69 +218,80 @@ const ProfileScreen = ({ navigation, route }: Props) => {
         sessionToken: sesion?.token,
         expirationDays: credentials?.expirationDays,
         channelTypeId
-      }
-      const headers = GetHeader(tokenRU, "application/json")
-      const response: CredentialsResponse = await HttpService(method, host,url, req, headers, setLoader)
-      if (response?.codigoRespuesta === "00") {
-        ToastCall('success', Languages[language].SCREENS.ProfileScreen.messageSuccess, language)
-        setCredentials(initialState)
-        !tokenTransaction && setTokenTransaction(tokenAuth)
-      } else if (response?.codigoRespuesta === "05") {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message10, language)
-      } else if (response?.codigoRespuesta === "06") {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message4, language)
-      } else if (response?.codigoRespuesta === "23") {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message3, language)
-      } else if (response?.codigoRespuesta === "43") {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message5, language)
-      } else if (response?.codigoRespuesta === "48") {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message6, language)
-      } else if (response?.codigoRespuesta === "69") {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message7, language)
-      } else if (response?.codigoRespuesta === "68") {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message8, language)
-      } else if (response?.codigoRespuesta === "19") {
-        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message9, language)
-      } else if (response?.codigoRespuesta === "44") {
-        ToastCall('warning', Languages[language].GENERAL.ERRORS.TokenInvalid, language)
+      };
+      const headers = GetHeader(tokenRU, 'application/json');
+      const response: CredentialsResponse = await HttpService(method, host, url, req, headers, setLoader);
+      if (response?.codigoRespuesta === '00') {
+        ToastCall('success', Languages[language].SCREENS.ProfileScreen.messageSuccess, language);
+        setCredentials(initialState);
+        !tokenTransaction && setTokenTransaction(tokenAuth);
+      } else if (response?.codigoRespuesta === '05') {
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message10, language);
+      } else if (response?.codigoRespuesta === '06') {
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message4, language);
+      } else if (response?.codigoRespuesta === '23') {
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message3, language);
+      } else if (response?.codigoRespuesta === '43') {
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message5, language);
+      } else if (response?.codigoRespuesta === '48') {
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message6, language);
+      } else if (response?.codigoRespuesta === '69') {
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message7, language);
+      } else if (response?.codigoRespuesta === '68') {
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message8, language);
+      } else if (response?.codigoRespuesta === '19') {
+        ToastCall('warning', Languages[language].SCREENS.ProfileScreen.ERRORS.message9, language);
+      } else if (response?.codigoRespuesta === '44') {
+        ToastCall('warning', Languages[language].GENERAL.ERRORS.TokenInvalid, language);
       } else {
-        ToastCall('error', Languages[language].GENERAL.ERRORS.TokenInvalid, language)
+        ToastCall('error', Languages[language].GENERAL.ERRORS.TokenInvalid, language);
       }
     } catch (err) {
-      ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language)
+      ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
-  }
+  };
   const onSubmitPhoto = async () => {
     try {
-      const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "COMPLIANCE_BASE_API")?.vale.trim() as string
-      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CHANGE_PROFILE_IMAGE_URL")?.vale as string
-      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "CHANGE_PROFILE_IMAGE_METHOD")?.vale as Method
-      const headers = GetHeader(tokenCompliance, "multipart/form-data")
-      const partPhoto: File | null = getPhoto(photo)
-      const req: FormData = new FormData()
-      /* req.append("userId", `${sesion?.id}`)
-      req.append("file", partPhoto) */
-      const response: PhotoResponse = await HttpService(method, host, url, req, headers, setLoader)
-      if (response?.codigoRespuesta === "00") {
-        let newSesion: SesionInterface | null = sesion
+      const host: string = endPoints
+        ?.find((endPoint: EndPointsInterface) => endPoint.name === 'COMPLIANCE_BASE_API')
+        ?.vale.trim() as string;
+      const url: string = endPoints?.find(
+        (endPoint: EndPointsInterface) => endPoint.name === 'CHANGE_PROFILE_IMAGE_URL'
+      )?.vale as string;
+      const method: Method = endPoints?.find(
+        (endPoint: EndPointsInterface) => endPoint.name === 'CHANGE_PROFILE_IMAGE_METHOD'
+      )?.vale as Method;
+      const headers = GetHeader(tokenCompliance, 'multipart/form-data');
+      const partPhoto: any = getPhoto(photo);
+      const req: FormData = new FormData();
+      req.append("userId", `${sesion?.id}`)
+      req.append("file", partPhoto)
+      const response: PhotoResponse = await HttpService(method, host, url, req, headers, setLoader);
+      console.log(response);
+
+      if (response?.codigoRespuesta === '00') {
+        let newSesion: SesionInterface | null = sesion;
         if (newSesion) {
           newSesion.profileImage = {
             id: parseInt(response?.id),
             name: response?.name,
             url: response?.url
-          }
-          setSesion(newSesion)
-          setPhoto(undefined)
+          };
+          setSesion(newSesion);
+          setPhoto(undefined);
+
+          ToastCall('success', "Imagen cambiada correctamente", language);
         } else {
-          ToastCall('error', Languages[language].GENERAL.ERRORS.RequestError, language)
+          ToastCall('error', Languages[language].GENERAL.ERRORS.RequestError, language);
         }
       } else {
-        ToastCall('error', Languages[language].GENERAL.ERRORS.RequestError, language)
+        ToastCall('error', Languages[language].GENERAL.ERRORS.RequestError, language);
       }
     } catch (err) {
-      ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language)
+      console.log(JSON.stringify(err));
+      ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
-  }
+  };
 
   useEffect(() => {
     if (photo) {
@@ -229,7 +313,8 @@ const ProfileScreen = ({ navigation, route }: Props) => {
               style={[styles.profile, styles.shadow]}
               onPress={() => {
                 changePhoto();
-              }}>
+              }}
+            >
               <Image
                 source={sesion?.profileImage?.url ? { uri: sesion?.profileImage?.url } : Images.Profile}
                 style={styles.profile}
@@ -309,39 +394,39 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     paddingHorizontal: width * 0.05,
-    width,
+    width
   },
   logo: {
     width: 200,
-    height: 115,
+    height: 115
   },
   text: {
     color: Colors.black,
-    fontFamily: "Dosis",
-    fontSize: 18,
+    fontFamily: 'Dosis',
+    fontSize: 18
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
+    marginBottom: 20
   },
   containerRow: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   containerCenter: {
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   containerWidth: {
-    width: '100%',
+    width: '100%'
   },
   buttonRender: {
     width: 'auto',
-    paddingHorizontal: 20,
+    paddingHorizontal: 20
   },
   buttonRenderWhite: {
     borderColor: Colors.transparent,
     shadowColor: Colors.transparent,
-    width: 'auto',
+    width: 'auto'
   },
   containerTransactions: {
     width: width * 0.9,
@@ -349,22 +434,22 @@ const styles = StyleSheet.create({
     marginHorizontal: width * 0.05,
     borderRadius: 20,
     backgroundColor: Colors.white,
-    marginBottom: 20,
+    marginBottom: 20
   },
   profile: {
     width: 120,
     height: 120,
-    borderRadius: 60,
+    borderRadius: 60
   },
   shadow: {
     shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 3
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-    elevation: 7,
-  },
+    elevation: 7
+  }
 });
 export default ProfileScreen;

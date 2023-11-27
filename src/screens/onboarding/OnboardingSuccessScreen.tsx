@@ -17,12 +17,12 @@ const OnboardingSuccessScreen = ({ navigation }: Props) => {
   const { language } = useContext(RenderContext);
   const { setSesion } = useContext(SesionContext);
   const { setAccounts } = useContext(AccountsContext);
-  useEffect(() => {
+ /*  useEffect(() => {
     navigation.addListener('beforeRemove', e => {
       e.preventDefault();
       ToastCall('warning', Languages[language].GENERAL.ERRORS.NoBack, language);
     });
-  }, [navigation]);
+  }, [navigation]); */
   return (
     <ScreenContainer>
       <View style={styles.container}>

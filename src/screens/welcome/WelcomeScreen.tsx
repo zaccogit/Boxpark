@@ -14,7 +14,7 @@ import {
   Button,
 } from "../../components";
 import { Colors } from "../../utils";
-import { Images } from "../../../assets";
+import { Images, SVG } from "../../../assets";
 import { StackScreenProps } from "@react-navigation/stack";
 import { Image } from "expo-image";
 import Swiper from "react-native-swiper";
@@ -36,35 +36,17 @@ const WelcomeScreen = ({ navigation }: Props) => {
   const data: Data[] = [
     {
       id: "1",
-      image: (
-        <Image
-          source={Images.PosPhone}
-          contentFit="fill"
-          style={{ width, height: "50%" }}
-        />
-      ),
+      image: <SVG.Frame1/>,
       text: "El mejor punto de ventas.",
     },
     {
       id: "2",
-      image: (
-        <Image
-          source={Images.MobilePaymen}
-          contentFit="fill"
-          style={{ width, height: "50%" }}
-        />
-      ),
+      image:<SVG.Frame2/>,
       text: "Todos los cobros desde un mismo lugar.",
     },
     {
       id: "3",
-      image: (
-        <Image
-          source={Images.Tienda}
-          contentFit="fill"
-          style={{ width, height: "50%" }}
-        />
-      ),
+      image: <SVG.Frame3/>,
       text: "Procesa pago sin intermediarios.",
     },
   ];

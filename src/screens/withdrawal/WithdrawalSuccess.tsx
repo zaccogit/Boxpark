@@ -40,12 +40,12 @@ const WithdrawalSuccess = ({ navigation, route }: Props) => {
     setResponse(data);
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     navigation.addListener('beforeRemove', e => {
       e.preventDefault();
       ToastCall('warning', Languages[language].GENERAL.ERRORS.NoBack, language);
     });
-  }, [navigation]);
+  }, [navigation]); */
 
   return (
     <>

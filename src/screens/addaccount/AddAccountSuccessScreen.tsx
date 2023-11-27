@@ -16,12 +16,12 @@ const height: number = Dimensions.get('window').height;
 const AddAccountSuccessScreen = ({ navigation }: Props) => {
   const { language } = useContext(RenderContext);
 
-  useEffect(() => {
+  /* useEffect(() => {
     navigation.addListener('beforeRemove', e => {
       e.preventDefault();
       ToastCall('warning', Languages[language].GENERAL.ERRORS.NoBack, language);
     });
-  }, [navigation]);
+  }, [navigation]); */
 
   return (
     <ScreenContainer>

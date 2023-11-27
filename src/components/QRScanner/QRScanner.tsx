@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -9,21 +9,20 @@ import {
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Colors } from "../../utils";
-import { Icons, Fonts } from "../../../assets";
+import { MaterialIcons } from "@expo/vector-icons";
 import { RenderContext } from "../../contexts";
 
 interface Props {
-  setState?: (e: string | undefined) => void;
+  setState: (e: string | undefined) => void;
   active: boolean,
-  setActive?: any
+  setActive: (e: boolean) => void
 }
 
 const width: number = Dimensions.get("window").width;
 
-const QRScanner = ({ setState }: Props) => {
+const QRScanner = ({ setState,setActive,active }: Props) => {
   const { language } = useContext(RenderContext);
   const [hasPermission, setHasPermission] = useState(false);
-  const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -35,39 +34,41 @@ const QRScanner = ({ setState }: Props) => {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }: { type: any; data: any }) => {
-    setScanned(true);
+    console.log(data,"AQUIII2");
     if (setState) setState(data);
   };
+  useEffect(() => {
+    console.log(active,"AQUIII");
+  }, [active])
+  
 
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        setScanned(false);
+        setActive(!active);
       }}
     >
-      <View style={scanned ? styles.scanner : styles.scanner2}>
+      <View style={active ? styles.scanner : styles.scanner2}>
         {hasPermission && (
           <>
+          {!active&&
             <BarCodeScanner
-              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-              style={StyleSheet.absoluteFillObject}
+              onBarCodeScanned={active ? undefined : handleBarCodeScanned}
+              style={[StyleSheet.absoluteFillObject]}
               barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
             />
-            {scanned && (
+            }
+            {active && (
               <View
                 style={[
-                  scanned ? styles.scanner : styles.scanner2,
+                  active ? styles.scanner : styles.scanner2,
                   { backgroundColor: Colors.white },
                 ]}
               >
-                <Image
-                  source={Icons.TouchID}
-                  style={styles.icon}
-                  resizeMode="cover"
-                />
-                <Text style={styles.text}>
-                  {language === "ES" ? "¡Presiona aquí!" : "¡Touch here!"}
+                <MaterialIcons name="touch-app" size={width * 0.3} color="black" />
+                <Text style={[styles.text]} className=" text-center mt-4">
+                  {language === "ES" ? "¡Presiona aquí para encender!" : "¡Touch here!"}
                 </Text>
               </View>
             )}

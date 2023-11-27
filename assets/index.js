@@ -65,9 +65,6 @@ import searchCountry from './images/123-3.png';
 import listCheck from './images/123-4.png';
 import phoneNumber from './images/telefono-movil.png';
 import documentImage from './images/carne-de-identidad.png';
-import MobilePaymen from './images/23730-3d-mobile-payment.gif';
-import Tienda from './images/37276-tienda.gif';
-import PosPhone from './images/116785-pos-phone-letim.gif';
 import selfie from './images/selfie.gif'
 import ScanQRPayment from './images/ScanQRPayment.png'
 import AmountScreen from './images/AmountScreen.png'
@@ -86,9 +83,6 @@ export const Images = {
   phoneNumber,
   documentImage,
   selfie,
-  MobilePaymen,
-  Tienda,
-  PosPhone,
   ScanQRPayment,
   AmountScreen,
   SplashLogoGif,
@@ -138,8 +132,14 @@ import RechargeIcon from './svg/RechargeIcon';
 import Trash from './svg/Trash';
 import ClipboardIcon from './svg/ClipboardIcon';
 import LogoBoxpark from './svg/LogoBoxpark';
+import Frame1 from './svg/Framer1';
+import Frame2 from './svg/Framer2';
+import Frame3 from './svg/Framer3';
 
 export const SVG = {
+  Frame1,
+  Frame2,
+  Frame3,
   ScanQrSvg,
   ZaccoLogoDSVG,
   ZaccoLogoWSVG,

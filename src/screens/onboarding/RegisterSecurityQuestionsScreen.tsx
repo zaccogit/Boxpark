@@ -151,7 +151,6 @@ const SecurityQuestionsScreen = ({ navigation }: Props) => {
     setSecQuestions3(
       secQuestions.filter(item => item.value !== sqSelected.question1 && item.value !== sqSelected.question2),
     );
-    console.log(sesion?.id, "sesion?.id")
   }, [sqSelected.question1, sqSelected.question2]);
   return (
     <ScreenContainer onRefresh={getSecQuestions}>

@@ -50,12 +50,12 @@ const ReceiptTransferScreen = ({ navigation, route }: Props) => {
   useEffect(() => {
     completeReference();
   }, []);
-  useEffect(() => {
+  /* useEffect(() => {
     navigation.addListener('beforeRemove', e => {
       e.preventDefault();
       ToastCall('warning', Languages[language].GENERAL.ERRORS.NoBack, language);
     });
-  }, [navigation]);
+  }, [navigation]); */
   return (
     <>
       <Header route={route} navigation={navigation} title={Languages['ES'].SCREENS.TransferScreen.Header} />

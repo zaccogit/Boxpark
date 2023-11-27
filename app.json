@@ -2,7 +2,7 @@
   "expo": {
     "name": "boxpark",
     "slug": "boxpark",
-    "version": "1.2.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -26,6 +26,7 @@
       }
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
@@ -83,6 +84,12 @@
         {
           "icon": "./assets/logos/logo.png",
           "color": "#00ff0000"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
     ],
