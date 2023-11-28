@@ -65,6 +65,7 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
     });
     setAccountsPayment(allAccounts);
   }, [qrPaymentRequest]);
+
   const getAccountInfo = useCallback(() => {
     const accountSelected: AccountsInterface = accounts?.find(
       (account: AccountsInterface) => account?.id === qrPaymentRequest?.accountPaymentId,
@@ -80,21 +81,26 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
     }
   }, [qrPaymentRequest, accounts]);
   const getInfoBusiness = useCallback(async (cryptogram:string | undefined) => {
+    setQr(false);
     if(!loader){
       try {
         const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "GATEWAY_BASE_API")?.vale.trim() as string
         const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BUSINESS_INFO_URL")?.vale as string
         const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "BUSINESS_INFO_METHOD")?.vale as Method
         const headers = GetHeader(tokenGateway, 'application/json');
-        console.log(cryptogram)
+        console.log(cryptogram, "cryptogram")
         const req = {
           criptograma: cryptogram,
         };
         const response: Response = await HttpService(method, host, url, req, headers, setLoader);
+        console.log(response);
         if (response?.codigoRespuesta !== '00') {
           ToastCall('warning', Languages[language].SCREENS.QrPaymentScreen.message3, language);
           return;
         }
+
+        console.log(response.products.savingsAccounts);
+
         const {
           products: { savingsAccounts },
         } = response;
@@ -102,11 +108,16 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
           ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
           return;
         }
-        const productId: number = accounts.find(item => item.id === qrPaymentRequest.accountPaymentId)?.productId as number;
+        const productId: number = accounts[0]?.productId as number;
+        console.log(productId);
+        
         const accountsBusiness: AccountsInterface[] = savingsAccounts?.filter(
           (account: AccountsInterface) => account?.productId === productId,
         );
+        console.log(accountsBusiness);
+        console.log(accountsBusiness.length);
         if (!accountsBusiness?.length) {
+          
           ToastCall(
             'warning',
             `${Languages[language].SCREENS.QrPaymentScreen.message1} ${qrPaymentRequest.accountPaymentName}. ${Languages[language].SCREENS.QrPaymentScreen.message2}`,
@@ -132,11 +143,7 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
         setQr(true);
       }
     }
-  }, [qrPaymentRequest, language,loader]);
-  useEffect(() => {
-    getAccountsPayment();
-    
-  }, []);
+  }, [qrPaymentRequest, language,loader,accounts]);
   useEffect(() => {
     if(isFocus){
       setLoader(true)
@@ -144,14 +151,12 @@ const QRPaymentScreen = ({ navigation, route }: Props) => {
         setQr(false);
         setLoader(false)
       }, 1000);
+      getAccountsPayment();
+      getAccountInfo();
     }else{
       setQr(true);
     }
   }, [isFocus])
-  
-  useEffect(() => {
-    getAccountInfo();
-  }, [qrPaymentRequest.accountPaymentId]);
 
   return (
     <>

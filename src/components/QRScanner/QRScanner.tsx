@@ -23,6 +23,7 @@ const width: number = Dimensions.get("window").width;
 const QRScanner = ({ setState,setActive,active }: Props) => {
   const { language } = useContext(RenderContext);
   const [hasPermission, setHasPermission] = useState(false);
+  const [isActive2, setisActive2] = useState(false)
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -34,11 +35,13 @@ const QRScanner = ({ setState,setActive,active }: Props) => {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }: { type: any; data: any }) => {
-    console.log(data,"AQUIII2");
+    setActive(false)
+    setisActive2(false)
     if (setState) setState(data);
   };
   useEffect(() => {
     console.log(active,"AQUIII");
+    setisActive2(active)
   }, [active])
   
 
@@ -54,7 +57,7 @@ const QRScanner = ({ setState,setActive,active }: Props) => {
           <>
           {!active&&
             <BarCodeScanner
-              onBarCodeScanned={active ? undefined : handleBarCodeScanned}
+              onBarCodeScanned={isActive2 ? undefined : handleBarCodeScanned}
               style={[StyleSheet.absoluteFillObject]}
               barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
             />

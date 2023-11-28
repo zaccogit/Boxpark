@@ -35,7 +35,7 @@ const QrPaymentFormScreen = ({ navigation, route }: Props) => {
       sucursalName.length &&
       accountBusinessName.length &&
       accountBusinessNumber.length &&
-      accountPaymentBalance <= Number(amount)  &&
+      accountPaymentBalance >= Number(amount)  &&
       Number(amount) >= 0
     );
   }, [qrPaymentRequest]);

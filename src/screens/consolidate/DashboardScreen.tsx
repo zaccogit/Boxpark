@@ -82,6 +82,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
   }, [tokenRU, sesion, language, endPoints]);
 
   const getLastTransactions = useCallback(async () => {
+    console.log("HOLA");
     try {
       const host: string = endPoints
         ?.find((endPoint: EndPointsInterface) => endPoint.name === 'APP_BASE_API')
@@ -106,6 +107,8 @@ const DashboardScreen = ({ navigation, route }: Props) => {
         headers,
         setLoaderTransaction
       );
+      console.log(req,"getLastTransactions");
+      
       if (!response) {
         ToastCall('error', Languages[language].GENERAL.ERRORS.RequestInformationError, language);
         setMessageTransaction('Error al consultar las ultimas \ntransacciones');
@@ -116,6 +119,8 @@ const DashboardScreen = ({ navigation, route }: Props) => {
         destinationId: `${sesion?.id}`,
         size: 10
       };
+
+      console.log(req,"getLastTransactions");
       const response2: LastransactionsInterface[] = await HttpService(
         method,
         host,
@@ -124,6 +129,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
         headers,
         setLoaderTransaction
       );
+      console.log(response2,"getLastTransactions");
       if (!response2) {
         ToastCall('error', Languages[language].GENERAL.ERRORS.RequestInformationError, language);
         setMessageTransaction('Error al consultar las ultimas \ntransacciones');
@@ -146,6 +152,7 @@ const DashboardScreen = ({ navigation, route }: Props) => {
       setLastTransactions(unique);
       setMessageTransaction('No tienes transacciones');
     } catch (err) {
+      console.log(JSON.stringify(err));
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   }, [sesion?.userCoreId, language, tokenRU]);
@@ -173,9 +180,9 @@ const DashboardScreen = ({ navigation, route }: Props) => {
 
   const refresh = useCallback(() => {
     if (sesion) {
-      refreshAccounts();
+      /* refreshAccounts();
+      getPromotions(); */
       getLastTransactions();
-      getPromotions();
     }
   }, [sesion?.id, sesion?.userCoreId, sesion?.phone]);
 

@@ -23,7 +23,7 @@ const height: number = Dimensions.get('window').height;
 
 const NacionalityScreen = ({ navigation }: Props) => {
   const { setLoader, language } = useContext(RenderContext);
-  const { tokenRU, endPoints } = useContext(AuthContext);
+  const { tokenRU, endPoints, DataCoordenadas } = useContext(AuthContext);
   const { registerReq, setRegisterReq, nacionality, setNacionality } = useContext(RegisterContext);
   const [countries, setCountries] = useState<SelectItems[]>([]);
   const [venezuelaId, setVenezuelaId] = useState<number>(0);
@@ -34,12 +34,10 @@ const NacionalityScreen = ({ navigation }: Props) => {
   const location = useCallback(
     async (nacionality: number) => {
 
-      let position = await Location.getCurrentPositionAsync({});
-
       setRegisterReq({
         ...registerReq,
-        positionY: position?.coords?.latitude?.toString(),
-        positionX: position?.coords?.longitude?.toString(),
+        positionY: DataCoordenadas?.coords?.latitude?.toString(),
+        positionX: DataCoordenadas?.coords?.longitude?.toString(),
       });
 
       setNacionality(nacionality);

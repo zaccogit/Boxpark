@@ -1,9 +1,9 @@
 {
-    "APP_CONFIG_BASE_API": "http://54.148.218.243:7272",
+    "APP_CONFIG_BASE_API": "https://boxpark.zaccoapp.com:7272",
     "AUTH_API_USERNAME": "admin",
     "AUTH_API_PASSWORD": "1nt3r4xt3l3ph0nyWEB",
-    "HOST_BP": "http://54.148.218.243:7676",
-    "HOST_TRANSACTION": "http://54.148.218.243:8066",
-    "HOST_RU": "http://54.148.218.243:8080",
-    "HOST_COMPLIANCE": "http://54.148.218.243:7575"
+    "HOST_BP": "https://boxpark.zaccoapp.com:7676",
+    "HOST_TRANSACTION": "https://boxpark.zaccoapp.com:8066",
+    "HOST_RU": "https://boxpark.zaccoapp.com:8080",
+    "HOST_COMPLIANCE": "https://boxpark.zaccoapp.com:7575"
 }

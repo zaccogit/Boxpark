@@ -17,6 +17,8 @@ export interface AuthContextProps {
   setdeviceId: (e: string) => void;
   setChannelTypeId: (e: number) => void;
   setEndPoints: (e: EndPoints[]) => void;
+  DataCoordenadas: Coodernadas;
+  setDataCoordenadas: (e: Coodernadas) => void;
 
 }
 
@@ -35,4 +37,14 @@ export interface Request {
 
 export interface Response {
   id_token: string;
+}
+
+
+export interface Coodernadas {
+  coords: Coords;
+}
+
+export interface Coords {
+  longitude: number;
+  latitude: number;
 }

@@ -9,7 +9,7 @@ import AuthContext from "./AuthContext";
 import { HttpConfigService } from "../../services";
 import Languages from "../../utils/Languages.json";
 import { GetHeader, ToastCall } from "../../utils/GeneralMethods";
-import { EndPoints, Request, Response } from "./AuthInterfaces";
+import { Coodernadas, EndPoints, Request, Response } from "./AuthInterfaces";
 import enviroments from "../../../enviroments.json";
 import { useRender } from "../render/RenderState";
 const AuthState = (props: PropsWithChildren) => {
@@ -23,6 +23,9 @@ const AuthState = (props: PropsWithChildren) => {
   const [channelTypeId, setChannelTypeId] = useState<number>(0);
   const [deviceId, setdeviceId] = useState<string>("123456789");
   const [endPoints, setEndPoints] = useState<EndPoints[]>([]);
+  const [DataCoordenadas, setDataCoordenadas] = useState<Coodernadas>({
+    coords: { latitude: 0, longitude: 0 }
+  });
   const getRequest = useCallback((): Request => {
     return {
       username: enviroments.AUTH_API_USERNAME,
@@ -91,7 +94,8 @@ const AuthState = (props: PropsWithChildren) => {
         setTokenBP,
         setChannelTypeId,
         setEndPoints,
-        setdeviceId
+        setdeviceId,
+        DataCoordenadas, setDataCoordenadas
       }}
     >
       {props.children}

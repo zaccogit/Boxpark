@@ -24,7 +24,7 @@ type OpenURLButtonProps = {
 const width: number = Dimensions.get('window').width;
 
 const PasswordScreen = ({ navigation }: Props) => {
-  const { tokenRU, endPoints, deviceId } = useContext(AuthContext);
+  const { tokenRU, endPoints, deviceId, DataCoordenadas} = useContext(AuthContext);
   const { language, setLoader } = useContext(RenderContext);
   const { registerReq, setRegisterReq, setNacionality, initialStateRegister, partPhoto } = useContext(RegisterContext);
 
@@ -41,7 +41,6 @@ const PasswordScreen = ({ navigation }: Props) => {
   };
 
   const onSubmit = async () => {
-    let position = await Location.getCurrentPositionAsync({});
 
     const {
       firstName,
@@ -73,8 +72,8 @@ const PasswordScreen = ({ navigation }: Props) => {
     documentTypeId=${documentTypeId}&\
     credential=${credential}&\
     ${referenceNumber ? "referCode="+referenceNumber+"&" : ""}\
-    positionX=${position.coords.longitude}&\
-    positionY=${position.coords.latitude}&\
+    positionX=${DataCoordenadas.coords.longitude}&\
+    positionY=${DataCoordenadas.coords.latitude}&\
     deviceId=${deviceId}&\
     typeCondition=${typeCondition}&\
     gender=${gender}`.replaceAll("    ", "")

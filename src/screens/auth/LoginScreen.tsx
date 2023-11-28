@@ -11,6 +11,8 @@ import { getIosIdForVendorAsync, androidId } from "expo-application";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ToastCall, GetHeader } from "../../utils/GeneralMethods";
 import { Image } from "expo-image";
+import * as Location from 'expo-location';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -61,7 +63,7 @@ const width: number = Dimensions.get("window").width;
 
 const LoginScreen = ({ navigation }: Props) => {
   const { language, setLoader } = useContext(RenderContext);
-  const { tokenRU, endPoints,deviceId } = useContext(AuthContext);
+  const { tokenRU, endPoints,deviceId, setDataCoordenadas} = useContext(AuthContext);
   const { setSesion, startTimerSesion, sesion } = useContext(SesionContext);
   const { setAccounts } = useContext(AccountsContext);
   const [email, setEmail] = useState<boolean>(true);
@@ -246,10 +248,26 @@ const LoginScreen = ({ navigation }: Props) => {
     [phone],
   );
 
+  const location = useCallback(async () => {
+
+    try {
+      setLoader(true);
+      let position = await Location.getCurrentPositionAsync();
+      setDataCoordenadas(position);
+      await AsyncStorage.setItem('location', JSON.stringify(position));
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }finally{
+      setLoader(false);
+    }
+
+  }, []);
+
   useEffect(() => {
     if (!tokenRU) {
       navigation.push("Init");
     }
+    location()
   }, []);
   /* useEffect(() => {
     if (deviceId) {
