@@ -36,16 +36,32 @@ const Selfie2Screen = ({ navigation, route: { params } }: Props) => {
 
   const getPhoto = async (file: Asset | ""): Promise<File | null> => {
     if (!file) return null;
-    const data: File = {
-      uri: file.uri,
-      type: 'image/jpg',
-      name: file.filename,
+    let data: File;
+
+    console.log(urlPhoto);
+
+    if(Platform.OS=== "ios" ){
+      data = {
+        uri: urlPhoto,
+        type: 'image/jpg',
+        name: file.filename,
+      }
+
+    }else{
+      data = {
+        uri: file.uri,
+        type: 'image/jpg',
+        name: file.filename,
+      }
     }
+    
+     
     return data
   }
   const onSubmit = async () => {
     if(photo){
-
+      console.log(photo,"getPhoto");
+      console.log(urlPhoto);
       const photoReq = await getPhoto(photo)
 
       setpartPhoto(photoReq)

@@ -61,8 +61,8 @@ const IdentityScreen = ({navigation}: Props) => {
     ) {
       setRegisterReq({
         ...registerReq,
-        firstName: `${identity.firstName} ${identity.secondName}`,
-        lastName: `${identity.lastName} ${identity.secondLastName}`,
+        firstName: `${identity.firstName}/${identity.secondName}`,
+        lastName: `${identity.lastName}/${identity.secondLastName}`,
       });
     }
   }, [identity]);

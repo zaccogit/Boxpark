@@ -49,8 +49,6 @@ const PasswordScreen = ({ navigation }: Props) => {
       phone,
       documentId,
       gender,
-      positionX,
-      positionY,
       documentTypeId,
       credential,
       credentialRepeat,
@@ -80,7 +78,8 @@ const PasswordScreen = ({ navigation }: Props) => {
     const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_METHOD")?.vale as Method
     const headers = GetHeader(tokenRU, "multipart/form-data")
     const req: FormData = new FormData()
-    req.append("file", partPhoto as any)
+    req.append("file", {...partPhoto, name:partPhoto?.name?.toLocaleLowerCase()} as any)
+    console.log(partPhoto);
     try {
       const response = await HttpService(method, host, url, req, headers, setLoader);
       if (response?.codigoRespuesta === '08') {

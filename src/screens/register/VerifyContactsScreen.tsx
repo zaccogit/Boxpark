@@ -205,7 +205,7 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
               keyboardType="numeric"
               maxLength={6}
             />
-            <Text style={[styles.textOptions, { color: timer1 > 10 ? Colors.green : Colors.danger }]}>
+            <Text style={[styles.textOptions, { color: timer1 > 10 ? Colors.green : Colors.danger, marginTop:10 }]}>
               {mins1}:{secs1}
             </Text>
             <TouchableOpacity
@@ -231,7 +231,7 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
               keyboardType="numeric"
               maxLength={6}
             />
-            <Text style={[styles.textOptions, { color: timer3 > 10 ? Colors.green : Colors.danger }]}>
+            <Text style={[styles.textOptions, { color: timer3 > 10 ? Colors.green : Colors.danger, marginTop:10 }]}>
               {mins3}:{secs3}
             </Text>
             <TouchableOpacity
