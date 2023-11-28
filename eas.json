@@ -26,6 +26,12 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios":{
+        "appleId":"desarrollozacco@gmail.com",
+        "ascAppId":"6467150416",
+        "appleTeamId":"5273S2Q37H"
+      }
+    }
   }
 }
