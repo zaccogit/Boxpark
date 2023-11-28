@@ -180,8 +180,8 @@ const DashboardScreen = ({ navigation, route }: Props) => {
 
   const refresh = useCallback(() => {
     if (sesion) {
-      /* refreshAccounts();
-      getPromotions(); */
+      refreshAccounts();
+      getPromotions();
       getLastTransactions();
     }
   }, [sesion?.id, sesion?.userCoreId, sesion?.phone]);
