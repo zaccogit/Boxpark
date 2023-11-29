@@ -70,8 +70,10 @@ import ScanQRPayment from './images/ScanQRPayment.png'
 import AmountScreen from './images/AmountScreen.png'
 import SplashLogoGif from './images/SplashLogoGif.gif'
 import cardMiBanco from './images/cardMiBanco.png'
+import Group12713 from './images/Group12713.png'
 
 export const Images = {
+  Group12713,
   Profile,
   BgSplash,
   Splash1,
@@ -135,6 +137,7 @@ import LogoBoxpark from './svg/LogoBoxpark';
 import Frame1 from './svg/Framer1';
 import Frame2 from './svg/Framer2';
 import Frame3 from './svg/Framer3';
+import Group127132 from './svg/Group12713.svg'
 
 export const SVG = {
   Frame1,
@@ -164,5 +167,6 @@ export const SVG = {
   RechargeIcon,
   Trash,
   ClipboardIcon,
-  LogoBoxpark
+  LogoBoxpark,
+  Group127132
 };

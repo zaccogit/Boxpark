@@ -24,6 +24,7 @@ const StackNavigator = () => {
     >
       <Stack.Screen name="Init" component={Screens.InitScreen} />
       <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+      <Stack.Screen name="Localization" component={Screens.LocalizationScreen} />
       {/* auth */}
       <Stack.Screen name="Login" component={Screens.LoginScreen} />
       <Stack.Screen

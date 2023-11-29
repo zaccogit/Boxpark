@@ -211,6 +211,7 @@ const InitScreen = ({ navigation }: Props) => {
       if (response) {
         setTokenPromotions(response.id_token);
         /* onSubmitBP(); */
+        redirect();
       }
     } catch (err: any) {
       console.error(err, "promo");
@@ -299,7 +300,7 @@ const InitScreen = ({ navigation }: Props) => {
     }
   }, []);
 
-  const permisosCheck = async () => {
+  /* const permisosCheck = async () => {
 
     let { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -313,7 +314,7 @@ const InitScreen = ({ navigation }: Props) => {
     }
 
     redirect();
-  }
+  } */
   useEffect(() => {
     changeLanguage();
   }, []);
@@ -322,17 +323,6 @@ const InitScreen = ({ navigation }: Props) => {
       onSubmit();
     }
   }, [endPoints.length]);
-
-  useEffect(() => {
-    if (
-      tokenRU &&
-      tokenGateway &&
-      tokenCompliance &&
-      tokenPromotions
-    ) {
-      permisosCheck()
-    }
-  }, [tokenRU, tokenGateway, tokenCompliance, tokenPromotions]);
 
   return (
     <ScreenContainer

@@ -1,6 +1,7 @@
 /* Welcome */
 import InitScreen from './welcome/InitScreen';
 import WelcomeScreen from './welcome/WelcomeScreen';
+import LocalizationScreen from './welcome/LocalizationScreen';
 /* Auth */
 import LoginScreen from './auth/LoginScreen';
 import TrustedDeviceScreen from './auth/TrustedDeviceScreen';
@@ -114,7 +115,8 @@ export const Screens = {
   RechargeButtonPaymentScreen,
   AllCardScreen,
   CardInfoScreen,
-  Selfie2Screen
+  Selfie2Screen,
+  LocalizationScreen
 };
 
 

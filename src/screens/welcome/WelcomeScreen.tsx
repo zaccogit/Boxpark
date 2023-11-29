@@ -93,23 +93,15 @@ const WelcomeScreen = ({ navigation }: Props) => {
       
       <View>
         <View style={styles.containerButton}>
-          <View style={{ width: "45%", alignItems: "center" }}>
+          <View style={{ width: "100%", alignItems: "center" }}>
             <Button
-              text={"Ir al login"}
+              text={"Continuar"}
               onPress={() => {
-                navigation.replace("Login");
+                navigation.replace("Localization");
               }}
             />
           </View>
-          <View style={{ width: "45%", alignItems: "center" }}>
-            <Button
-              text={"Registrarse"}
-              onPress={() => {
-                navigation.replace("Nacionality");
-              }}
-              white={true}
-            />
-          </View>
+         
         </View>
       </View>
     </ScreenContainer>

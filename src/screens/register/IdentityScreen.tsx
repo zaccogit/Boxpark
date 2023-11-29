@@ -1,8 +1,8 @@
 import React, {useEffect, useState, useContext, useCallback} from 'react';
 import {View, Text, Dimensions, StyleSheet, Image} from 'react-native';
 import {ScreenContainer, Select, Button, Input} from '../../components';
-import {Colors} from '../../utils';
-import {Fonts, Images} from '../../../assets';
+import { Colors } from '../../utils';
+import { Images } from '../../../assets';
 import Languages from '../../utils/Languages.json';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RegisterContext, RenderContext} from '../../contexts';

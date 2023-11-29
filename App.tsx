@@ -57,7 +57,6 @@ export default function App() {
       <AppMultiContext providers={ContextProviders}>
         <SafeAreaProvider>
           <Loading />
-          <PushNotification/>
           <NavigationContainer>
             <StackNavigator />
           </NavigationContainer>
