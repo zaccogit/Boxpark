@@ -79,7 +79,7 @@ const NacionalityScreen = ({ navigation }: Props) => {
     });
     setRegisterReq({
       ...registerReq,
-      typeCondition: nacionality === venezuelaId ? 'V' : 'E'
+      typeCondition: 'V'
     })
   }
   useEffect(() => {

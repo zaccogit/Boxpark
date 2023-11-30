@@ -2,6 +2,7 @@
 import InitScreen from './welcome/InitScreen';
 import WelcomeScreen from './welcome/WelcomeScreen';
 import LocalizationScreen from './welcome/LocalizationScreen';
+import CamaraPermisos from './welcome/CamaraPermisos';
 /* Auth */
 import LoginScreen from './auth/LoginScreen';
 import TrustedDeviceScreen from './auth/TrustedDeviceScreen';
@@ -116,7 +117,8 @@ export const Screens = {
   AllCardScreen,
   CardInfoScreen,
   Selfie2Screen,
-  LocalizationScreen
+  LocalizationScreen,
+  CamaraPermisos
 };
 
 

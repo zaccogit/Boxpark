@@ -138,6 +138,7 @@ import Frame1 from './svg/Framer1';
 import Frame2 from './svg/Framer2';
 import Frame3 from './svg/Framer3';
 import Group127132 from './svg/Group12713.svg'
+import Group12714 from './svg/Group12714.svg'
 
 export const SVG = {
   Frame1,
@@ -168,5 +169,6 @@ export const SVG = {
   Trash,
   ClipboardIcon,
   LogoBoxpark,
-  Group127132
+  Group127132,
+  Group12714
 };

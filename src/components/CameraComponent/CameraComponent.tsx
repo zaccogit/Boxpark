@@ -39,9 +39,8 @@ export default function CameraComponent({ saveImage, setActive, setUrl, swichCam
       try {
         const data = await cameraRef.current.takePictureAsync({
           aspect: [4, 3],
-          quality: .1,
+          quality: .05,
         });
-        console.log(data, "dataIMAGE");
         setUrl(data.uri)
         setImage(data.uri);
       } catch (error) {
@@ -55,10 +54,8 @@ export default function CameraComponent({ saveImage, setActive, setUrl, swichCam
       try {
         const asset = await MediaLibrary.createAssetAsync(image);
         saveImage(asset)
-        /* setUrl(asset.uri) */
         setActive(false)
         setImage("");
-        console.log('saved successfully');
       } catch (error) {
         console.log(error);
       }

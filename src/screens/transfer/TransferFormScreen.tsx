@@ -33,8 +33,8 @@ const TransferFormScreen = ({ navigation, route }: Props) => {
       userDestinationName.length &&
       accountDestinationName.length &&
       accountDestinationNumber.length &&
-      Number(amount) <= accountPaymentBalance &&
-      Number(amount) >= 0
+      accountPaymentBalance >= Number(amount.replace(",",".")) &&
+      Number(amount .replace(",",".")) >= 0
     );
   }, [transferRequest]);
 
@@ -78,7 +78,7 @@ const TransferFormScreen = ({ navigation, route }: Props) => {
               displaySymbol={transferRequest?.displaySymbol}
               value={transferRequest?.amount}
               onChangeText={(e: string) => {
-                change(e.replace(/[^0-9.]/g, ''), 'amount')
+                change(e.replace(/[^0-9,]/g, ''), 'amount')
               }}
               keyboardType="numeric"
             />

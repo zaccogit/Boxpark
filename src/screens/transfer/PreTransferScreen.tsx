@@ -111,7 +111,7 @@ const PreTransferScreen = ({ navigation, route }: Props) => {
         accountDestinationId: `${accountDestinationId}`,
         transacionSourceId: `${Platform?.OS === "ios" ? 2 : 1}`,
         userDestinationId,
-        amount,
+        amount:amount.replace(",","."),
         description: concept,
         userId: sesion?.id,
         simbol: displaySymbol,

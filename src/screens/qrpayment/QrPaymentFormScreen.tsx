@@ -35,8 +35,8 @@ const QrPaymentFormScreen = ({ navigation, route }: Props) => {
       sucursalName.length &&
       accountBusinessName.length &&
       accountBusinessNumber.length &&
-      accountPaymentBalance >= Number(amount)  &&
-      Number(amount) >= 0
+      accountPaymentBalance >= Number(amount.replace(",","."))  &&
+      Number(amount.replace(",",".")) >= 0
     );
   }, [qrPaymentRequest]);
   useEffect(() => {
@@ -77,7 +77,7 @@ const QrPaymentFormScreen = ({ navigation, route }: Props) => {
               displaySymbol={qrPaymentRequest?.displaySymbol}
               value={qrPaymentRequest?.amount}
               onChangeText={(e: string) => {
-                change(e.replace(/[^0-9.]/g, ''), 'amount')
+                change(e.replace(/[^0-9,]/g, ''), 'amount')
               }}
               keyboardType="numeric"
             />

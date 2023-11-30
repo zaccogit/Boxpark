@@ -35,7 +35,7 @@ const ContactsScreen = ({ navigation }: Props) => {
   };
 
   const isCorreoHandler = useCallback((text: string) => {
-    let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    let regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     setIsCorreo(regex.test(text));
   }, []);
 

@@ -26,7 +26,7 @@ const PreQRPaymenScreen = ({ navigation, route }: Props) => {
   const [modal, setModal] = useState<boolean>(false);
 
   const validateAmount = useCallback(() => {
-    const amount: string = qrPaymentRequest?.amount;
+    const amount: string = qrPaymentRequest?.amount.replace(",",".");
     if (amount?.length) {
       let newAmount: string = '';
       let symbol: number = 0;
@@ -94,7 +94,7 @@ const PreQRPaymenScreen = ({ navigation, route }: Props) => {
           accountDestinationId: `${accountBusinessId}`,
           transacionSourceId: `${Platform?.OS === 'ios' ? 2 : 1}`,
           userDestinationId: businessDestinationId,
-          amount,
+          amount:amount.replace(",","."),
           description: concept,
           userId: sesion?.id,
           simbol: displaySymbol,

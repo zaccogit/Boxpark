@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { Colors } from "../../utils";
 import { SVG } from "../../../assets";
 import { HttpService } from "../../services";
-import { RenderContext, AuthContext, SesionContext, EndPointsInterface, AccountsInterface, SesionInterface, AccountsContext } from "../../contexts";
+import { RenderContext, AuthContext, SesionContext, EndPointsInterface, AccountsInterface, SesionInterface, AccountsContext, RegisterContext } from "../../contexts";
 import Languages from "../../utils/Languages.json";
 import { Platform } from "react-native";
 import { getIosIdForVendorAsync, androidId } from "expo-application";
@@ -63,8 +63,9 @@ const width: number = Dimensions.get("window").width;
 
 const LoginScreen = ({ navigation }: Props) => {
   const { language, setLoader } = useContext(RenderContext);
-  const { tokenRU, endPoints,deviceId, setDataCoordenadas} = useContext(AuthContext);
+  const { tokenRU, endPoints,deviceId, setDataCoordenadas,} = useContext(AuthContext);
   const { setSesion, startTimerSesion, sesion } = useContext(SesionContext);
+  const { registerReq, setRegisterReq, setNacionality } = useContext(RegisterContext);
   const { setAccounts } = useContext(AccountsContext);
   const [email, setEmail] = useState<boolean>(true);
   const [phone, setPhone] = useState<Phone>(initialStatePhone);
@@ -249,12 +250,19 @@ const LoginScreen = ({ navigation }: Props) => {
   );
 
   const location = useCallback(async () => {
-
     try {
       setLoader(true);
-      let position = await Location.getCurrentPositionAsync();
-      setDataCoordenadas(position);
-      await AsyncStorage.setItem('location', JSON.stringify(position));
+      Location.getCurrentPositionAsync().then(async position => {
+        setLoader(false);
+        setDataCoordenadas(position);
+        console.log(position);
+        await AsyncStorage.setItem('location', JSON.stringify(position));
+      })
+      .catch(error => {
+        console.log(JSON.stringify(error));
+      });
+      
+      
     } catch (error) {
       console.log(JSON.stringify(error));
     }finally{
@@ -409,7 +417,14 @@ const LoginScreen = ({ navigation }: Props) => {
             styleButton={[styles.buttonRender, styles.buttonRenderWhite]}
             white={true}
             onPress={() => {
-              navigation.push('Nacionality');
+              navigation.push('Document', {
+                message: 'Ingrese su documento de identidad',
+              });
+              setRegisterReq({
+                ...registerReq,
+                typeCondition: 'V',
+              })
+              setNacionality("VENEZUELA")
             }}
           />
         </View>
