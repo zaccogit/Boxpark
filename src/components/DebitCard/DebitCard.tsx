@@ -31,7 +31,7 @@ const DebitCard = ({ name, balance, displaySymbol, language }: Props) => {
           />
           <View style={styles.containerIcon}>
             <Text style={[styles.textTop, { fontSize: 14, marginRight: 30 }]}>
-              {language ? (language === "EN" ? "Balance" : "Saldo") : "Saldo"}
+              {"Tickets"}
             </Text>
             <TouchableOpacity
               style={styles.icon}

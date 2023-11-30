@@ -752,15 +752,15 @@
         "text8": "Referencia"
       },
       "TransferScreen": {
-        "Header": "Transferencia a terceros",
+        "Header": "Compartir Tickets a terceros",
         "text1": "Seleccione la cuenta de origen:",
         "text2": "Escanee el código QR del comercio",
-        "message1": "El usuario al que desea transferir no tiene cuenta de tipo",
+        "message1": "El usuario al que desea compartir Tickets no tiene cuenta de tipo",
         "message2": "¡Seleccione otro tipo de cuenta!",
         "message3": "Usuario no encontrado. ¡Verifique e intente nuevamente!"
       },
       "TransferFormScreen": {
-        "Header": "Transferencia a terceros",
+        "Header": "Compartir Tickets a terceros",
         "text1": "Datos del receptor",
         "text2": "Nombre",
         "text3": "Apellido",
@@ -786,12 +786,12 @@
         "ERRORS": {
           "message1": "Saldo insuficiente.",
           "message2": "Monto erroneo, verifique e intente de nuevo.",
-          "message3": "El monto de la transacción esta en blanco."
+          "message3": "El monto de Ticket Compartido esta en blanco."
         }
       },
       "ReceiptTransferScreen": {
-        "title": "Transacción exitosa",
-        "text1": "Su transferencia ha sido efectuado de manera exitosa",
+        "title": "Ticket Compartido con exito",
+        "text1": "Ticket Compartido ha sido efectuado de manera exitosa",
         "text2": "Número de cuenta",
         "text3": "Monto",
         "text4": "Nombre",

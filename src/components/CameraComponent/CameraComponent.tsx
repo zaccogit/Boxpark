@@ -20,26 +20,19 @@ type Props = {
 const width: number = Dimensions.get('window').width;
 
 export default function CameraComponent({ saveImage, setActive, setUrl, swichCamera = false, text, typeMask = "camera" }: Props) {
-  const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false);
   const [image, setImage] = useState("");
   const [type, setType] = useState(typeMask === "selfie" ? CameraType.front : CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
   const cameraRef = useRef<any>(null);
 
-  useEffect(() => {
-    (async () => {
-      MediaLibrary.requestPermissionsAsync();
-      const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(cameraStatus.status === 'granted');
-    })();
-  }, []);
 
   const takePicture = async () => {
     if (cameraRef.current) {
       try {
         const data = await cameraRef.current.takePictureAsync({
           aspect: [4, 3],
-          quality: .05,
+          quality: .1,
+          allowsEditing: true,
         });
         setUrl(data.uri)
         setImage(data.uri);
@@ -62,9 +55,7 @@ export default function CameraComponent({ saveImage, setActive, setUrl, swichCam
     }
   };
 
-  if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+
 
   return (
     <View style={styles.container}>

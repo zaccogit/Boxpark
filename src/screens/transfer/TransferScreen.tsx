@@ -138,7 +138,7 @@ const TransferScreen = ({ navigation, route }: Props) => {
       const headers = GetHeader(tokenGateway, 'application/json');
       const req = {
         mail: email,
-        phoneNumer: `${code}${phoneNumer}`,
+        phoneNumer: `${code}${!phoneNumer[0]? phoneNumer.slice(1,11):phoneNumer }`,
       };
       const response: Response = await HttpService(method, host, url, req, headers, setLoader);
       if (response?.codigoRespuesta !== '00') {

@@ -303,7 +303,7 @@ const LoginScreen = ({ navigation }: Props) => {
       <View style={styles.container} className=" justify-between h-full ">
         <Image source={SVG.ZaccoLogoWV2} style={{ width: 128, height: 128, backgroundColor:"#000", borderRadius:32 }} />
         <Text style={[styles.text, styles.title]}>{Languages[language].SCREENS.LoginScreen.title}</Text>
-        <View style={[styles.containerRow, styles.containerWidth, styles.containerButtons]} className="">
+ {/*        <View style={[styles.containerRow, styles.containerWidth, styles.containerButtons]} className="">
           <Button
             text={Languages[language].SCREENS.LoginScreen.titleEmail}
             styleButton={[styles.buttonRender, !email ? styles.buttonRenderWhite : {}]}
@@ -329,7 +329,7 @@ const LoginScreen = ({ navigation }: Props) => {
               });
             }}
           />
-        </View>
+        </View> */}
         {email && (
           <View style={[styles.containerWidth]}>
             <Text style={styles.text}>{Languages[language].SCREENS.LoginScreen.titleEmail}</Text>
@@ -424,7 +424,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 ...registerReq,
                 typeCondition: 'V',
               })
-              setNacionality("VENEZUELA")
+              setNacionality(9)
             }}
           />
         </View>

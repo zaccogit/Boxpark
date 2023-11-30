@@ -27,6 +27,8 @@ const CamaraPermisos = ({ navigation }: Props) => {
       return;
     }
 
+    await MediaLibrary.requestPermissionsAsync();
+
     await Camera.requestCameraPermissionsAsync();
 
     navigation.replace('Login');
