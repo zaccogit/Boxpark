@@ -20,16 +20,12 @@ const CamaraPermisos = ({ navigation }: Props) => {
 
   const permisosCheck = async () => {
 
-    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    const {status} = await Camera.requestCameraPermissionsAsync();
 
-    if (status !== 'granted') {
-      ToastCall('error', 'Permission to access location was denied', language);
-      return;
+    if(status !== "granted"){
+      ToastCall('error', 'Para Usar la app necesita los permisos de la camara.', language);
+      return
     }
-
-    await MediaLibrary.requestPermissionsAsync();
-
-    await Camera.requestCameraPermissionsAsync();
 
     navigation.replace('Login');
 

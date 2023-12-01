@@ -12,7 +12,7 @@ import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
 import { Asset } from 'expo-media-library';
 import CameraComponent from '../../components/CameraComponent/CameraComponent';
 
-interface Props extends StackScreenProps<any, any> { }
+interface Props extends StackScreenProps<any, any> {}
 
 interface File {
   uri: string | undefined;
@@ -20,7 +20,7 @@ interface File {
   name: string | undefined;
 }
 
-type Method = "get" | "post" | "put" | "delete"
+type Method = 'get' | 'post' | 'put' | 'delete';
 
 const width: number = Dimensions.get('window').width;
 
@@ -29,117 +29,107 @@ const Selfie2Screen = ({ navigation, route: { params } }: Props) => {
   const { sesion, setSesion } = useContext(SesionContext);
   /* const { permissions, askCameraPermission } = useContext(PermissionsContext); */
   const { setLoader, language } = useContext(RenderContext);
-  const [urlPhoto, setUrlPhoto] = useState<string | undefined>("")
-  const [photo, setPhoto] = useState<Asset | "">("")
-  const [CameraActive, setCameraActive] = useState<boolean>(false)
-  const {  setpartPhoto} = useContext(RegisterContext);
+  const [urlPhoto, setUrlPhoto] = useState<string | undefined>('');
+  const [photo, setPhoto] = useState<Asset | ''>('');
+  const [CameraActive, setCameraActive] = useState<boolean>(false);
+  const { setpartPhoto } = useContext(RegisterContext);
 
-  const getPhoto = async (file: Asset | ""): Promise<File | null> => {
-    if (!file) return null;
-    let data: File;
+  const onSubmit = async () => {
+    if (urlPhoto) {
+      const name = urlPhoto?.split('/');
 
-    console.log(urlPhoto);
-
-    if(Platform.OS=== "ios" ){
-      data = {
+      const data = {
         uri: urlPhoto,
         type: 'image/jpg',
-        name: file.filename,
-      }
+        name: urlPhoto?.split('/')[name?.length - 1]
+      };
+      console.log(urlPhoto, 'urlPhoto');
 
-    }else{
-      data = {
-        uri: file.uri,
-        type: 'image/jpg',
-        name: file.filename,
-      }
-    }
-    
-     
-    return data
-  }
-  const onSubmit = async () => {
-    if(photo){
+      setpartPhoto(data);
 
-      const photoReq = await getPhoto(photo)
-
-      setpartPhoto(photoReq)
-
-      navigation.navigate("CreatePassword")
-
+      navigation.navigate('CreatePassword');
     }
   };
   return (
     <ScreenContainer>
-      {
-        CameraActive
-          ? (
-            <CameraComponent saveImage={setPhoto} setActive={setCameraActive} setUrl={setUrlPhoto}  text='Toma una foto selfie' typeMask='selfie' />
-          )
-          : (<>
-            <View style={styles.containerForm}>
-              <Text style={styles.textTitle}>{Languages[language].SCREENS.SelfieScreen.title}</Text>
-              <View style={{ marginHorizontal: width * 0.1, alignItems: 'center' }}>
-                <TouchableOpacity
-                  style={styles.buttonQR}
-                  onPress={() => {
-                    setCameraActive(true)
-                  }}>
-                  <View
-                    style={{
-                      position: 'absolute',
-                      width: 12,
-                      height: 160,
-                      left: -10,
-                      top: 25,
-                      backgroundColor: Colors.white,
-                    }}></View>
-                  <View
-                    style={{
-                      position: 'absolute',
-                      width: 160,
-                      height: 12,
-                      left: 25,
-                      top: -10,
-                      backgroundColor: Colors.white,
-                    }}></View>
-                  <View
-                    style={{
-                      position: 'absolute',
-                      width: 160,
-                      height: 12,
-                      left: 25,
-                      bottom: -10,
-                      backgroundColor: Colors.white,
-                    }}></View>
-                  <View
-                    style={{
-                      position: 'absolute',
-                      width: 12,
-                      height: 160,
-                      right: -10,
-                      top: 25,
-                      backgroundColor: Colors.white,
-                    }}></View>
-                  <View style={styles.iconQrContainer}>
-                    <Image source={urlPhoto ? { uri: urlPhoto } : Icons.TouchScreen} style={styles.iconQr} />
-                  </View>
-                </TouchableOpacity>
-              </View>
-              {/* <View style={{ marginTop: 20 }}>
+      {CameraActive ? (
+        <CameraComponent
+          saveImage={setPhoto}
+          setActive={setCameraActive}
+          setUrl={setUrlPhoto}
+          text="Toma una foto selfie"
+          typeMask="selfie"
+        />
+      ) : (
+        <>
+          <View style={styles.containerForm}>
+            <Text style={styles.textTitle}>{Languages[language].SCREENS.SelfieScreen.title}</Text>
+            <View style={{ marginHorizontal: width * 0.1, alignItems: 'center' }}>
+              <TouchableOpacity
+                style={styles.buttonQR}
+                onPress={() => {
+                  setCameraActive(true);
+                }}
+              >
+                <View
+                  style={{
+                    position: 'absolute',
+                    width: 12,
+                    height: 160,
+                    left: -10,
+                    top: 25,
+                    backgroundColor: Colors.white
+                  }}
+                ></View>
+                <View
+                  style={{
+                    position: 'absolute',
+                    width: 160,
+                    height: 12,
+                    left: 25,
+                    top: -10,
+                    backgroundColor: Colors.white
+                  }}
+                ></View>
+                <View
+                  style={{
+                    position: 'absolute',
+                    width: 160,
+                    height: 12,
+                    left: 25,
+                    bottom: -10,
+                    backgroundColor: Colors.white
+                  }}
+                ></View>
+                <View
+                  style={{
+                    position: 'absolute',
+                    width: 12,
+                    height: 160,
+                    right: -10,
+                    top: 25,
+                    backgroundColor: Colors.white
+                  }}
+                ></View>
+                <View style={styles.iconQrContainer}>
+                  <Image source={urlPhoto ? { uri: urlPhoto } : Icons.TouchScreen} style={styles.iconQr} />
+                </View>
+              </TouchableOpacity>
+            </View>
+            {/* <View style={{ marginTop: 20 }}>
                 <Image source={Images.selfie} style={{ width: 250, height: 250 }} />
               </View> */}
-              <View style={{ width: width * 0.5, alignItems: 'center' }}>
-                <Button
-                  disabled={!urlPhoto?.length}
-                  onPress={() => { onSubmit(); }}
-                />
-              </View>
+            <View style={{ width: width * 0.5, alignItems: 'center' }}>
+              <Button
+                disabled={!urlPhoto?.length}
+                onPress={() => {
+                  onSubmit();
+                }}
+              />
             </View>
-          </>)
-
-      }
-
+          </View>
+        </>
+      )}
     </ScreenContainer>
   );
 };
@@ -147,13 +137,13 @@ const styles = StyleSheet.create({
   containerForm: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingHorizontal: width * .05,
+    paddingHorizontal: width * 0.05,
     flex: 1
   },
   textTitle: {
     color: Colors.blackBackground,
     fontSize: 26,
-    fontFamily: "DosisMedium",
+    fontFamily: 'DosisMedium',
     marginHorizontal: 10,
     marginVertical: 20,
     textAlign: 'center'
@@ -161,7 +151,7 @@ const styles = StyleSheet.create({
   textSubTitle: {
     color: Colors.blackBackground,
     fontSize: 22,
-    fontFamily: "DosisBold",
+    fontFamily: 'DosisBold',
     textAlign: 'center'
   },
   cancelButton: {
@@ -196,7 +186,7 @@ const styles = StyleSheet.create({
   },
   iconQr: {
     width: 180,
-    height: 180,
+    height: 180
   }
-})
+});
 export default Selfie2Screen;

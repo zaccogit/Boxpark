@@ -2,7 +2,7 @@
   "expo": {
     "name": "boxpark",
     "slug": "boxpark",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -19,12 +19,13 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.desarrollozacco.boxpark",
       "infoPlist": {
-        "NSCameraUsageDescription": "We need to access the camera to capture photos and videos that you can share in the app.",
+        "NSCameraUsageDescription": "We request permission to use the camera for the purpose of capturing images that allow us to verify the identification of users, as well as scan QR codes in payment transactions.",
+        "NSPhotoLibraryUsageDescription": "The app accesses your photos to change profile image and verify the identification.",
         "NSLocationWhenInUseUsageDescription": "To provide a personalized experience, we request access to your location while you use the app. We will use this information to show you relevant content based on your current location."
       }
     },
     "android": {
-      "versionCode": 5,
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
@@ -53,27 +54,19 @@
       [
         "expo-barcode-scanner",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+          "cameraPermission": "We request permission to use the camera for the purpose of capturing images that allow us to verify the identification of users, as well as scan QR codes in payment transactions."
         }
       ],
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+          "locationAlwaysAndWhenInUsePermission": "To provide a personalized experience, we request access to your location while you use the app. We will use this information to show you relevant content based on your current location."
         }
       ],
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
-        }
-      ],
-      [
-        "expo-media-library",
-        {
-          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
-          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
-          "isAccessMediaLocationEnabled": true
+          "cameraPermission": "We request permission to use the camera for the purpose of capturing images that allow us to verify the identification of users, as well as scan QR codes in payment transactions."
         }
       ],
       [
@@ -86,7 +79,7 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
+          "photosPermission": "The app accesses your photos to change profile image and verify the identification."
         }
       ]
     ],

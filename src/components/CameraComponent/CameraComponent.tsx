@@ -45,8 +45,6 @@ export default function CameraComponent({ saveImage, setActive, setUrl, swichCam
   const savePicture = async () => {
     if (image) {
       try {
-        const asset = await MediaLibrary.createAssetAsync(image);
-        saveImage(asset)
         setActive(false)
         setImage("");
       } catch (error) {
