@@ -10,6 +10,8 @@ import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-pick
 import { StackScreenProps } from '@react-navigation/stack';
 import { GetHeader, ToastCall } from '../../utils/GeneralMethods';
 import * as ImagePicker from 'expo-image-picker';
+import ButtonComponent from '../../components/ButtonComponent/Button';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -126,6 +128,7 @@ const ProfileScreen = ({ navigation, route }: Props) => {
     useContext(AuthContext);
   const { sesion, setSesion } = useContext(SesionContext);
   const [modal, setModal] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [photo, setPhoto] = useState<ImagePicker.ImagePickerResult | undefined>();
   const [credentials, setCredentials] = useState<Credentials>(initialState);
   const change = (value: string | number, key: string | number) => {
@@ -307,6 +310,17 @@ const ProfileScreen = ({ navigation, route }: Props) => {
         route={route}
       />
       <ScreenContainer disabledPaddingTop>
+      <View className=' items-end bg-white'>
+        <View className=" w-1/6 ">
+          <ButtonComponent
+            text=" "
+            showIcon
+            onPress={() => setIsVisible(true)}
+            typeButton="link"
+            icon={<SimpleLineIcons name="options-vertical" size={24} color="black" />}
+          />
+        </View>
+        </View>
         <View style={[styles.container, { flexGrow: 1, paddingTop: 20 }]}>
           <View style={[styles.containerWidth, styles.containerCenter]}>
             <TouchableOpacity
@@ -386,6 +400,7 @@ const ProfileScreen = ({ navigation, route }: Props) => {
           </View>
         </View>
       </ScreenContainer>
+      
     </>
   );
 };

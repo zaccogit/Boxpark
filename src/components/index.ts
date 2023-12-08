@@ -53,5 +53,5 @@ export {
   QRScanner,
   DebitCardWithInfo,
   CardInterface, CardInitState,
-  AuthTokenInternal
+  AuthTokenInternal,
 };
