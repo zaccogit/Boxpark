@@ -2,7 +2,7 @@
   "expo": {
     "name": "boxpark",
     "slug": "boxpark",
-    "version": "1.1.7",
+    "version": "1.1.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,12 +20,14 @@
       "bundleIdentifier": "com.desarrollozacco.boxpark",
       "infoPlist": {
         "NSCameraUsageDescription": "Para hacer tus pagos rápidos y seguros en BoxPark, la aplicación necesita acceso a la cámara para escanear códigos QR. También usamos la cámara para tomar rápidas fotos que aceleran la identificación del usuario, ofreciendo un servicio más eficiente y personalizado. Ejemplo: Al escanear el código de la taquilla se puede identificar rápidamente  a quien se le va a realizar el pago.",
+        "NSPhotoLibraryAddUsageDescription": "Para mejorar tu experiencia en BoxPark, necesitamos acceso a tus archivos para cambiar tu foto de perfil. Esta función te permite personalizar tu cuenta de manera sencilla y rápida. Queremos asegurarte que respetamos tu privacidad y solo utilizamos esta información con el propósito específico de actualizar tu imagen de perfil en la aplicación.",
         "NSPhotoLibraryUsageDescription": "Para mejorar tu experiencia en BoxPark, necesitamos acceso a tus archivos para cambiar tu foto de perfil. Esta función te permite personalizar tu cuenta de manera sencilla y rápida. Queremos asegurarte que respetamos tu privacidad y solo utilizamos esta información con el propósito específico de actualizar tu imagen de perfil en la aplicación.",
-        "NSLocationWhenInUseUsageDescription": "Con el fin de garantizar la seguridad de las transacciones, es necesario acceder a tu ubicación actual cuando utilizas la aplicación. Esta medida nos permite verificar que los pagos se realicen exclusivamente desde ubicaciones autorizadas, evitando duplicados no autorizados. Asimismo, este acceso facilita la identificación de patrones de uso en zonas de alto riesgo, contribuyendo a fortalecer la seguridad de tu cuenta y nuestras operaciones. Por ejemplo, se ha establecido que no puedes realizar operaciones fuera de los parques de BoxPark ni en zonas lejanas al parque, asegurando así que todas las transacciones ocurran en áreas específicas previamente autorizadas."
+        "NSLocationWhenInUseUsageDescription": "Con el fin de garantizar la seguridad de las transacciones, es necesario acceder a tu ubicación actual cuando utilizas la aplicación. Esta medida nos permite verificar que los pagos se realicen exclusivamente desde ubicaciones autorizadas, evitando duplicados no autorizados. Asimismo, este acceso facilita la identificación de patrones de uso en zonas de alto riesgo, contribuyendo a fortalecer la seguridad de tu cuenta y nuestras operaciones. Por ejemplo, se ha establecido que no puedes realizar operaciones fuera de los parques de BoxPark ni en zonas lejanas al parque, asegurando así que todas las transacciones ocurran en áreas específicas previamente autorizadas.",
+        "NSLocationAlwaysUsageDescription": "Con el fin de garantizar la seguridad de las transacciones, es necesario acceder a tu ubicación actual cuando utilizas la aplicación. Esta medida nos permite verificar que los pagos se realicen exclusivamente desde ubicaciones autorizadas, evitando duplicados no autorizados. Asimismo, este acceso facilita la identificación de patrones de uso en zonas de alto riesgo, contribuyendo a fortalecer la seguridad de tu cuenta y nuestras operaciones. Por ejemplo, se ha establecido que no puedes realizar operaciones fuera de los parques de BoxPark ni en zonas lejanas al parque, asegurando así que todas las transacciones ocurran en áreas específicas previamente autorizadas."
       }
     },
     "android": {
-      "versionCode": 7,
+      "versionCode": 9,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
