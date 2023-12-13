@@ -79,20 +79,9 @@ const PasswordScreen = ({ navigation }: Props) => {
         ?.vale.trim() as string;
       const url: string =
         (endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'REGISTER_APP_URL')?.vale as string) +
-        `?\
-    firstName=${firstName.replaceAll(' ', '')}&\
-    lastName=${lastName.replaceAll(' ', '')}&\
-    email=${email}&\
-    phone=${phone}&\
-    documentId=${documentId}&\
-    documentTypeId=${documentTypeId}&\
-    credential=${credential}&\
-    ${referenceNumber ? 'referCode=' + referenceNumber + '&' : ''}\
-    positionX=${DataCoordenadas.coords.longitude}&\
-    positionY=${DataCoordenadas.coords.latitude}&\
-    deviceId=${deviceId}&\
-    typeCondition=${typeCondition}&\
-    gender=${gender}`.replaceAll('    ', '').trim();
+        `?firstName=${firstName.replaceAll(' ', '')}&lastName=${lastName.replaceAll(' ', '')}&email=${email}&phone=${phone}&documentId=${documentId}&documentTypeId=${documentTypeId}&credential=${credential}&${referenceNumber ? 'referCode=' + referenceNumber + '&' : ''}positionX=${DataCoordenadas.coords.longitude}&positionY=${DataCoordenadas.coords.latitude}&deviceId=${deviceId}&typeCondition=${typeCondition}&gender=${gender}`.replaceAll('    ', '').trim();
+
+    console.log(host+url);
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'REGISTER_APP_METHOD')
         ?.vale as Method;
       const headers = GetHeader(tokenRU, 'multipart/form-data');
