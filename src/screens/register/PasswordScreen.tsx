@@ -1,5 +1,5 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
-import { View, Text, Dimensions, StyleSheet, Image, Linking,Alert } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Image, Linking, Alert, Platform } from 'react-native';
 import { ScreenContainer, Button, Input } from '../../components';
 import { Colors } from '../../utils';
 import { Fonts, Icons } from '../../../assets';
@@ -8,11 +8,11 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { AuthContext, RegisterContext, RenderContext, EndPointsInterface } from '../../contexts';
 import { HttpService } from '../../services';
 import { ToastCall, GetHeader } from '../../utils/GeneralMethods';
-import * as Location from 'expo-location';
+import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 
-interface Props extends StackScreenProps<any, any> { }
+interface Props extends StackScreenProps<any, any> {}
 
-type Method = "get" | "post" | "put" | "delete"
+type Method = 'get' | 'post' | 'put' | 'delete';
 
 const supportedURL = 'http://54.148.218.243:7474/img4/terminosycondiciones.html';
 
@@ -24,7 +24,7 @@ type OpenURLButtonProps = {
 const width: number = Dimensions.get('window').width;
 
 const PasswordScreen = ({ navigation }: Props) => {
-  const { tokenRU, endPoints, deviceId, DataCoordenadas} = useContext(AuthContext);
+  const { tokenRU, endPoints, deviceId, DataCoordenadas } = useContext(AuthContext);
   const { language, setLoader } = useContext(RenderContext);
   const { registerReq, setRegisterReq, setNacionality, initialStateRegister, partPhoto } = useContext(RegisterContext);
 
@@ -41,7 +41,6 @@ const PasswordScreen = ({ navigation }: Props) => {
   };
 
   const onSubmit = async () => {
-
     const {
       firstName,
       lastName,
@@ -60,55 +59,76 @@ const PasswordScreen = ({ navigation }: Props) => {
       return;
     }
     console.log(partPhoto);
-    const host: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "APP_BASE_API")?.vale.trim() as string
-    const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_URL")?.vale as string + `?\
-    firstName=${firstName.replaceAll(" ", "")}&\
-    lastName=${lastName.replaceAll(" ", "")}&\
+    if (partPhoto?.uri) {
+      const manipResult = await manipulateAsync(
+        partPhoto.uri,
+        [{ flip: FlipType.Vertical },{resize:{width:400, height:600}}],
+        { compress: 0.1, format: SaveFormat.PNG }
+      );
+
+      const name = manipResult.uri?.split('/');
+
+      const data = {
+        uri: manipResult.uri,
+        type: 'image/png',
+        name: manipResult.uri?.split('/')[name?.length - 1]
+      };
+
+      const host: string = endPoints
+        ?.find((endPoint: EndPointsInterface) => endPoint.name === 'APP_BASE_API')
+        ?.vale.trim() as string;
+      const url: string =
+        (endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'REGISTER_APP_URL')?.vale as string) +
+        `?\
+    firstName=${firstName.replaceAll(' ', '')}&\
+    lastName=${lastName.replaceAll(' ', '')}&\
     email=${email}&\
     phone=${phone}&\
     documentId=${documentId}&\
     documentTypeId=${documentTypeId}&\
     credential=${credential}&\
-    ${referenceNumber ? "referCode="+referenceNumber+"&" : ""}\
+    ${referenceNumber ? 'referCode=' + referenceNumber + '&' : ''}\
     positionX=${DataCoordenadas.coords.longitude}&\
     positionY=${DataCoordenadas.coords.latitude}&\
     deviceId=${deviceId}&\
     typeCondition=${typeCondition}&\
-    gender=${gender}`.replaceAll("    ", "")
-    const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === "REGISTER_APP_METHOD")?.vale as Method
-    const headers = GetHeader(tokenRU, "multipart/form-data")
-    const req: FormData = new FormData()
-    req.append("file", {...partPhoto, name:partPhoto?.name?.toLocaleLowerCase()} as any)
-    console.log(partPhoto);
-    try {
-      const response = await HttpService(method, host, url, req, headers, setLoader);
-      if (response?.codigoRespuesta === '08') {
-        ToastCall('warning', Languages[language].SCREENS.PasswordScreen.ERRORS.message3, language);
-        return;
-      }
+    gender=${gender}`.replaceAll('    ', '').trim();
+      const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'REGISTER_APP_METHOD')
+        ?.vale as Method;
+      const headers = GetHeader(tokenRU, 'multipart/form-data');
+      const req: FormData = new FormData();
+      req.append('file', data as any);
+      console.log(partPhoto);
+      try {
+        const response = await HttpService(method, host, url, req, headers, setLoader);
+        if (response?.codigoRespuesta === '08') {
+          ToastCall('warning', Languages[language].SCREENS.PasswordScreen.ERRORS.message3, language);
+          return;
+        }
 
-      if (response?.codigoRespuesta === '10') {
-        ToastCall('warning', Languages[language].SCREENS.PasswordScreen.ERRORS.message4, language);
-        return;
-      }
+        if (response?.codigoRespuesta === '10') {
+          ToastCall('warning', Languages[language].SCREENS.PasswordScreen.ERRORS.message4, language);
+          return;
+        }
 
-      if (response?.codigoRespuesta === '00') {
-        setRegisterReq(initialStateRegister);
-        setNacionality(0);
-        navigation.push('RegisterSuccess');
-      } else {
-        ToastCall('error', response?.mensajeRespuesta, language);
+        if (response?.codigoRespuesta === '00') {
+          setRegisterReq(initialStateRegister);
+          setNacionality(0);
+          navigation.push('RegisterSuccess');
+        } else {
+          ToastCall('error', response?.mensajeRespuesta, language);
+        }
+      } catch (err) {
+        console.log(JSON.stringify(err));
+        ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
       }
-    } catch (err) {
-      console.log(JSON.stringify(err))
-      ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);
     }
   };
-  const OpenURLButton = ({url, children}: OpenURLButtonProps) => {
+  const OpenURLButton = ({ url, children }: OpenURLButtonProps) => {
     const handlePress = useCallback(async () => {
       // Checking if the link is supported for links with custom URL scheme.
       const supported = await Linking.canOpenURL(url);
-  
+
       if (supported) {
         // Opening the link with some app, if the URL scheme is "http" the web link should be opened
         // by some browser in the mobile
@@ -117,9 +137,17 @@ const PasswordScreen = ({ navigation }: Props) => {
         Alert.alert(`Don't know how to open this URL: ${url}`);
       }
     }, [url]);
-  
-    return <Button styleText={{color:"#4f9bd9", textAlign:"center",textDecorationLine:"underline", fontFamily:"DosisBold",}} styleButton={[styles.buttonRenderWhite]} text={children} onPress={handlePress} white />;
-  }
+
+    return (
+      <Button
+        styleText={{ color: '#4f9bd9', textAlign: 'center', textDecorationLine: 'underline', fontFamily: 'DosisBold' }}
+        styleButton={[styles.buttonRenderWhite]}
+        text={children}
+        onPress={handlePress}
+        white
+      />
+    );
+  };
   const validatePassword = useCallback(
     (e: any) => {
       let password = e;
@@ -168,7 +196,7 @@ const PasswordScreen = ({ navigation }: Props) => {
         setEquals(false);
       }
     },
-    [registerReq.credential],
+    [registerReq.credential]
   );
 
   const change = (value: string, key: string) => {
@@ -176,7 +204,7 @@ const PasswordScreen = ({ navigation }: Props) => {
 
     setRegisterReq({
       ...registerReq,
-      [key]: value,
+      [key]: value
     });
   };
   useEffect(() => {
@@ -184,8 +212,8 @@ const PasswordScreen = ({ navigation }: Props) => {
     setEquals(credential.length && credential.length ? credential === credentialRepeat : false);
   }, [registerReq.credential, registerReq.credentialRepeat]);
   useEffect(() => {
-    if(!registerReq.typeCondition.length) navigation.push("Nacionality")
-  },[registerReq.typeCondition])
+    if (!registerReq.typeCondition.length) navigation.push('Nacionality');
+  }, [registerReq.typeCondition]);
   return (
     <ScreenContainer>
       <Text style={styles.title}>{Languages[language].SCREENS.PasswordScreen.text1}</Text>
@@ -227,7 +255,6 @@ const PasswordScreen = ({ navigation }: Props) => {
         <View>
           <Input
             placeholder={Languages[language].SCREENS.PasswordScreen.placeholder1}
-            
             secureTextEntry={true}
             onChangeText={(e: string) => {
               change(e, 'credential');
@@ -247,20 +274,18 @@ const PasswordScreen = ({ navigation }: Props) => {
             placeholderColor={Colors.transparent}
           />
         </View>
-        <View className=' gap-y-3'>
-          <OpenURLButton url={supportedURL}>
-          Si presionas continuar aceptas los terminos y condiciones.
-          </OpenURLButton>
+        <View className=" gap-y-3">
+          <OpenURLButton url={supportedURL}>Si presionas continuar aceptas los terminos y condiciones.</OpenURLButton>
 
-        <View style={{ width: width * 0.9, flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-          <Button
-            text={Languages[language].SCREENS.PasswordScreen.textSubmit}
-            disabled={disable()}
-            onPress={() => {
-              onSubmit();
-            }}
-          />
-        </View>
+          <View style={{ width: width * 0.9, flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
+            <Button
+              text={Languages[language].SCREENS.PasswordScreen.textSubmit}
+              disabled={disable()}
+              onPress={() => {
+                onSubmit();
+              }}
+            />
+          </View>
         </View>
       </View>
     </ScreenContainer>
@@ -271,22 +296,22 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: Colors.blackBackground,
-    fontFamily: "DosisExtraBold",
+    fontFamily: 'DosisExtraBold',
     fontSize: 28,
-    marginVertical: 15,
+    marginVertical: 15
   },
   subTitle: {
     textAlign: 'left',
     color: Colors.blackBackground,
-    fontFamily: "DosisBold",
+    fontFamily: 'DosisBold',
     fontSize: 16,
     width: '100%',
-    marginVertical: 5,
+    marginVertical: 5
   },
   paragraph: {
-    fontFamily: "DosisBold",
+    fontFamily: 'DosisBold',
     fontSize: 24,
-    paddingHorizontal: width * 0.1,
+    paddingHorizontal: width * 0.1
   },
   contentContainer: {
     width: width * 0.9,
@@ -299,23 +324,23 @@ const styles = StyleSheet.create({
     elevation: 0,
     borderStyle: 'solid',
     borderWidth: 2,
-    borderColor: Colors.blackBackground,
+    borderColor: Colors.blackBackground
   },
   select: {
     color: Colors.blackBackground,
     borderBottomColor: Colors.blackBackground,
     borderStyle: 'solid',
-    borderBottomWidth: 2,
+    borderBottomWidth: 2
   },
   icon: {
     width: 16,
     height: 16,
-    tintColor: Colors.green,
+    tintColor: Colors.green
   },
   buttonRenderWhite: {
     borderColor: Colors.transparent,
-    shadowColor: Colors.transparent,
-  },
+    shadowColor: Colors.transparent
+  }
 });
 
 export default PasswordScreen;
