@@ -62,7 +62,7 @@ const PasswordScreen = ({ navigation }: Props) => {
     if (partPhoto?.uri) {
       const manipResult = await manipulateAsync(
         partPhoto.uri,
-        [{ rotate: 180 },{ flip: FlipType.Vertical },{resize:{width:200, height:300}}],
+        [{ rotate: 180 }, { flip: FlipType.Vertical }, { resize: { width: 200, height: 300 } }],
         { compress: 0.1, format: SaveFormat.PNG }
       );
 
@@ -77,15 +77,25 @@ const PasswordScreen = ({ navigation }: Props) => {
       const host: string = endPoints
         ?.find((endPoint: EndPointsInterface) => endPoint.name === 'APP_BASE_API')
         ?.vale.trim() as string;
-      const url: string =
-        (endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'REGISTER_APP_URL')?.vale as string) +
-        `?firstName=${firstName.replaceAll(' ', '')}&lastName=${lastName.replaceAll(' ', '')}&email=${email}&phone=${phone}&documentId=${documentId}&documentTypeId=${documentTypeId}&credential=${credential}&${referenceNumber ? 'referCode=' + referenceNumber + '&' : ''}positionX=${DataCoordenadas.coords.longitude}&positionY=${DataCoordenadas.coords.latitude}&deviceId=${deviceId}&typeCondition=${typeCondition}&gender=${gender}`.replaceAll('    ', '').trim();
-
-    console.log(host+url);
+      const url: string = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'REGISTER_APP_URL')
+        ?.vale as string;
       const method: Method = endPoints?.find((endPoint: EndPointsInterface) => endPoint.name === 'REGISTER_APP_METHOD')
         ?.vale as Method;
       const headers = GetHeader(tokenRU, 'multipart/form-data');
       const req: FormData = new FormData();
+      req.append('firstName', firstName.replaceAll(' ', '').replace("/",""));
+      req.append('lastName', lastName.replaceAll(' ', '').replace("/",""));
+      req.append('email', email);
+      req.append('phone', phone);
+      req.append('documentId', documentId);
+      req.append('credential', credential);
+      req.append('gender', gender);
+      req.append('positionY', DataCoordenadas?.coords?.latitude?.toString());
+      req.append('positionX', DataCoordenadas?.coords?.longitude?.toString());
+      req.append('deviceId', deviceId);
+      req.append('documentTypeId', documentTypeId);
+      req.append('referCode', referenceNumber);
+      req.append('typeCondition', typeCondition);
       req.append('file', data as any);
       try {
         const response = await HttpService(method, host, url, req, headers, setLoader);
