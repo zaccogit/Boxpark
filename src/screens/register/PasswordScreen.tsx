@@ -62,7 +62,7 @@ const PasswordScreen = ({ navigation }: Props) => {
     if (partPhoto?.uri) {
       const manipResult = await manipulateAsync(
         partPhoto.uri,
-        [{ flip: FlipType.Vertical },{resize:{width:400, height:600}}],
+        [{ rotate: 180 },{ flip: FlipType.Vertical },{resize:{width:200, height:300}}],
         { compress: 0.1, format: SaveFormat.PNG }
       );
 
@@ -98,7 +98,6 @@ const PasswordScreen = ({ navigation }: Props) => {
       const headers = GetHeader(tokenRU, 'multipart/form-data');
       const req: FormData = new FormData();
       req.append('file', data as any);
-      console.log(partPhoto);
       try {
         const response = await HttpService(method, host, url, req, headers, setLoader);
         if (response?.codigoRespuesta === '08') {
