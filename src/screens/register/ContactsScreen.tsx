@@ -118,7 +118,8 @@ const ContactsScreen = ({ navigation }: Props) => {
       }
 
       onSubmit(1, registerReq.phone);
-      onSubmit(2, registerReq.email);
+      navigation.push('VerifyContacts')
+      /* onSubmit(2, registerReq.email); */
     } catch (err) {
       console.log(JSON.stringify(err));
       ToastCall('error', Languages[language].GENERAL.ERRORS.GeneralError, language);

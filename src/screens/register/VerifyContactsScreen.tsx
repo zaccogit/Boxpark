@@ -48,7 +48,7 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
   const { mins: mins3, secs: secs3 } = getRemaining(timer3);
   const disable = () => {
     const { email, sms } = state;
-    return !(email.length >= 6) || !(sms.length >= 6);
+    return !(sms.length >= 6);
   };
   const change = (value: string, key: string) => {
     setState({
@@ -123,10 +123,10 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
         return;
       }
 
-      req = getReq(2, registerReq.email, email);
-      const responseEmail: any = await HttpService(method, host, url, req, headers, setLoader);
       //VALIDAR EMAIL
-      if (!responseEmail) {
+     /* req = getReq(2, registerReq.email, email);
+      const responseEmail: any = await HttpService(method, host, url, req, headers, setLoader);
+       if (!responseEmail) {
         ToastCall('warning', Languages[language].SCREENS.VerifyContactsScreen.ERROR.message5, language);
         return;
       }
@@ -134,8 +134,7 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
       if (responseEmail?.codigoRespuesta !== '00') {
         ToastCall('warning', Languages[language].GENERAL.ERRORS.GeneralError, language);
         return;
-      }
-
+      }*/
       clearInterval(intervalTimer);
       clearInterval(intervalTimer2);
       clearInterval(intervalTimer3);
@@ -220,7 +219,7 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View>
+          {/* <View>
             <Text style={[styles.subTitle, { marginBottom: 10 }]}>
               {Languages[language].SCREENS.VerifyContactsScreen.text2}
             </Text>
@@ -245,7 +244,7 @@ const VerifyContactsScreen = ({ navigation }: Props) => {
                 {timer4 > 0 ? `${formatNumber(timer4)}s` : null}
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View style={{ width: width * 0.9, flexDirection: 'row', justifyContent: 'space-around' }}>
             <View style={{ width: width * 0.3, alignItems: 'center' }}>
               <Button
